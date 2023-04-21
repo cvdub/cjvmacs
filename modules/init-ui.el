@@ -33,4 +33,8 @@
   :custom
   (which-key-idle-delay 0.5))
 
+;;;; Rainbow delimiters
+(use-package rainbow-delimiters
+  :hook (prog-mode))
+
 (provide 'init-ui)

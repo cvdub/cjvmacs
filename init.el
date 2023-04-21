@@ -34,3 +34,5 @@
 (require 'init-eshell)
 (require 'init-python)
 (require 'init-git)
+(require 'init-spacebase)
+

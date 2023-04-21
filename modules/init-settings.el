@@ -29,8 +29,16 @@
 (global-unset-key (kbd "C-z"))
 
 ;; Ensure environment variables are loaded
+(defvar cjv/environment-variables '("PYTHONPATH"
+                                    "PYTHONSTARTUP"
+                                    "GPG_TTY"
+                                    "SSH_AUTH_SOCK"
+                                    "ANSIBLE_CONFIG"))
+
 (use-package exec-path-from-shell
   :init
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+  :config
+  (mapc #'exec-path-from-shell-copy-env cjv/environment-variables))
 
 (provide 'init-settings)

@@ -1,8 +1,8 @@
 (use-package eshell
   :defer t
+  :bind (:map cjv/open-map
+              ("e" . #'eshell))
   :custom
   (eshell-banner-message ""))
-
-(global-set-key (kbd "C-c o e") #'eshell)
 
 (provide 'init-eshell)

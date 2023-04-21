@@ -21,6 +21,7 @@
 ;; Modules
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
 
+(require 'init-keybindings)
 (require 'init-ui)
 (require 'init-utils)
 (require 'init-backups)

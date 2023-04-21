@@ -1,5 +1,12 @@
 (use-package notmuch
   :defer t
+  :init
+  (defun cjv/notmuch-inbox ()
+    "Opens the notmuch inbox."
+    (interactive)
+    (notmuch-search "tag:inbox"))
+  :bind (:map cjv/open-map
+              ("m" . #'cjv/notmuch-inbox))
   :custom
   (message-directory "~/.mail/")
   (sendmail-program "/opt/homebrew/bin/msmtp")
@@ -22,3 +29,4 @@
   (shr-max-width fill-column))
 
 (provide 'init-email)
+

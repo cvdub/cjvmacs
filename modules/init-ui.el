@@ -16,6 +16,11 @@
                       :height 160
                       :weight 'light))
 
+;;;; Theme
+(use-package gruvbox-theme
+  :init
+  (load-theme 'gruvbox-light-medium t))
+
 ;;;; Which Key
 (use-package which-key
   :init

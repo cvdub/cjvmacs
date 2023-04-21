@@ -1,4 +1,5 @@
 (use-package eshell
+  :defer t
   :custom
   (eshell-banner-message ""))
 

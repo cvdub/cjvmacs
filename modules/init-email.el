@@ -1,4 +1,5 @@
 (use-package notmuch
+  :defer t
   :custom
   (message-directory "~/.mail/")
   (sendmail-program "/opt/homebrew/bin/msmtp")

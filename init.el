@@ -2,10 +2,6 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-;; Garbage collection
-(setq gc-cons-threshold 50000000) ; 50MB
-(setq large-file-warning-threshold 100000000)
-
 ;; Straight
 (setq straight-use-package-by-default t
       straight-vc-git-default-protocol 'ssh)

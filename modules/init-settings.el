@@ -36,6 +36,7 @@
                                     "ANSIBLE_CONFIG"))
 
 (use-package exec-path-from-shell
+  :defer 2
   :init
   (exec-path-from-shell-initialize)
   :config

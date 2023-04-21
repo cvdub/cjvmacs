@@ -19,7 +19,12 @@
 ;;;; Theme
 (use-package gruvbox-theme
   :init
-  (load-theme 'gruvbox-light-medium t))
+  (load-theme 'gruvbox-light-medium t)
+  :config
+  (custom-theme-set-faces
+   'gruvbox-light-medium
+   '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))
+  (enable-theme 'gruvbox-light-medium))
 
 ;;;; Which Key
 (use-package which-key

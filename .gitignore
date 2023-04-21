@@ -1,0 +1,10 @@
+/auto-save-list/
+/backups/
+/bookmarks
+/custom.el
+/eln-cache/
+/eshell/
+/projects
+/straight/
+/transient/
+/tree-sitter/

@@ -35,4 +35,5 @@
 (require 'init-python)
 (require 'init-git)
 (require 'init-spacebase)
+(require 'init-org)
 

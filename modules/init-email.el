@@ -1,0 +1,23 @@
+(use-package notmuch
+  :custom
+  (message-directory "~/.mail/")
+  (sendmail-program "/opt/homebrew/bin/msmtp")
+  (mail-specify-envelope-from t)
+  (message-sendmail-envelope-from 'header)
+  (mail-envelope-from 'header)
+  (notmuch-fcc-dirs '(("christian@cvdub.net" . "christian@cvdub.net/Sent -inbox -unread -new +sent")
+                      ("christian@spacebaseapp.com" . "christian@spacebaseapp.com/Sent -inbox -unread -new +sent")
+                      ("cvanderwall14@gmail.com" . "cvanderwall14@gmail.com/Sent -inbox -unread -new +sent")
+                      ("christian@vanderwall.org" . "christian@vanderwall.org/Sent -inbox -unread -new +sent")))
+  (message-citation-line-function 'message-insert-formatted-citation-line)
+  (notmuch-mua-compose-in 'new-window)
+  (notmuch-wash-wrap-lines-length 80)
+  (notmuch-search-oldest-first nil)
+  (mm-text-html-renderer 'shr)
+  (notmuch-show-text/html-blocked-images nil)
+  (notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
+  ;; (shr-use-colors nil)
+  (shr-use-fonts nil)
+  (shr-max-width fill-column))
+
+(provide 'init-email)

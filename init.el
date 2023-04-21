@@ -36,4 +36,5 @@
 (require 'init-git)
 (require 'init-spacebase)
 (require 'init-org)
+(require 'init-email)
 

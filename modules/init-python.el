@@ -8,5 +8,7 @@
   (pyvenv-tracking-mode 1))
 
 (use-package poetry)
+(use-package poetry
+  :defer t)
 
 (provide 'init-python)

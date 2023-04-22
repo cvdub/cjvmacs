@@ -17,14 +17,32 @@
                       :weight 'light))
 
 ;;;; Theme
+(defvar cjv/light-theme 'gruvbox-light-medium)
+(defvar cjv/dark-theme 'gruvbox-dark-medium)
+
+(defun cjv/apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (let ((theme (pcase appearance
+                 ('light cjv/light-theme)
+                 ('dark cjv/dark-theme))))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)
+    (enable-theme theme)))
+
 (use-package gruvbox-theme
   :init
-  (load-theme 'gruvbox-light-medium t)
+  (load-theme 'gruvbox-light-medium t t)
   :config
   (custom-theme-set-faces
    'gruvbox-light-medium
-   '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))
-  (enable-theme 'gruvbox-light-medium))
+   '(highlight ((t (:background "#ebdbb2" :foreground "#282828"))))))
+
+
+;; (cjv/apply-theme 'dark)
+
+;; Switch theme when system dark/light mode changes
+(add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)
+
 
 ;;;; Diminish
 (use-package diminish

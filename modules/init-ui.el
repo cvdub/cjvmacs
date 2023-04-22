@@ -26,8 +26,13 @@
    '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))
   (enable-theme 'gruvbox-light-medium))
 
+;;;; Diminish
+(use-package diminish
+  :diminish narrow)
+
 ;;;; Which Key
 (use-package which-key
+  :diminish
   :init
   (which-key-mode)
   :custom

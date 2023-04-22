@@ -95,6 +95,7 @@
                         "|"
                         "DONE(d)"
                         "CANC(c)")))
+  (org-agenda-window-setup 'current-window)
   (org-agenda-custom-commands
    '(("h" "Agenda and home next actions"
       ((agenda ""

@@ -18,4 +18,13 @@
           (cjv/alert (process-name p) ,message-text)
         (cjv/alert (process-name p) "Failed!")))))
 
+(defmacro cjv/with-message (message-text &rest body)
+  "Messages the user after process finishes."
+  `(set-process-sentinel
+    ,@body
+    (lambda (p e)
+      (if (= 0 (process-exit-status p))
+          (message "%s: %s" (process-name p) ,message-text)
+        (message "%s Failed!" (process-name p))))))
+
 (provide 'init-utils)

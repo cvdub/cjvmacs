@@ -27,4 +27,13 @@
           (message "%s: %s" (process-name p) ,message-text)
         (message "%s Failed!" (process-name p))))))
 
+(defmacro cjv/with-bottom-window (&rest body)
+  "Open buffer created by BODY in bottom window."
+  `(let ((display-buffer-alist '(("*"
+                                  (display-buffer-in-side-window)
+                                  (inhibit-same-window . t)
+                                  (window-height . 0.3)
+                                  (side . bottom)))))
+     ,@body))
+
 (provide 'init-utils)

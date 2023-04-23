@@ -5,8 +5,11 @@
 ;; Disable package.el in favor of straight.el
 (setq package-enable-at-startup nil)
 
-;; Disable title bar
-(add-to-list 'default-frame-alist '(undecorated-round . t))
+;; Make title bar transparent
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+
+;; Remove internal border
+(add-to-list 'default-frame-alist '(internal-border-width . 0))
 
 ;; Set startup frame background color. This is replaced later once the
 ;; theme is activated.

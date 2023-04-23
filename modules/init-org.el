@@ -86,6 +86,7 @@
   (org-export-with-toc nil)
   (org-export-with-section-numbers nil)
   (org-export-with-sub-superscripts '{})
+  (org-use-fast-todo-selection 'expert)
   (org-todo-keywords '((sequence
                         "TODO(t)"
                         "DELE(l)"

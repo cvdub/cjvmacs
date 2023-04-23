@@ -92,8 +92,14 @@
   :defer t
   :hook visual-line-mode)
 
+;;;; Write room
 (use-package writeroom-mode
   :defer t
+  :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
+  :config
+  (defun cjv/writeroom-increase-text-scaling ()
+    (text-scale-adjust 1)
+    (visual-fill-column-adjust))
   :custom
   (writeroom-mode-line t)
   (writeroom-fullscreen-effect 'maximized))

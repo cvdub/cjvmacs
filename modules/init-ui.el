@@ -63,12 +63,8 @@
    'gruvbox-light-medium
    '(highlight ((t (:background "#ebdbb2" :foreground "#282828"))))))
 
-
-;; (cjv/apply-theme 'dark)
-
 ;; Switch theme when system dark/light mode changes
 (add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)
-
 
 ;;;; Diminish
 (use-package diminish

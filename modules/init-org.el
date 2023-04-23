@@ -77,7 +77,12 @@
                            (refile . "Refiled on %t")
                            (clock-out . "")))
   (org-startup-indented t)
-  (org-use-speed-commands t)
+
+  ;; Enable speed commands, and activate t hem on any of the asterisks
+  ;; at the beginning of the line.
+  (org-use-speed-commands (lambda ()
+                            (and (looking-at org-outline-regexp)
+                                 (looking-back "^\**"))))
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   (org-startup-folded 'show2levels)
   (org-startup-align-all-tables t)
@@ -86,6 +91,7 @@
   (org-export-with-toc nil)
   (org-export-with-section-numbers nil)
   (org-export-with-sub-superscripts '{})
+  (org-fontify-quote-and-verse-blocks t)
   (org-use-fast-todo-selection 'expert)
   (org-todo-keywords '((sequence
                         "TODO(t)"
@@ -97,13 +103,13 @@
                         "DONE(d)"
                         "CANC(c)")))
   (org-todo-keyword-faces
-        '(("TODO" . +org-todo-todo)
-          ("DELE" . +org-todo-onhold)
-          ("SOME" . +org-todo-someday)
-          ("HOLD" . +org-todo-onhold)
-          ("WAIT" . +org-todo-onhold)
-          ("DONE" . +org-todo-done)
-          ("CANC" . +org-todo-done)))
+   '(("TODO" . +org-todo-todo)
+     ("DELE" . +org-todo-onhold)
+     ("SOME" . +org-todo-someday)
+     ("HOLD" . +org-todo-onhold)
+     ("WAIT" . +org-todo-onhold)
+     ("DONE" . +org-todo-done)
+     ("CANC" . +org-todo-done)))
   (org-agenda-window-setup 'current-window)
   (org-agenda-custom-commands
    '(("h" "Agenda and home next actions"

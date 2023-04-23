@@ -16,6 +16,24 @@
                       :height 160
                       :weight 'light))
 
+(custom-set-faces
+ '(fixed-pitch ((t (:family "Fira Code" :height 160 :weight light))))
+ '(variable-pitch ((t (:family "iA Writer Quattro S" :height 180)))))
+
+(custom-set-faces
+ '(org-document-title ((t (:height 1.3))))
+ '(org-level-1 ((t (:inherit outline-1 :weight extra-bold :height 1.25))))
+ '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.1))))
+ '(org-tag ((t (:height .8))))
+ '(org-document-info-keyword ((t (:height .9))))
+ '(org-meta-line ((t (:height .9))))
+ '(org-special-keyword ((t (:height .9))))
+ '(org-date ((t (:inherit font-lock-comment-face :height .9))))
+ '(org-drawer ((t (:height .9))))
+ '(org-block-begin-line ((t (:height .9))))
+ '(org-block-end-line ((t (:height .9))))
+ '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro S")))))
+
 ;;;; Theme
 (with-eval-after-load 'org
   (custom-declare-face '+org-todo-todo '((t (:inherit (org-todo)))) "")

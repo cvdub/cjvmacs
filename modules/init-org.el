@@ -1,12 +1,14 @@
 (use-package org
   :straight (:type built-in)
   :defer t
+  :diminish org-indent-mode
   :commands (cjv/org-open-agenda
              cjv/org-open-work-todo-file
              cjv/org-open-personal-todo-file)
   :bind (("<f10>" . #'cjv/org-open-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
          ("<S-f10>" . #'cjv/org-open-personal-todo-file))
+  :hook (org-mode . variable-pitch-mode)
   :config
   ;; Agenda functions
   (defun cjv/org-subtask-p ()

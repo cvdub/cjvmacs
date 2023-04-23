@@ -70,7 +70,7 @@
 
 ;;;; Diminish
 (use-package diminish
-  :diminish narrow)
+  :diminish (narrow buffer-face-mode))
 
 ;;;; Which Key
 (use-package which-key

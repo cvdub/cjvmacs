@@ -6,6 +6,8 @@
   (set-scroll-bar-mode nil)
   (tool-bar-mode -1))
 
+(winner-mode 1)
+
 ;;;; Mode line
 (column-number-mode)
 
@@ -89,5 +91,12 @@
 (use-package visual-fill-column
   :defer t
   :hook visual-line-mode)
+
+(use-package writeroom-mode
+  :defer t
+  :custom
+  (writeroom-mode-line t)
+  (writeroom-fullscreen-effect 'maximized))
+
 
 (provide 'init-ui)

@@ -168,4 +168,14 @@
      ("e" "Errands" ((tags-todo "#ERRAND/TODO")))
      ("y" "Someday" ((todo "SOME"))))))
 
+(use-package org-journal
+  :bind
+  (:map cjv/notes-map
+              ("j" . #'org-journal-new-entry))
+  :init
+  (setq org-journal-prefix-key nil)
+  :hook (org-journal-mode . writeroom-mode)
+  :custom
+  (org-journal-dir (expand-file-name "journal/" org-directory)))
+
 (provide 'init-org)

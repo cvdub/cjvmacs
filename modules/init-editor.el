@@ -11,5 +11,13 @@
                          :fork (:host github :repo "cvdub/emacs-lorem-ipsum" :protocl ssh))
   :defer t)
 
-(provide 'init-editor)
+(use-package company
+  :hook prog-mode
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-tooltip-align-annotations t)
+  (company-require-match nil)
+  (company-transformers '(company-sort-by-occurrence
+                          company-sort-by-backend-importance)))
 
+(provide 'init-editor)

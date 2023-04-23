@@ -104,5 +104,10 @@
   (writeroom-mode-line t)
   (writeroom-fullscreen-effect 'maximized))
 
+;;;; Icons
+(use-package all-the-icons)
+(use-package all-the-icons-dired
+  :defer t
+  :hook dired-mode)
 
 (provide 'init-ui)

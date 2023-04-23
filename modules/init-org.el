@@ -96,6 +96,14 @@
                         "|"
                         "DONE(d)"
                         "CANC(c)")))
+  (org-todo-keyword-faces
+        '(("TODO" . +org-todo-todo)
+          ("DELE" . +org-todo-onhold)
+          ("SOME" . +org-todo-someday)
+          ("HOLD" . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("DONE" . +org-todo-done)
+          ("CANC" . +org-todo-done)))
   (org-agenda-window-setup 'current-window)
   (org-agenda-custom-commands
    '(("h" "Agenda and home next actions"

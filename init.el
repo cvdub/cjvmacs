@@ -3,8 +3,7 @@
 (load custom-file 'noerror)
 
 ;; Straight
-(setq straight-use-package-by-default t
-      straight-vc-git-default-protocol 'ssh)
+(setq straight-use-package-by-default t)
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))

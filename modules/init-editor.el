@@ -8,7 +8,7 @@
 
 (use-package lorem-ipsum
   :straight (lorem-ipsum :type git :host github :repo "jschaf/emacs-lorem-ipsum"
-                         :fork (:host github :repo "cvdub/emacs-lorem-ipsum"))
+                         :fork (:host github :repo "cvdub/emacs-lorem-ipsum" :protocl ssh))
   :defer t)
 
 (provide 'init-editor)

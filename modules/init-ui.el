@@ -84,4 +84,10 @@
 (use-package rainbow-delimiters
   :hook (prog-mode))
 
+;;;; Visual lines
+(setq visual-line-fringe-indicators '(nil right-curly-arrow))
+(use-package visual-fill-column
+  :defer t
+  :hook visual-line-mode)
+
 (provide 'init-ui)

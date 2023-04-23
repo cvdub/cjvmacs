@@ -8,7 +8,9 @@
   :bind (("<f10>" . #'cjv/org-open-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
          ("<S-f10>" . #'cjv/org-open-personal-todo-file))
-  :hook (org-mode . variable-pitch-mode)
+  :hook ((org-mode . variable-pitch-mode)
+         (org-mode . visual-line-mode))
+
   :config
   ;; Agenda functions
   (defun cjv/org-subtask-p ()
@@ -89,6 +91,7 @@
   (org-startup-folded 'show2levels)
   (org-startup-align-all-tables t)
   (org-startup-shrink-all-tables t)
+  (org-startup-truncated nil)
   (org-fast-tag-selection-single-key t)
   (org-export-with-toc nil)
   (org-export-with-section-numbers nil)

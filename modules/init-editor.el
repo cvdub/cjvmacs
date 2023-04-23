@@ -1,6 +1,6 @@
 (electric-pair-mode 1)
-(setq fill-column 80
-      sentence-end-double-space nil)
+(setq-default fill-column 80)
+(setq sentence-end-double-space nil)
 
 (use-package eldoc
   :straight (:type built-in)

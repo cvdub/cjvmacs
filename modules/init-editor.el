@@ -39,4 +39,9 @@
          ("C-a" . #'mc/edit-beginnings-of-lines)
          ("C-e" . #'mc/edit-ends-of-lines)))
 
+(use-package avy
+  :bind ("C-'" . avy-goto-subword-1)
+  :custom
+  (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
+
 (provide 'init-editor)

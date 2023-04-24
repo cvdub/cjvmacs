@@ -6,6 +6,8 @@
   (set-scroll-bar-mode nil)
   (tool-bar-mode -1))
 
+(setq use-system-tooltips nil)
+
 (winner-mode 1)
 
 ;;;; Mode line
@@ -22,22 +24,21 @@
  '(fixed-pitch ((t (:family "Fira Code" :height 160 :weight light))))
  '(variable-pitch ((t (:family "iA Writer Quattro S" :height 160)))))
 
-(custom-set-faces
- '(org-document-title ((t (:height 1.3))))
- '(org-level-1 ((t (:inherit outline-1 :weight extra-bold :height 1.25))))
- '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.1))))
- '(org-tag ((t (:height .8))))
- '(org-document-info-keyword ((t (:height .9))))
- '(org-meta-line ((t (:height .9))))
- '(org-special-keyword ((t (:height .9))))
- '(org-date ((t (:inherit font-lock-comment-face :height .9))))
- '(org-drawer ((t (:height .9))))
- '(org-block-begin-line ((t (:height .9))))
- '(org-block-end-line ((t (:height .9))))
- '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro S")))))
-
 ;;;; Theme
 (with-eval-after-load 'org
+  (custom-set-faces
+   '(org-document-title ((t (:height 1.3))))
+   '(org-level-1 ((t (:inherit outline-1 :weight extra-bold :height 1.25))))
+   '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.1))))
+   '(org-tag ((t (:height .8))))
+   '(org-document-info-keyword ((t (:height .9))))
+   '(org-meta-line ((t (:height .9))))
+   '(org-special-keyword ((t (:height .9))))
+   '(org-date ((t (:inherit font-lock-comment-face :height .9))))
+   '(org-drawer ((t (:height .9))))
+   '(org-block-begin-line ((t (:height .9))))
+   '(org-block-end-line ((t (:height .9))))
+   '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro S")))))
   (custom-declare-face '+org-todo-todo '((t (:inherit (org-todo)))) "")
   (custom-declare-face '+org-todo-done '((t (:inherit (org-done)))) "")
   (custom-declare-face '+org-todo-onhold '((t (:inherit (font-lock-constant-face org-todo)))) "")
@@ -127,5 +128,17 @@
   (doom-modeline-enable-word-count t)
   (doom-modeline-battery nil)
   (doom-modeline-hud t))
+
+;;;; Mixed pitch
+(use-package mixed-pitch)
+
+;;;; Diff HL
+(use-package diff-hl
+  :defer t
+  :hook (dired-mode . diff-hl-dired-mode)
+  :init
+  (global-diff-hl-mode)
+  :custom
+  (diff-hl-disable-on-remote t))
 
 (provide 'init-ui)

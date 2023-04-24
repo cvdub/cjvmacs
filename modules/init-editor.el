@@ -2,11 +2,65 @@
 (setq-default fill-column 80)
 (setq sentence-end-double-space nil)
 
+;; Move buffer line to the top, middle, then bottom when re-centering the current buffer line.
+(setq recenter-positions '(top middle bottom))
+
+;; Use ibuffer instead of list-buffers.
+(defalias 'list-buffers 'ibuffer)
+
+;; Add keybinding for swapping windows
+(bind-key (kbd "w") #'window-swap-states 'window-prefix-map)
+
+;; Activate view-mode in read-only buffers
+(setq view-read-only t)
+
+;; Save minibuffer history
+(savehist-mode)
+
+;; Load newest version of files
+(setq load-prefer-newer t)
+
+;; Save existing clipboard text (from other programs) onto the kill ring before
+;; replacing it. Ensures that Emacs kill operations do not irrevocably overwrite
+;; existing clipboard text.
+(setq save-interprogram-paste-before-kill t)
+
+;; Return to last visited location when reopening buffers
+(save-place-mode 1)
+
+;; Enable all commands.
+(setq disabled-command-function nil)
+
+;; Enable subword mode
+(global-subword-mode 1)
+
+;; Use zap-up-to-char instead of zap-to-char.
+(substitute-key-definition #'zap-to-char #'zap-up-to-char global-map)
+
+;; Changing case
+(substitute-key-definition #'upcase-word #'upcase-dwim global-map)
+(substitute-key-definition #'downcase-word #'downcase-dwim global-map)
+(substitute-key-definition #'capitalize-word #'capitalize-dwim global-map)
+
+(defun cjv/fill-or-unfill ()
+  "Like `fill-paragraph', but unfill if used twice."
+  (interactive)
+  (let ((fill-column
+         (if (eq last-command 'cjv/fill-or-unfill)
+             (progn (setq this-command nil)
+                    (point-max))
+           fill-column)))
+    (call-interactively #'fill-paragraph)))
+
+(substitute-key-definition #'fill-paragraph #'cjv/fill-or-unfill global-map)
+
+;;;; Lorem ipsum
 (use-package lorem-ipsum
   :straight (lorem-ipsum :type git :host github :repo "jschaf/emacs-lorem-ipsum"
                          :fork (:host github :repo "cvdub/emacs-lorem-ipsum" :protocl ssh))
   :defer t)
 
+;;;; Multiple cursors
 (use-package multiple-cursors
   :defer t
   :init
@@ -36,7 +90,8 @@
   :custom
   (dired-auto-revert-buffer t)
   (dired-create-destination-dirs 'ask)
-  (dired-dwim-target t))
+  (dired-dwim-target t)
+  (dired-listing-switches "-alh"))
 
 (use-package dired-narrow
   :defer t
@@ -52,6 +107,8 @@
   (rg-define-toggle "--context 3" (kbd "C")))
 
 ;;;; Completion
+(setq tab-always-indent 'complete)
+
 (use-package company
   :hook prog-mode
   :custom
@@ -193,5 +250,49 @@
 ;;;; 5. No project support
   ;; (setq consult-project-function nil)
   )
+
+;;;; Hideshow mode
+(use-package hs-minor-mode
+  :straight (:type built-in)
+  :hook (prog-mode . hs-minor-mode))
+
+;;;; Goto last change
+(use-package goto-last-change
+  :defer t
+  :bind ("M-g l" . #'goto-last-change))
+
+;;;; Snippets
+(use-package yasnippet
+  :defer 3
+  :init (yas-global-mode 1))
+
+(use-package yasnippet-snippets
+  :defer t)
+
+;;;; Ediff
+(use-package ediff
+  :straight (:type built-in)
+  :config
+  (defun cjv/ediff-copy-both-to-C ()
+    "Copies Ediff contents of A and B to C."
+    (interactive)
+    (ediff-copy-diff ediff-current-difference nil 'C nil
+                     (concat
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+
+  (defun cjv/ediff-add-d-to-mode-map ()
+    (define-key ediff-mode-map "d" 'cjv/ediff-copy-both-to-C))
+
+  (add-hook 'ediff-keymap-setup-hook 'cjv/ediff-add-d-to-mode-map)
+
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally))
+
+;;;; Expand region
+(use-package expand-region
+  :defer t
+  :bind ("M-2" . 'er/expand-region))
 
 (provide 'init-editor)

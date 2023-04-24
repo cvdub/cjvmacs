@@ -6,15 +6,15 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Expansion
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
+(substitute-key-definition #'dabbrev-expand #'hippie-expand global-map)
 
 ;; Revert
 (global-set-key (kbd "<f5>") #'revert-buffer)
 (global-auto-revert-mode 1)
 
 ;; Spaces/Tabs
-(setq tab-width 2)
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
 
 ;; Encoding
 (prefer-coding-system 'utf-8)

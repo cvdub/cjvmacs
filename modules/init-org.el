@@ -9,7 +9,7 @@
          ("<S-f10>" . #'cjv/org-open-personal-todo-file)
          ("M-p" . #'org-metaup)
          ("M-n" . #'org-metadown))
-  :hook ((org-mode . variable-pitch-mode)
+  :hook ((org-mode . mixed-pitch-mode)
          (org-mode . visual-line-mode))
 
   :config
@@ -90,7 +90,9 @@
   (org-archive-location (expand-file-name "archive/archive.org_archive::* From %s" org-directory))
 
   ;; Behavior
+  (org-catch-invisible-edits 'show-and-error)
   (org-special-ctrl-k t)
+  (org-special-ctrl-e t)
   (org-return-follows-link t)
   (org-log-into-drawer t)
   (org-log-done 'time)
@@ -110,6 +112,15 @@
                             (and (looking-at org-outline-regexp)
                                  (looking-back "^\**"))))
   (org-fast-tag-selection-single-key t)
+  (org-outline-path-complete-in-steps nil)
+
+  ;; Clock
+  (org-clock-out-remove-zero-time-clocks t)
+
+  ;; Refile
+  (org-refile-use-outline-path 'file)
+  (org-refile-allow-creating-parent-nodes 'confirm)
+  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
 
   ;; UI
   (org-startup-indented t)
@@ -119,6 +130,8 @@
   (org-startup-shrink-all-tables t)
   (org-startup-truncated nil)
   (org-fontify-quote-and-verse-blocks t)
+  (org-tags-column 0)
+
 
   ;; Export
   (org-export-with-toc nil)
@@ -127,6 +140,7 @@
 
   ;; Todo
   (org-use-fast-todo-selection 'expert)
+  (org-enforce-todo-dependencies t)
   (org-todo-keywords '((sequence
                         "TODO(t)"
                         "DELE(l)"

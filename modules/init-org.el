@@ -224,4 +224,7 @@
   :custom
   (org-journal-dir (expand-file-name "journal/" org-directory)))
 
+(use-package ol-notmuch
+  :defer t)
+
 (provide 'init-org)

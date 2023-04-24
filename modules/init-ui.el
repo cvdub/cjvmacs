@@ -20,7 +20,7 @@
 
 (custom-set-faces
  '(fixed-pitch ((t (:family "Fira Code" :height 160 :weight light))))
- '(variable-pitch ((t (:family "iA Writer Quattro S" :height 180)))))
+ '(variable-pitch ((t (:family "iA Writer Quattro S" :height 160)))))
 
 (custom-set-faces
  '(org-document-title ((t (:height 1.3))))

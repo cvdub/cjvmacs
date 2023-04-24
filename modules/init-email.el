@@ -5,8 +5,11 @@
     "Opens the notmuch inbox."
     (interactive)
     (notmuch-search "tag:inbox"))
+  :hook (notmuch-show-mode . variable-pitch-mode)
   :bind (:map cjv/open-map
               ("m" . #'cjv/notmuch-inbox))
+  :config
+  (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
   :custom
   (message-directory "~/.mail/")
   (sendmail-program "/opt/homebrew/bin/msmtp")

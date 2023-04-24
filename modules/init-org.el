@@ -1,7 +1,6 @@
 (use-package org
   :straight (:type built-in)
   :defer t
-  :diminish org-indent-mode
   :commands (cjv/org-open-agenda
              cjv/org-open-work-todo-file
              cjv/org-open-personal-todo-file)

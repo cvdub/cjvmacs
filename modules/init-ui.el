@@ -67,13 +67,8 @@
 ;; Switch theme when system dark/light mode changes
 (add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)
 
-;;;; Diminish
-(use-package diminish
-  :diminish (narrow buffer-face-mode))
-
 ;;;; Which Key
 (use-package which-key
-  :diminish
   :init
   (which-key-mode)
   :custom
@@ -114,6 +109,17 @@
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-close-last-tab-choice tab-bar-mode-disable)
-  (tab-bar-show 1))
+  (tab-bar-show nil))
+
+;;;; Mode line
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (add-to-list 'doom-modeline-continuous-word-count-modes 'org-journal-mode)
+  :custom
+  (doom-modeline-enable-word-count t)
+  (doom-modeline-battery nil)
+  (doom-modeline-hud t))
 
 (provide 'init-ui)

@@ -34,6 +34,9 @@
 ;; Enable subword mode
 (global-subword-mode 1)
 
+;; Enable word wrap mode
+(global-word-wrap-whitespace-mode)
+
 ;; Use zap-up-to-char instead of zap-to-char.
 (substitute-key-definition #'zap-to-char #'zap-up-to-char global-map)
 

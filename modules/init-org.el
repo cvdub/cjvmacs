@@ -7,7 +7,9 @@
              cjv/org-open-personal-todo-file)
   :bind (("<f10>" . #'cjv/org-open-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
-         ("<S-f10>" . #'cjv/org-open-personal-todo-file))
+         ("<S-f10>" . #'cjv/org-open-personal-todo-file)
+         ("M-p" . #'org-metaup)
+         ("M-n" . #'org-metadown))
   :hook ((org-mode . variable-pitch-mode)
          (org-mode . visual-line-mode))
 

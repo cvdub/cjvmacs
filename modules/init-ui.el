@@ -106,4 +106,13 @@
   :defer t
   :hook dired-mode)
 
+;;;; Tab Bar
+(use-package tab-bar
+  :defer t
+  :custom
+  (tab-bar-new-button-show nil)
+  (tab-bar-close-button-show nil)
+  (tab-bar-close-last-tab-choice tab-bar-mode-disable)
+  (tab-bar-show 1))
+
 (provide 'init-ui)

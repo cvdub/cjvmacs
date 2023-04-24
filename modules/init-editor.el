@@ -13,6 +13,7 @@
 
 (use-package company
   :hook prog-mode
+  :diminish
   :custom
   (company-minimum-prefix-length 1)
   (company-tooltip-align-annotations t)

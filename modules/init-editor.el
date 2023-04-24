@@ -44,4 +44,17 @@
   :custom
   (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
 
+(use-package dired
+  :straight (:type built-in)
+  :hook (dired-mode . turn-on-gnus-dired-mode)
+  :custom
+  (dired-auto-revert-buffer t)
+  (dired-create-destination-dirs 'ask)
+  (dired-dwim-target t))
+
+(use-package dired-narrow
+  :defer t
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
+
 (provide 'init-editor)

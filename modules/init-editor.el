@@ -295,4 +295,8 @@
   :defer t
   :bind ("M-2" . 'er/expand-region))
 
+;;;; CSV
+(use-package csv-mode
+  :defer t)
+
 (provide 'init-editor)

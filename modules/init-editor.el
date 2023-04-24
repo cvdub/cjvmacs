@@ -57,4 +57,12 @@
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
 
+(use-package rg
+  :defer t
+  :bind ("C-c s" . #'rg-menu)
+  :config
+  (rg-define-toggle "-g '!*migrations'" (kbd "M") t)
+  (rg-define-toggle "-g '!*tests'" (kbd "T"))
+  (rg-define-toggle "--context 3" (kbd "C")))
+
 (provide 'init-editor)

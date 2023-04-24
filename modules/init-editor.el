@@ -21,4 +21,22 @@
   (company-transformers '(company-sort-by-occurrence
                           company-sort-by-backend-importance)))
 
+(use-package multiple-cursors
+  :defer t
+  :init
+  (defvar cjv/multiple-cursors-map (make-sparse-keymap)
+    "Keymap for multiple cursors stuff.")
+  (bind-key (kbd "C-m") cjv/multiple-cursors-map ctl-x-map)
+  :bind (("M-3" . #'mc/mark-next-like-this)
+         ("M-4" . #'mc/mark-previous-like-this)
+         ("M-#" . #'mc/unmark-next-like-this)
+         ("M-$" . #'mc/unmark-previous-like-this)
+         :map cjv/multiple-cursors-map
+         ("a" . #'mc/mark-all-dwim)
+         ("d" . #'mc/mark-all-symbols-like-this-in-defun)
+         ("e" . #'mc/edit-lines)
+         ("i" . #'mc/insert-numbers)
+         ("C-a" . #'mc/edit-beginnings-of-lines)
+         ("C-e" . #'mc/edit-ends-of-lines)))
+
 (provide 'init-editor)

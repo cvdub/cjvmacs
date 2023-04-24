@@ -32,4 +32,5 @@
 (require 'init-spacebase)
 (require 'init-org)
 (require 'init-email)
+(require 'init-lisp)
 

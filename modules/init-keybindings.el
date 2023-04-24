@@ -18,4 +18,11 @@
 
 (global-set-key (kbd "C-c n") cjv/notes-map)
 
+(defun cjv/open-downloads ()
+  "Opens the downloads directory."
+  (interactive)
+  (find-file "~/Downloads/"))
+
+(global-set-key (kbd "<f6>") #'cjv/open-downloads)
+
 (provide 'init-keybindings)

@@ -56,8 +56,14 @@
   "Keymap for Spacebase commands.")
 
 (bind-key (kbd "s") cjv/spacebase-map cjv/my-map)
-
 (bind-key (kbd "d") #'spacebase/server-deploy cjv/spacebase-map)
 (bind-key (kbd "t") #'spacebase/rebuild-test-db cjv/spacebase-map)
+
+(defun spacebase/magit-status ()
+  "Open magit status buffer for Spacebase."
+  (interactive)
+  (magit-status-setup-buffer "~/code/projects/spacebase/"))
+
+(global-set-key (kbd "<f12>") #'spacebase/magit-status)
 
 (provide 'init-spacebase)

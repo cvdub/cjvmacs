@@ -1,6 +1,6 @@
 ;; Garbage collection
-(setq gc-cons-threshold 50000000) ; 50MB
-(setq large-file-warning-threshold 100000000)
+(setq gc-cons-threshold 1000000000)
+(setq large-file-warning-threshold 1000000000)
 
 ;; Disable package.el in favor of straight.el
 (setq package-enable-at-startup nil)

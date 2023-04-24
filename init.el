@@ -26,7 +26,6 @@
 (require 'init-backups)
 (require 'init-settings)
 (require 'init-editor)
-(require 'init-completion)
 (require 'init-eshell)
 (require 'init-python)
 (require 'init-git)

@@ -11,16 +11,6 @@
                          :fork (:host github :repo "cvdub/emacs-lorem-ipsum" :protocl ssh))
   :defer t)
 
-(use-package company
-  :hook prog-mode
-  :diminish
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-tooltip-align-annotations t)
-  (company-require-match nil)
-  (company-transformers '(company-sort-by-occurrence
-                          company-sort-by-backend-importance)))
-
 (use-package multiple-cursors
   :defer t
   :init
@@ -64,5 +54,37 @@
   (rg-define-toggle "-g '!*migrations'" (kbd "M") t)
   (rg-define-toggle "-g '!*tests'" (kbd "T"))
   (rg-define-toggle "--context 3" (kbd "C")))
+
+;;;; Completion
+(use-package company
+  :hook prog-mode
+  :diminish
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-tooltip-align-annotations t)
+  (company-require-match nil)
+  (company-transformers '(company-sort-by-occurrence
+                          company-sort-by-backend-importance)))
+
+(use-package vertico
+  :init
+  (vertico-mode)
+  :custom
+  (vertico-resize t)
+  (vertico-scroll-margin 0)
+  (vertico-count 12))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+;; TODO: Configure consult
+;; Need to replace default functions with consult variants
+(use-package consult)
 
 (provide 'init-editor)

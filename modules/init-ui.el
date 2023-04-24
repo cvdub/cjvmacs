@@ -61,7 +61,8 @@
   :config
   (custom-theme-set-faces
    'gruvbox-light-medium
-   '(highlight ((t (:background "#ebdbb2" :foreground "#282828"))))))
+   '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))
+  (enable-theme 'gruvbox-light-medium))
 
 ;; Switch theme when system dark/light mode changes
 (add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)

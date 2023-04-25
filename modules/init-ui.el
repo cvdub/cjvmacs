@@ -130,7 +130,9 @@
   (doom-modeline-hud t))
 
 ;;;; Mixed pitch
-(use-package mixed-pitch)
+(use-package mixed-pitch
+  :defer t
+  :hook (Info-mode . mixed-pitch-mode))
 
 ;;;; Diff HL
 (use-package diff-hl

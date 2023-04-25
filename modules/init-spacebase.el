@@ -52,12 +52,22 @@
      "Done!"
      (start-process-shell-command "Rebuild Spacebase test DB" "*spacebase-rebuild-test-db*" command))))
 
+(defun spacebase/open-logs ()
+  "Copies Spacebase server logs to local machine, then opens them."
+  (interactive)
+  (message "Downloading Spacebase log file...")
+  (let* ((server (spacebase/get-server))
+         (command (format "rsync -v %s:/var/log/spacebase/spacebase.log ~/Downloads/" server)))
+    (call-process-shell-command command))
+  (find-file "~/Downloads/spacebase.log"))
+
 (defvar cjv/spacebase-map (make-sparse-keymap)
   "Keymap for Spacebase commands.")
 
 (bind-key (kbd "s") cjv/spacebase-map cjv/my-map)
 (bind-key (kbd "d") #'spacebase/server-deploy cjv/spacebase-map)
 (bind-key (kbd "t") #'spacebase/rebuild-test-db cjv/spacebase-map)
+(bind-key (kbd "l") #'spacebase/open-logs cjv/spacebase-map)
 
 (defun spacebase/magit-status ()
   "Open magit status buffer for Spacebase."

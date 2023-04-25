@@ -41,7 +41,7 @@
    '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro S")))))
   (custom-declare-face '+org-todo-todo '((t (:inherit (org-todo)))) "")
   (custom-declare-face '+org-todo-done '((t (:inherit (org-done)))) "")
-  (custom-declare-face '+org-todo-onhold '((t (:inherit (font-lock-constant-face org-todo)))) "")
+  (custom-declare-face '+org-todo-onhold '((t (:inherit (font-lock-constant-face org-todo) :weight bold))) "")
   (custom-declare-face '+org-todo-someday '((t (:inherit (font-lock-comment-face org-todo)))) ""))
 
 (defvar cjv/light-theme 'gruvbox-light-medium)

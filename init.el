@@ -26,6 +26,7 @@
 (require 'init-backups)
 (require 'init-settings)
 (require 'init-editor)
+(require 'init-project)
 (require 'init-lsp)
 (require 'init-eshell)
 (require 'init-python)

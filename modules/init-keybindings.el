@@ -1,3 +1,22 @@
+(defvar cjv/global-keymap (make-keymap)
+  "Keymap for cjv/keybindings-mode.")
+
+(define-minor-mode cjv/keybindings-mode
+  "Minor mode for custom keybindings."
+  :init-value t
+  :global t
+  :keymap cjv/global-keymap)
+
+;; The keymaps in `emulation-mode-map-alists' take precedence over
+;; `minor-mode-map-alist'
+(add-to-list 'emulation-mode-map-alists
+             `((cjv/keybindings-mode . ,cjv/global-keymap)))
+(define-key cjv/global-keymap (kbd "M-o") #'other-window)
+
+
+;; Disable suspend-frame binding
+(global-unset-key (kbd "C-z"))
+
 (defvar cjv/open-map (make-sparse-keymap)
   "Keymap for opening stuff.")
 

@@ -22,12 +22,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-;; Other window
-(global-set-key (kbd "M-o") #'other-window)
-
-;; Disable suspend-frame binding
-(global-unset-key (kbd "C-z"))
-
 ;; Ensure environment variables are loaded
 (defvar cjv/environment-variables '("PYTHONPATH"
                                     "PYTHONSTARTUP"

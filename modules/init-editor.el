@@ -302,4 +302,9 @@
 (use-package csv-mode
   :defer t)
 
+;;;; Whitespace
+(use-package ws-butler
+  :defer t
+  :hook prog-mode)
+
 (provide 'init-editor)

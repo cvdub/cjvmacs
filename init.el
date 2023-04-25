@@ -35,4 +35,4 @@
 (require 'init-org)
 (require 'init-email)
 (require 'init-lisp)
-
+(require 'init-html)

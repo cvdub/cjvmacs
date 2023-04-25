@@ -1,7 +1,16 @@
 (use-package python
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-  :hook (python-ts-mode . eglot-ensure))
+  :hook (python-ts-mode . eglot-ensure)
+  :bind (:map python-ts-mode-map
+              ("C-c o r" . cjv/python-open-shell))
+  :config
+  (defun cjv/python-open-shell ()
+    "Opens a Python shell in a bottom side window."
+    (interactive)
+    (cjv/with-bottom-window (run-python nil 'project t)))
+  :custom
+  (python-shell-dedicated 'project))
 
 (use-package pyvenv
   :init

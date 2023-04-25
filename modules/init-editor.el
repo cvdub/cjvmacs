@@ -125,7 +125,7 @@
   :init
   (vertico-mode)
   :custom
-  (vertico-resize t)
+  (vertico-resize nil)
   (vertico-scroll-margin 0)
   (vertico-count 12))
 

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: affirmations
+# key: a
+# --
+Affirmations:
+- $0

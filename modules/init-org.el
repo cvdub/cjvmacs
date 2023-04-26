@@ -7,12 +7,18 @@
   :bind (("<f10>" . #'cjv/org-open-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
          ("<S-f10>" . #'cjv/org-open-personal-todo-file)
+         :map cjv/notes-map
+         ("c" . #'org-capture)
+         :map org-mode-map
          ("M-p" . #'org-metaup)
          ("M-n" . #'org-metadown))
   :hook ((org-mode . mixed-pitch-mode)
          (org-mode . visual-line-mode))
 
   :config
+  (defvar cjv/org-inbox-file (expand-file-name "inbox.org" org-directory)
+    "My org-mode inbox file.")
+
   ;; Modules
   (add-to-list 'org-modules 'org-habit)
   (require 'org-habit)
@@ -66,6 +72,29 @@
 
   ;; Show full subtree of matching items when narrowing to sparse trees.
   (push '(occur-tree . ancestors-full) org-show-context-detail)
+
+  ;; Capture
+  ; Display capture buffers in bottom side window
+  (add-to-list 'display-buffer-alist
+               '("\\*Org Select\\*"
+                 (display-buffer-in-side-window)
+                 (inhibit-same-window . nil)
+                 (side . bottom)))
+  (add-to-list 'display-buffer-alist
+               '("CAPTURE-inbox.org"
+                 (display-buffer-in-side-window)
+                 (inhibit-same-window . nil)
+                 (window-height . 0.2)
+                 (side . bottom)))
+
+  ; Don't delete other windows when opening capture template
+  (defun cjv/org-capture-place-template-dont-delete-windows (oldfun &rest args)
+    (cl-letf (((symbol-function 'delete-other-windows) 'ignore))
+      (apply oldfun args)))
+
+  (with-eval-after-load "org-capture"
+    (advice-add 'org-capture-place-template
+                :around 'cjv/org-capture-place-template-dont-delete-windows))
 
   ;; Shortcuts
   (defun cjv/org-open-agenda ()
@@ -159,6 +188,13 @@
      ("DONE" . +org-todo-done)
      ("CANC" . +org-todo-done)))
 
+  ;; Capture
+  (org-capture-templates
+   '(("t" "Todo" entry (file+headline cjv/org-inbox-file "Inbox")
+      "* TODO %i%?")
+     ("T" "Todo with link" entry (file+headline cjv/org-inbox-file "Inbox")
+      "* TODO %i%?\n- %a")))
+
   ;; Agenda
   (org-agenda-window-setup 'current-window)
   (org-agenda-custom-commands
@@ -240,5 +276,12 @@
 
 (use-package ol-notmuch
   :defer t)
+
+(defun cjv/org-capture-place-template-dont-delete-windows (oldfun &rest args)
+  (cl-letf (((symbol-function 'delete-other-windows) 'ignore))
+    (apply oldfun args)))
+
+(with-eval-after-load "org-capture"
+  (advice-add 'org-capture-place-template :around 'cjv/org-capture-place-template-dont-delete-windows))
 
 (provide 'init-org)

@@ -5,7 +5,9 @@
     "Opens the notmuch inbox."
     (interactive)
     (notmuch-search "tag:inbox" t))
-  :hook (notmuch-show-mode . mixed-pitch-mode)
+  :hook ((notmuch-show-mode . mixed-pitch-mode)
+         (notmuch-message-mode . mixed-pitch-mode)
+         (notmuch-message-mode . visual-line-mode))
   :bind (:map cjv/open-map
               ("m" . #'cjv/notmuch-inbox))
   :config

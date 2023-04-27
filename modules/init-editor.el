@@ -266,8 +266,10 @@
 
 ;;;; Snippets
 (use-package yasnippet
-  :defer 3
-  :init (yas-global-mode 1))
+  :defer 2
+  :init
+  (defvar yas-verbosity 2)
+  (yas-global-mode 1))
 
 (use-package yasnippet-snippets
   :defer t)

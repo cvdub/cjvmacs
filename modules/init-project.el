@@ -14,4 +14,7 @@
   :custom
   (project-find-functions (list #'cjv/project-try-vc-with-ignored-directories)))
 
+(use-package projectile
+  :disabled)
+
 (provide 'init-project)

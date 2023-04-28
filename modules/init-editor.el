@@ -40,6 +40,9 @@
 ;; Use zap-up-to-char instead of zap-to-char.
 (substitute-key-definition #'zap-to-char #'zap-up-to-char global-map)
 
+;; Kill entire line when cursor is all the way left
+(setq kill-whole-line t)
+
 ;; Changing case
 (substitute-key-definition #'upcase-word #'upcase-dwim global-map)
 (substitute-key-definition #'downcase-word #'downcase-dwim global-map)

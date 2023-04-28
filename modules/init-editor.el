@@ -99,6 +99,18 @@
   (dired-dwim-target t)
   (dired-listing-switches "-alh"))
 
+(use-package dired-x
+  :straight (:type built-in)
+  :hook (dired-mode . dired-omit-mode)
+  :config
+  (setq dired-omit-files (concat dired-omit-files
+                            "\\|^\\.DS_Store\\'"
+                            "\\|^\\.project\\(?:ile\\)?\\'"
+                            "\\|^\\.\\(?:svn\\|git\\)\\'"
+                            "\\|^\\.ccls-cache\\'"
+                            "\\|\\(?:\\.js\\)?\\.meta\\'"
+                            "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
+
 (use-package dired-narrow
   :defer t
   :bind (:map dired-mode-map

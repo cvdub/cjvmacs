@@ -9,6 +9,7 @@
          ("<S-f10>" . #'cjv/org-open-personal-todo-file)
          :map cjv/notes-map
          ("c" . #'org-capture)
+         ("l" . #'org-store-link)
          :map org-mode-map
          ("M-p" . #'org-metaup)
          ("M-n" . #'org-metadown))

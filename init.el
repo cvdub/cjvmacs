@@ -36,3 +36,4 @@
 (require 'init-email)
 (require 'init-lisp)
 (require 'init-html)
+(require 'init-tramp)

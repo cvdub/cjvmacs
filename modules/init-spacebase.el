@@ -54,6 +54,19 @@
      "Done!"
      (start-process-shell-command "Rebuild Spacebase test DB" "*spacebase-rebuild-test-db*" command))))
 
+(defun spacebase/update-local-db ()
+  "Updates local Spacebase DB to match production."
+  (interactive)
+  (message "Updating Spacebase local database...")
+  (let ((default-directory (temporary-file-directory)))
+    (cjv/with-alert
+     "Update complete!"
+     (start-process-shell-command
+      "Update Spacebase DB"
+      "*spacebase-db-update*"
+      "/Users/cjv/code/projects/spacebase/provisioning/create-local-db.sh \
+      $(pass spacebase/production/database-password)"))))
+
 (defun spacebase/open-logs ()
   "Copies Spacebase server logs to local machine, then opens them."
   (interactive)
@@ -97,6 +110,7 @@
 
 (bind-key (kbd "s") cjv/spacebase-map cjv/my-map)
 (bind-key (kbd "d") #'spacebase/server-deploy cjv/spacebase-map)
+(bind-key (kbd "u") #'spacebase/update-local-db cjv/spacebase-map)
 (bind-key (kbd "t") #'spacebase/rebuild-test-db cjv/spacebase-map)
 (bind-key (kbd "l") #'spacebase/open-logs cjv/spacebase-map)
 (bind-key (kbd "r") #'spacebase/run-development-server cjv/spacebase-map)

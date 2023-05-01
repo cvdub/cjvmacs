@@ -319,6 +319,10 @@
 (use-package csv-mode
   :defer t)
 
+;;;; YAML
+(use-package yaml-mode
+  :defer t)
+
 ;;;; Whitespace
 (use-package ws-butler
   :defer t

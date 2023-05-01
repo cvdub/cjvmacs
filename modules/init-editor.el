@@ -328,4 +328,8 @@
   :defer t
   :hook prog-mode)
 
+;;;; Sudo edit
+(use-package sudo-edit
+  :defer t)
+
 (provide 'init-editor)

@@ -37,3 +37,4 @@
 (require 'init-lisp)
 (require 'init-html)
 (require 'init-tramp)
+(require 'init-docker)

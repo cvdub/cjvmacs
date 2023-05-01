@@ -30,6 +30,7 @@
 (require 'init-lsp)
 (require 'init-eshell)
 (require 'init-python)
+(require 'init-javascript)
 (require 'init-git)
 (require 'init-spacebase)
 (require 'init-org)

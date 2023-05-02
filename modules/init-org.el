@@ -13,7 +13,9 @@
          ("o" . #'org-clock-goto)
          :map org-mode-map
          ("M-p" . #'org-metaup)
-         ("M-n" . #'org-metadown))
+         ("M-n" . #'org-metadown)
+         :map org-agenda-mode-map
+         ("C-t" . #'org-agenda-todo-yesterday))
   :hook ((org-mode . mixed-pitch-mode)
          (org-mode . visual-line-mode))
 

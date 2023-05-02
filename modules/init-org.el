@@ -10,6 +10,7 @@
          :map cjv/notes-map
          ("c" . #'org-capture)
          ("l" . #'org-store-link)
+         ("o" . #'org-clock-goto)
          :map org-mode-map
          ("M-p" . #'org-metaup)
          ("M-n" . #'org-metadown))

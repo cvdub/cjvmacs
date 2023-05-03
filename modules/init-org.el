@@ -266,7 +266,13 @@
   (org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s%(cjv/org-agenda-element-padding)")
                               (todo . " %i %-12:c")
                               (tags . " %i %-12:c")
-                              (search . " %i %-12:c"))))
+                              (search . " %i %-12:c")))
+
+  ;; Babel
+  (org-babel-load-languages '((emacs-lisp . t)
+                              (lisp . t)
+                              (python . t)
+                              (shell . t))))
 
 (use-package org-journal
   :bind

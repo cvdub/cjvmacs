@@ -137,7 +137,7 @@
 ;;;; Diff HL
 (use-package diff-hl
   :defer t
-  :hook (dired-mode . diff-hl-dired-mode)
+  :hook (dired-mode . diff-hl-dired-mode-unless-remote)
   :init
   (global-diff-hl-mode)
   :custom

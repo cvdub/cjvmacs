@@ -16,12 +16,10 @@
 ;;;; Font
 (when window-system
   (set-face-attribute 'default nil
-                      :family "Fira Code"
-                      :height 160
-                      :weight 'light))
+                      :font "-*-Fira Code-medium-normal-normal-*-*-160-*-*-m-0-iso10646-1"))
 
 (custom-set-faces
- '(fixed-pitch ((t (:family "Fira Code" :height 160 :weight light))))
+ '(fixed-pitch ((t (:font "-*-Fira Code-medium-normal-normal-*-*-160-*-*-m-0-iso10646-1"))))
  '(variable-pitch ((t (:family "iA Writer Quattro S" :height 160)))))
 
 ;;;; Theme

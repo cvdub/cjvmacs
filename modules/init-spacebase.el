@@ -1,7 +1,8 @@
 (defvar spacebase/directory "/Users/cjv/code/projects/spacebase/")
 
 (defvar spacebase/servers '(("production" . "ubuntu@spacebaseapp.com")
-                            ("staging" . "ubuntu@test.spacebaseapp.com")))
+                            ("staging" . "ubuntu@test.spacebaseapp.com")
+                            ("pentest" . "ubuntu@pentest.spacebaseapp.com")))
 
 (defun spacebase/get-server-name ()
   "Select Spacebase server name."

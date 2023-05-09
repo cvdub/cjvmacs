@@ -104,6 +104,17 @@
         (async-shell-command-buffer 'confirm-kill-process))
     (async-shell-command "python manage.py migrate" "*Spacebase: migrate*")))
 
+(defun spacebase/server-django-shell ()
+  "Start a Django shell on a remote server."
+  (interactive)
+  (let ((default-directory (format "/ssh:%s:~/webapps/spacebase/" (spacebase/get-server)))
+        (venv (expand-file-name "venv"))
+        (python-shell-interpreter "venv/bin/python")
+        (python-shell-interpreter-args "manage.py shell -i python"))
+    (pyvenv-activate "venv")
+    (run-python)
+    (python-shell-switch-to-shell)))
+
 ;;;; Keybindings
 (defvar cjv/spacebase-map (make-sparse-keymap)
   "Keymap for Spacebase commands.")
@@ -116,6 +127,7 @@
 (bind-key (kbd "r") #'spacebase/run-development-server cjv/spacebase-map)
 (bind-key (kbd "M") #'spacebase/make-migrations cjv/spacebase-map)
 (bind-key (kbd "m") #'spacebase/migrate cjv/spacebase-map)
+(bind-key (kbd "j") #'spacebase/server-django-shell cjv/spacebase-map)
 (global-set-key (kbd "<f12>") #'spacebase/magit-status)
 
 

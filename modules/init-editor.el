@@ -48,6 +48,9 @@
 (substitute-key-definition #'downcase-word #'downcase-dwim global-map)
 (substitute-key-definition #'capitalize-word #'capitalize-dwim global-map)
 
+;; Disable native comp warnings
+(setq native-comp-async-report-warnings-errors nil)
+
 (defun cjv/fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."
   (interactive)

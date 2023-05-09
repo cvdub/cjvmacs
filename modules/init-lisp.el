@@ -6,4 +6,6 @@
          (scheme-mode . enable-paredit-mode)
          (eval-expression-minibuffer-setup . enable-paredit-mode)))
 
+(use-package sly)
+
 (provide 'init-lisp)

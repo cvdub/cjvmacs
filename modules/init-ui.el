@@ -26,8 +26,8 @@
 (with-eval-after-load 'org
   (custom-set-faces
    '(org-document-title ((t (:height 1.3))))
-   '(org-level-1 ((t (:inherit outline-1 :weight extra-bold :height 1.25))))
-   '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.1))))
+   '(org-level-1 ((t (:inherit (variable-pitch outline-1) :weight extra-bold :height 1.25))))
+   '(org-level-2 ((t (:inherit (variable-pitch outline-2) :weight bold :height 1.1))))
    '(org-tag ((t (:height .8))))
    '(org-document-info-keyword ((t (:height .9))))
    '(org-meta-line ((t (:height .9))))

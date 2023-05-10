@@ -27,12 +27,13 @@
   (notmuch-mua-compose-in 'new-window)
   (notmuch-wash-wrap-lines-length 80)
   (notmuch-search-oldest-first nil)
-  (mm-text-html-renderer 'shr)
-  (notmuch-show-text/html-blocked-images nil)
-  (notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
+  ;; (mm-text-html-renderer 'shr)
+  ;; (notmuch-show-text/html-blocked-images nil)
+  ;; (notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
   ;; (shr-use-colors nil)
-  (shr-use-fonts nil)
-  (shr-max-width fill-column))
+  ;; (shr-use-fonts nil)
+  ;; (shr-max-width fill-column)
+  )
 
 (provide 'init-email)
 

@@ -8,7 +8,7 @@
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
          ("<S-f10>" . #'cjv/org-open-personal-todo-file)
          :map cjv/notes-map
-         ("c" . #'org-capture)
+         ("n" . #'org-capture)
          ("l" . #'org-store-link)
          ("o" . #'org-clock-goto)
          :map org-mode-map

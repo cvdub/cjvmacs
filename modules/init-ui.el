@@ -23,6 +23,10 @@
  '(variable-pitch ((t (:family "iA Writer Quattro S" :height 160)))))
 
 ;;;; Theme
+(custom-set-faces
+ '(font-lock-constant-face ((t (:inherit font-lock-constant-face :weight medium))))
+ '(font-lock-keyword-face ((t (:inherit font-lock-constant-face :weight medium)))))
+
 (with-eval-after-load 'org
   (custom-set-faces
    '(org-document-title ((t (:height 1.3))))

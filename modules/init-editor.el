@@ -335,4 +335,8 @@
 (use-package sudo-edit
   :defer t)
 
+;;;; Envrc
+(use-package envrc
+  :init (envrc-global-mode))
+
 (provide 'init-editor)

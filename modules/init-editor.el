@@ -51,6 +51,9 @@
 ;; Disable native comp warnings
 (setq native-comp-async-report-warnings-errors nil)
 
+;; Enable recent files mode
+(recentf-mode 1)
+
 (defun cjv/fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."
   (interactive)

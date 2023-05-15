@@ -27,6 +27,7 @@
   (notmuch-mua-compose-in 'new-window)
   (notmuch-wash-wrap-lines-length 80)
   (notmuch-search-oldest-first nil)
+  (notmuch-archive-tags '("-inbox" "-unread"))
   ;; (mm-text-html-renderer 'shr)
   ;; (notmuch-show-text/html-blocked-images nil)
   ;; (notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))

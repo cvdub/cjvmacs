@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: lease-upload
+# key: lease-upload
+# --
+Hi $0,
+
+I uploaded the attached documents to Spacebase and assigned them to our abstraction team. We'll let you know as soon as the update is complete.
+
+Thanks!

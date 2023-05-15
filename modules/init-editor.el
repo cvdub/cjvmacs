@@ -96,9 +96,11 @@
   :custom
   (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
 
+;;;; Dired
 (use-package dired
   :straight (:type built-in)
-  :hook (dired-mode . turn-on-gnus-dired-mode)
+  :hook ((dired-mode . turn-on-gnus-dired-mode)
+         (dired-mode . (lambda () (toggle-truncate-lines 1))))
   :custom
   (dired-auto-revert-buffer t)
   (dired-create-destination-dirs 'ask)

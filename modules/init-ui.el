@@ -6,7 +6,8 @@
   (set-scroll-bar-mode nil)
   (tool-bar-mode -1))
 
-(setq use-system-tooltips nil)
+(setq use-system-tooltips nil
+      use-file-dialog nil)
 
 (winner-mode 1)
 

@@ -107,9 +107,6 @@
 
 ;;;; Icons
 (use-package all-the-icons)
-(use-package all-the-icons-dired
-  :defer t
-  :hook dired-mode)
 
 ;;;; Tab Bar
 (use-package tab-bar

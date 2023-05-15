@@ -124,6 +124,9 @@
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
 
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
+
 (use-package rg
   :defer t
   :bind ("C-c s" . #'rg-menu)

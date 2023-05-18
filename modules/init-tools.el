@@ -4,4 +4,7 @@
   :custom
   (ansible-vault-password-file nil))
 
+(use-package pdf-tools
+  :init (pdf-tools-install))
+
 (provide 'init-tools)

@@ -22,6 +22,10 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+;; Disable bell
+(setq ring-bell-function #'ignore)
+
+
 ;; Ensure environment variables are loaded
 (defvar cjv/environment-variables '("PYTHONPATH"
                                     "PYTHONSTARTUP"

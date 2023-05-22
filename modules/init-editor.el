@@ -68,8 +68,8 @@
 
 ;;;; Lorem ipsum
 (use-package lorem-ipsum
-  :straight (lorem-ipsum :type git :host github :repo "jschaf/emacs-lorem-ipsum"
-                         :fork (:host github :repo "cvdub/emacs-lorem-ipsum" :protocl ssh))
+  :elpaca (lorem-ipsum :host github :repo "jschaf/emacs-lorem-ipsum"
+                       :remotes (("fork" :repo "cvdub/emacs-lorem-ipsum" :protocl ssh)))
   :defer t)
 
 ;;;; Multiple cursors
@@ -98,7 +98,7 @@
 
 ;;;; Dired
 (use-package dired
-  :straight (:type built-in)
+  :elpaca nil
   :hook ((dired-mode . turn-on-gnus-dired-mode)
          (dired-mode . (lambda () (toggle-truncate-lines 1))))
   :custom
@@ -108,7 +108,7 @@
   (dired-listing-switches "-alh"))
 
 (use-package dired-x
-  :straight (:type built-in)
+  :elpaca nil
   :hook (dired-mode . dired-omit-mode)
   :config
   (setq dired-omit-files (concat dired-omit-files
@@ -148,6 +148,7 @@
                           company-sort-by-backend-importance)))
 
 (use-package vertico
+  :elpaca (vertico :files (:defaults "extensions/*"))
   :init
   (vertico-mode)
   :custom
@@ -281,8 +282,8 @@
   )
 
 ;;;; Hideshow mode
-(use-package hs-minor-mode
-  :straight (:type built-in)
+(use-package hideshow
+  :elpaca nil
   :hook (prog-mode . hs-minor-mode))
 
 ;;;; Goto last change
@@ -302,7 +303,7 @@
 
 ;;;; Ediff
 (use-package ediff
-  :straight (:type built-in)
+  :elpaca nil
   :config
   (defun cjv/ediff-copy-both-to-C ()
     "Copies Ediff contents of A and B to C."

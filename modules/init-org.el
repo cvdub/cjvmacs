@@ -1,5 +1,5 @@
 (use-package org
-  :straight (:type built-in)
+  :elpaca nil
   :defer t
   :commands (cjv/org-open-agenda
              cjv/org-open-work-todo-file

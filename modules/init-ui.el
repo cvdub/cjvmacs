@@ -16,11 +16,12 @@
 
 ;;;; Font
 (when window-system
-  (set-face-attribute 'default nil :family "Fira Code" :height 160))
+  (set-face-attribute 'default nil :family "Fira Code" :height 140 :weight 'medium))
+
 
 (custom-set-faces
- '(fixed-pitch ((t (:family "Fira Code" :height 160))))
- '(variable-pitch ((t (:family "iA Writer Quattro S" :height 160)))))
+ '(fixed-pitch ((t (:family "Fira Code" :height 140))))
+ '(variable-pitch ((t (:family "iA Writer Quattro S" :height 140)))))
 
 ;;;; Theme
 (custom-set-faces
@@ -110,6 +111,7 @@
 
 ;;;; Tab Bar
 (use-package tab-bar
+  :elpaca nil
   :defer t
   :custom
   (tab-bar-new-button-show nil)
@@ -120,7 +122,7 @@
 ;;;; Mode line
 (use-package doom-modeline
   :ensure t
-  :hook (after-init . doom-modeline-mode)
+  :hook (cjv/after-init . doom-modeline-mode)
   :config
   (add-to-list 'doom-modeline-continuous-word-count-modes 'org-journal-mode)
   :custom

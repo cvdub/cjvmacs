@@ -1,5 +1,5 @@
 (use-package eglot
-  :straight (:type built-in)
+  :elpaca nil
   :bind (:map cjv/code-map
               ("f" . #'eglot-format-buffer))
   :config

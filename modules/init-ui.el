@@ -24,15 +24,18 @@
  '(variable-pitch ((t (:family "iA Writer Quattro S" :height 140)))))
 
 ;;;; Theme
+(use-package gruvbox-theme
+  :defer t)
+
 (custom-set-faces
- '(font-lock-constant-face ((t (:inherit font-lock-constant-face :weight medium))))
- '(font-lock-keyword-face ((t (:inherit font-lock-constant-face :weight medium)))))
+ '(font-lock-constant-face ((t (:weight medium))))
+ '(font-lock-keyword-face ((t (:weight medium)))))
 
 (with-eval-after-load 'org
   (custom-set-faces
    '(org-document-title ((t (:height 1.3))))
-   '(org-level-1 ((t (:inherit (variable-pitch outline-1) :weight extra-bold :height 1.25))))
-   '(org-level-2 ((t (:inherit (variable-pitch outline-2) :weight bold :height 1.1))))
+   '(org-level-1 ((t (:weight extra-bold :height 1.25))))
+   '(org-level-2 ((t (:weight bold :height 1.1))))
    '(org-tag ((t (:height .8))))
    '(org-document-info-keyword ((t (:height .9))))
    '(org-meta-line ((t (:height .9))))
@@ -70,9 +73,6 @@
      '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))))
 
 (add-to-list 'enable-theme-functions 'cjv/customize-gruvbox-light-medium)
-
-(use-package gruvbox-theme
-  :defer t)
 
 ;; Switch theme when system dark/light mode changes
 (add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)

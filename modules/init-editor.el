@@ -129,6 +129,7 @@
 
 (use-package rg
   :defer t
+  :commands rg-menu
   :bind ("C-c s" . #'rg-menu)
   :config
   (rg-define-toggle "-g '!*migrations'" (kbd "M") t)

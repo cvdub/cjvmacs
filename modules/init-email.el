@@ -36,5 +36,10 @@
   ;; (shr-max-width fill-column)
   )
 
+(use-package org-mime
+  :after notmuch
+  :bind (:map notmuch-message-mode-map
+              ("C-c M-o" . #'org-mime-htmlize)))
+
 (provide 'init-email)
 

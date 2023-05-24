@@ -13,6 +13,10 @@
                   symbols))
 
   (advice-add #'eglot-imenu :filter-return #'cjv/eglot-imenu-filter)
+
+  ;; Configure up corfu
+  (add-to-list 'completion-category-overrides '(eglot (styles orderless)))
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   :custom
   (eglot-events-buffer-size 0)
   (eglot-autoshutdown t))

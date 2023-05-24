@@ -139,14 +139,16 @@
 ;;;; Completion
 (setq tab-always-indent 'complete)
 
-(use-package company
-  :hook prog-mode
+(use-package corfu
+  :init
+  (global-corfu-mode)
   :custom
-  (company-minimum-prefix-length 1)
-  (company-tooltip-align-annotations t)
-  (company-require-match nil)
-  (company-transformers '(company-sort-by-occurrence
-                          company-sort-by-backend-importance)))
+  (corfu-auto t))
+
+(use-package cape
+  :init
+  (dolist (f (list #'dabbrev-capf #'cape-file #'cape-elisp-block))
+    (add-to-list 'completion-at-point-functions f)))
 
 (use-package vertico
   :elpaca (vertico :files (:defaults "extensions/*"))

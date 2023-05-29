@@ -82,28 +82,34 @@
   (interactive)
   (magit-status-setup-buffer spacebase/directory))
 
+(defmacro spacebase/with-project-directory (&rest body)
+  "Sets default-directory to Spacebase project root."
+  `(let ((default-directory spacebase/directory))
+     (hack-local-variables)
+     ,@body))
+
 (defun spacebase/run-development-server ()
   "Runs the Spacebase development server."
   (interactive)
-  (let ((default-directory spacebase/directory)
-        (async-shell-command-buffer 'confirm-kill-process)
-        (display-buffer-alist '(("*" (display-buffer-no-window)))))
-    (async-shell-command "python manage.py runserver" "*Spacebase: runserver*")
-    (async-shell-command "python manage.py celery_worker" "*Spacebase: celery_worker*")))
+  (spacebase/with-project-directory
+   (let ((async-shell-command-buffer 'confirm-kill-process)
+         (display-buffer-alist '(("*" (display-buffer-no-window)))))
+     (async-shell-command "python manage.py runserver" "*Spacebase: runserver*")
+     (async-shell-command "python manage.py celery_worker" "*Spacebase: celery_worker*"))))
 
 (defun spacebase/make-migrations ()
   "Runs Spacebase makemigrations."
   (interactive)
-  (let ((default-directory spacebase/directory)
-        (async-shell-command-buffer 'confirm-kill-process))
-    (async-shell-command "python manage.py makemigrations" "*Spacebase: makemigrations*")))
+  (spacebase/with-project-directory
+   (let ((async-shell-command-buffer 'confirm-kill-process))
+     (async-shell-command "python manage.py makemigrations" "*Spacebase: makemigrations*"))))
 
 (defun spacebase/migrate ()
   "Runs Spacebase migrate."
   (interactive)
-  (let ((default-directory spacebase/directory)
-        (async-shell-command-buffer 'confirm-kill-process))
-    (async-shell-command "python manage.py migrate" "*Spacebase: migrate*")))
+  (spacebase/with-project-directory
+   (let ((async-shell-command-buffer 'confirm-kill-process))
+     (async-shell-command "python manage.py migrate" "*Spacebase: migrate*"))))
 
 (defun spacebase/server-django-shell ()
   "Start a Django shell on a remote server."

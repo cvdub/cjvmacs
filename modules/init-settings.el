@@ -35,7 +35,7 @@
 
 ;;;; Window splitting
 ;; Don't split windows horizontally
-(setq split-width-threshold 1)
+(setq split-height-threshold 90)
 
 (use-package exec-path-from-shell
   :defer 2

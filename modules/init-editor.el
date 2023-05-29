@@ -147,7 +147,7 @@
 
 (use-package cape
   :init
-  (dolist (f (list #'dabbrev-capf #'cape-file #'cape-elisp-block))
+  (dolist (f (list #'cape-dabbrev #'cape-file #'cape-elisp-block))
     (add-to-list 'completion-at-point-functions f)))
 
 (use-package vertico

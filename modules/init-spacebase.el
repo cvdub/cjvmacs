@@ -95,7 +95,8 @@
    (let ((async-shell-command-buffer 'confirm-kill-process)
          (display-buffer-alist '(("*" (display-buffer-no-window)))))
      (async-shell-command "python manage.py runserver" "*Spacebase: runserver*")
-     (async-shell-command "python manage.py celery_worker" "*Spacebase: celery_worker*"))))
+     (async-shell-command "python manage.py celery_worker" "*Spacebase: celery_worker*")
+     (async-shell-command "python manage.py tailwind start" "*Spacebase: tailwind*"))))
 
 (defun spacebase/make-migrations ()
   "Runs Spacebase makemigrations."

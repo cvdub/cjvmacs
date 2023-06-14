@@ -10,7 +10,8 @@
     (interactive)
     (cjv/with-bottom-window (run-python nil 'project t)))
   :custom
-  (python-shell-dedicated 'project))
+  (python-shell-dedicated 'project)
+  (python-interpreter "python3"))
 
 (use-package pyvenv
   :init

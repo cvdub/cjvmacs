@@ -79,3 +79,4 @@
 (require 'init-tramp)
 (require 'init-docker)
 (require 'init-tools)
+(require 'init-spelling)

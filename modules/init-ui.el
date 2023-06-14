@@ -133,7 +133,9 @@
 ;;;; Mixed pitch
 (use-package mixed-pitch
   :defer t
-  :hook (Info-mode . mixed-pitch-mode))
+  :hook (Info-mode . mixed-pitch-mode)
+  :config
+  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-checkbox-statistics-todo))
 
 ;;;; Diff HL
 (use-package diff-hl

@@ -36,4 +36,9 @@
                                   (side . bottom)))))
      ,@body))
 
+(defun cjv/post-to-sftp (file dest)
+  "Put FILE to SFTP server located at DEST."
+  (shell-command
+   (format "sftp \"%s\" <<< $\'put \"%s\"\'" dest file)))
+
 (provide 'init-utils)

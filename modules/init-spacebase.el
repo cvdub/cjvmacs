@@ -122,6 +122,30 @@
     (run-python)
     (python-shell-switch-to-shell)))
 
+(defvar spacebase/lyft-sftp-servers
+  '(("Lyft Staging" .
+     (:gpg-key-id "7046067B97E265ACA5878649064EA24D226C0AD6"
+      :destination "lyft-sftp-staging:/Spacebase-LyftLease-test/from Spacebase/"))
+    ("Lyft Production" .
+     (:gpg-key-id "7EE93014F52B58740240F2D21AA46806B17E2129"
+      :destination "lyft-sftp-production:/Spacebase-LyftLease-prod/from Spacebase/"))))
+
+(defun spacebase/post-lyft-file (file gpg-key-id destination)
+  "Encrypt and post file to Lyft's SFTP server."
+  (call-process-shell-command
+   (format "gpg --recipient %s --trust-model always --armor --encrypt %s" gpg-key-id file))
+  (cjv/post-to-sftp (format "%s.asc" file) destination))
+
+(defun spacebase/post-lyft-files ()
+  "Encrypt and post files marked in Dired to Lyft's SFTP server."
+  (interactive)
+  (let* ((server-key (completing-read "Select server: " spacebase/lyft-sftp-servers))
+         (server (cdr (assoc server-key spacebase/lyft-sftp-servers)))
+         (gpg-key-id (plist-get server :gpg-key-id))
+         (destination (plist-get server :destination)))
+    (mapc (lambda (file) (spacebase/post-lyft-file file gpg-key-id destination))
+          (dired-get-marked-files))))
+
 ;;;; Keybindings
 (defvar cjv/spacebase-map (make-sparse-keymap)
   "Keymap for Spacebase commands.")

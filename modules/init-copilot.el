@@ -8,4 +8,4 @@
               ("C-<tab>" . #'copilot-accept-completion-by-word)
               ("C-TAB" . #'copilot-accept-completion-by-word)))
 
-(require 'init-copilot)
+(provide 'init-copilot)

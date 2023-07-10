@@ -294,4 +294,11 @@
 (with-eval-after-load "org-capture"
   (advice-add 'org-capture-place-template :around 'cjv/org-capture-place-template-dont-delete-windows))
 
+(use-package org-roam
+  :init
+  (org-roam-db-autosync-mode)
+  :custom
+  (org-roam-directory (expand-file-name "roam/" org-directory))
+  (org-roam-completion-everywhere t))
+
 (provide 'init-org)

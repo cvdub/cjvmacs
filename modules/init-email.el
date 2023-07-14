@@ -63,5 +63,46 @@
   :bind (:map notmuch-message-mode-map
               ("C-c M-o" . #'org-mime-htmlize)))
 
+(use-package gnus-alias
+  :after notmuch
+  :bind (:map notmuch-message-mode-map
+              ("C-c C-f o" . gnus-alias-select-identity))
+  :config
+  (setq gnus-alias-default-identity "christian@cvdub.net"
+        gnus-alias-identity-alist
+        '(("christian@cvdub.net"
+           nil ;; Does not refer to any other identity
+           "Christian Vanderwall <christian@cvdub.net>"
+           nil ;; No organization header
+           (("Fcc" . "christian@cvdub.net/Sent -inbox -unread -new +sent"))
+           nil ;; No extra body text
+           "~/.signature")
+          ("christian@spacebaseapp.com"
+           nil ;; Does not refer to any other identity
+           "Christian Vanderwall <christian@spacebaseapp.com>"
+           "Spacebase"
+           (("Fcc" . "christian@spacebaseapp.com/Sent -inbox -unread -new +sent"))
+           nil ;; No extra body text
+           "~/.signature")
+          ("cvanderwall14@gmail.com"
+           nil ;; Does not refer to any other identity
+           "Christian Vanderwall <cvanderwall14@gmail.com>"
+           nil ;; No organization header
+           (("Fcc" . "cvanderwall14@gmail.com/Sent -inbox -unread -new +sent"))
+           nil ;; No extra body text
+           "~/.signature")
+          ("christian@vanderwall.org"
+           nil ;; Does not refer to any other identity
+           "Christian Vanderwall <christian@vanderwall.org>"
+           nil ;; No organization header
+           (("Fcc" . "christian@vanderwall.org/Sent -inbox -unread -new +sent"))
+           nil ;; No extra body text
+           "~/.signature"))
+        gnus-alias-identity-rules
+        '(("christian@cvdub.net" ("any" "christian@cvdub.net" both) "christian@cvdub.net")
+          ("christian@spacebaseapp.com" ("any" "christian@spacebaseapp.com" both) "christian@spacebaseapp.com")
+          ("cvanderwall14@gmail.com" ("any" "cvanderwall14@gmail.com" both) "cvanderwall14@gmail.com")
+          ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org"))))
+
 (provide 'init-email)
 

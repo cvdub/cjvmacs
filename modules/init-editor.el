@@ -351,4 +351,9 @@
 (use-package envrc
   :init (envrc-global-mode))
 
+(use-package flyspell
+  :elpaca nil
+  :hook ((text-mode . flyspell-mode)
+         (prog-mode . flyspell-prog-mode)))
+
 (provide 'init-editor)

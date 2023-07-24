@@ -299,6 +299,7 @@
   (org-roam-db-autosync-mode)
   :custom
   (org-roam-directory (expand-file-name "roam/" org-directory))
+  (org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
   (org-roam-completion-everywhere t))
 
 (provide 'init-org)

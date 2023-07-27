@@ -14,7 +14,7 @@
 
 ;; Fix bright flash when opening Emacs
 (setq mode-line-format nil)
-(set-face-attribute 'default 'nil :background "#282828")
+(set-face-attribute 'default 'nil :background "#fbf1c7")
 (add-hook 'after-make-frame-functions (lambda (_)
                                         (when-let ((theme (car custom-enabled-themes)))
                                           (enable-theme theme))))

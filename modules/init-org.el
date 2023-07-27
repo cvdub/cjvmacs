@@ -277,7 +277,10 @@
 (use-package org-journal
   :bind
   (:map cjv/notes-map
-              ("j" . #'org-journal-new-entry))
+        ("j" . #'org-journal-new-entry)
+   :map org-journal-mode-map
+        ("C-c l n" . #'org-journal-next-entry)
+        ("C-c l p" . #'org-journal-previous-entry))
   :init
   (setq org-journal-prefix-key nil)
   :hook (org-journal-mode . writeroom-mode)

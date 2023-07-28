@@ -31,7 +31,8 @@
                                     "PYTHONSTARTUP"
                                     "GPG_TTY"
                                     "SSH_AUTH_SOCK"
-                                    "ANSIBLE_CONFIG"))
+                                    "ANSIBLE_CONFIG"
+                                    "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"))
 
 ;;;; Window splitting
 ;; Don't split windows horizontally

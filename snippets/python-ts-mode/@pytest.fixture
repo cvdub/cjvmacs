@@ -1,5 +1,5 @@
 # key: @f
-# name: @pytest.mark.fixture
+# name: @pytest.fixture
 # --
-@pytest.mark.fixture
+@pytest.fixture
 $0

@@ -44,4 +44,11 @@
 
 (global-set-key (kbd "<f6>") #'cjv/open-downloads)
 
+(defun cjv/open-desktop ()
+  "Opens the desktop directory."
+  (interactive)
+  (find-file "~/Desktop/"))
+
+(global-set-key (kbd "<S-f6>") #'cjv/open-desktop)
+
 (provide 'init-keybindings)

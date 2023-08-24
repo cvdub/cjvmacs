@@ -65,7 +65,7 @@
      (start-process-shell-command
       "Update Spacebase DB"
       "*spacebase-db-update*"
-      "/Users/cjv/code/projects/spacebase/provisioning/create-local-db.sh \
+      "time /Users/cjv/code/projects/spacebase/provisioning/create-local-db.sh \
       $(pass spacebase/production/database-password)"))))
 
 (defun spacebase/open-logs ()

@@ -7,4 +7,8 @@
 (use-package pdf-tools
   :init (pdf-tools-install))
 
+(use-package dired-rsync
+  :bind (:map dired-mode-map
+              ("C-c C-r" . dired-rsync)))
+
 (provide 'init-tools)

@@ -51,4 +51,9 @@
 
 (global-set-key (kbd "<S-f6>") #'cjv/open-desktop)
 
+(defvar cjv/window-map (make-sparse-keymap)
+  "Keymap for my UI commands.")
+
+(global-set-key (kbd "C-c w") cjv/window-map)
+
 (provide 'init-keybindings)

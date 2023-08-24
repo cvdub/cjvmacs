@@ -217,5 +217,10 @@
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode))
 
+;;;; Demap
+(use-package demap
+  :bind (:map cjv/window-map
+              ("d" . #'demap-toggle)))
+
 
 (provide 'init-ui)

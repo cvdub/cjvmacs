@@ -213,5 +213,9 @@
   (global-ligature-mode t)
   )
 
+;;;; Goggles
+(use-package goggles
+  :hook ((prog-mode text-mode) . goggles-mode))
+
 
 (provide 'init-ui)

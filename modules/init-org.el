@@ -165,6 +165,7 @@
   (org-startup-truncated nil)
   (org-fontify-quote-and-verse-blocks t)
   (org-tags-column 0)
+  (org-hide-emphasis-markers t)
 
 
   ;; Export
@@ -305,5 +306,9 @@
   (org-roam-directory (expand-file-name "roam/" org-directory))
   (org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
   (org-roam-completion-everywhere t))
+
+(use-package org-appear
+  :after org
+  :hook (org-mode . org-appear-mode))
 
 (provide 'init-org)

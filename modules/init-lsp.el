@@ -19,7 +19,7 @@
   (add-to-list 'completion-category-overrides '(eglot (styles orderless)))
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   :custom
-  (eglot-events-buffer-size 0)
+  (eglot-events-buffer-size 2000000)
   (eglot-autoshutdown t))
 
 (provide 'init-lsp)

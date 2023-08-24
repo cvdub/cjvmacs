@@ -10,9 +10,11 @@
     "Opens a Python shell in a bottom side window."
     (interactive)
     (cjv/with-bottom-window (run-python nil 'project t)))
+
   :custom
   (python-shell-dedicated 'project)
-  (python-interpreter "python3"))
+  (python-interpreter "python3")
+  (python-indent-guess-indent-offset-verbose nil))
 
 (use-package pyvenv
   :init

@@ -26,6 +26,7 @@
   ;; Modules
   (add-to-list 'org-modules 'org-habit)
   (require 'org-habit)
+  (require 'ox-md) ; Markdown
 
   ;; Agenda functions
   (defun cjv/org-agenda-element-padding ()

@@ -1,7 +1,8 @@
 (use-package eglot
   :elpaca nil
   :bind (:map cjv/code-map
-              ("f" . #'eglot-format-buffer))
+              ("f" . #'eglot-format-buffer)
+              ("a" . #'eglot-code-actions))
   :config
   (defvar cjv/eglot-imenu-ignored-symbols '("Variable")
     "Symbols excluded from eglot's Imenu.")

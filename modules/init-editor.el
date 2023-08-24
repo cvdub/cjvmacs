@@ -351,9 +351,14 @@
 (use-package envrc
   :init (envrc-global-mode))
 
+;;;; Flyspell
 (use-package flyspell
   :elpaca nil
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
+
+;;;; Apheleia (auto formatting)
+(use-package apheleia
+  :init (apheleia-global-mode +1))
 
 (provide 'init-editor)

@@ -132,6 +132,26 @@
     (setq cjv/org-punched-in-task-id nil)
     (org-clock-out))
 
+  (defun cjv/org-maybe-clock-into-punched-in-task ()
+    "Clocks back into the default task if punched in."
+    (when (and cjv/org-punched-in-task-id
+               (not org-clock-clocking-in)
+               (marker-buffer org-clock-default-task)
+               (not org-clock-resolving-clocks-due-to-idleness))
+      (save-excursion
+        (org-with-point-at (org-id-find cjv/org-punched-in-task-id 'marker)
+          (org-clock-in)))))
+
+  (add-hook 'org-clock-out-hook #'cjv/org-maybe-clock-into-punched-in-task 'append)
+
+  (defun cjv/org-clock-heading-function ()
+    "Returns the punched in task name or heading name for the mode line."
+    (or (car (rassoc (org-id-get) cjv/org-default-tasks))
+        (org-link-display-format
+         (org-no-properties (org-get-heading t t t t)))))
+
+  (setq org-clock-heading-function #'cjv/org-clock-heading-function)
+
   ;; Shortcuts
   (defun cjv/org-open-agenda ()
     (interactive)
@@ -181,6 +201,8 @@
 
   ;; Clock
   (org-clock-out-remove-zero-time-clocks t)
+  (org-clock-clocked-in-display 'frame-title)
+  (org-clock-mode-line-total 'today)
 
   ;; Refile
   (org-refile-use-outline-path 'file)

@@ -3,7 +3,10 @@
   :defer t
   :commands (cjv/org-open-agenda
              cjv/org-open-work-todo-file
-             cjv/org-open-personal-todo-file)
+             cjv/org-open-personal-todo-file
+             org-with-point-at
+             cjv/org-punch-in
+             cjv/org-punch-out)
   :bind (("<f10>" . #'cjv/org-open-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
          ("<S-f10>" . #'cjv/org-open-personal-todo-file)
@@ -11,6 +14,8 @@
          ("n" . #'org-capture)
          ("l" . #'org-store-link)
          ("o" . #'org-clock-goto)
+         ("p" . #'cjv/org-punch-in)
+         ("P" . #'cjv/org-punch-out)
          :map org-mode-map
          ("M-p" . #'org-metaup)
          ("M-n" . #'org-metadown)
@@ -100,6 +105,32 @@
   (with-eval-after-load "org-capture"
     (advice-add 'org-capture-place-template
                 :around 'cjv/org-capture-place-template-dont-delete-windows))
+
+  ;; Clock
+  (defvar cjv/org-punched-in-task-id nil
+    "The task ID of the default task. Nil if not punched in.")
+
+  (defvar cjv/org-default-tasks
+    '(("Work" . "7b2f58f0-955d-487b-bc91-93b788b59ed0")
+      ("Home" . "066813ec-f434-4a4d-a4ae-ed473401675b")))
+
+  (defun cjv/org-get-default-task-id ()
+    "Get the task ID from the list of default tasks."
+    (cdr (assoc (completing-read "Select task: " cjv/org-default-tasks)
+                cjv/org-default-tasks)))
+
+  (defun cjv/org-punch-in ()
+    "Punch in and start clock on default task."
+    (interactive)
+    (setq cjv/org-punched-in-task-id (cjv/org-get-default-task-id))
+    (org-with-point-at (org-id-find cjv/org-punched-in-task-id 'marker)
+      (org-clock-in '(16))))
+
+  (defun cjv/org-punch-out ()
+    "Stop clock and punch out."
+    (interactive)
+    (setq cjv/org-punched-in-task-id nil)
+    (org-clock-out))
 
   ;; Shortcuts
   (defun cjv/org-open-agenda ()

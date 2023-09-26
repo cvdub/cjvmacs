@@ -32,9 +32,19 @@
          (notmuch-message-mode . turn-off-auto-fill))
   :bind (:map cjv/open-map
               ("m" . #'cjv/notmuch-inbox)
-              ("M" . #'cjv/update-email))
-  :config
+              ("M" . #'cjv/update-email)
+         :map notmuch-show-mode-map
+              ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message))
+    :config
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
+
+  (defun cjv/notmuch-browse-url-or-notmuch-show-toggle-message ()
+    "Browse URL at point or toggle message at point."
+    (interactive)
+    (if (thing-at-point 'url t)
+        (browse-url-at-point)
+      (notmuch-show-toggle-message)))
+
   :custom
   (message-directory "~/.mail/")
   (sendmail-program "/opt/homebrew/bin/msmtp")

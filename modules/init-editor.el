@@ -362,9 +362,9 @@
   :init (apheleia-global-mode +1))
 
 ;;;; Explain Pause Mode
-(use-package explain-pause-mode
-  :elpaca (explain-pause-mode :host github :repo "lastquestion/explain-pause-mode")
-  :config
-  (explain-pause-mode))
+;; (use-package explain-pause-mode
+;;   :elpaca (explain-pause-mode :host github :repo "lastquestion/explain-pause-mode")
+;;   :config
+;;   (explain-pause-mode))
 
 (provide 'init-editor)

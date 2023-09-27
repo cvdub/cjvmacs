@@ -101,16 +101,24 @@
 (defun spacebase/make-migrations ()
   "Runs Spacebase makemigrations."
   (interactive)
+  (message "Making migrations...")
   (spacebase/with-project-directory
-   (let ((async-shell-command-buffer 'confirm-kill-process))
-     (async-shell-command "python manage.py makemigrations" "*Spacebase: makemigrations*"))))
+   (cjv/with-message
+    "Done!"
+    (start-process-shell-command "Spacebase make migrations"
+                                 "*Spacebase: makemigrations*"
+                                 "python manage.py makemigrations"))))
 
 (defun spacebase/migrate ()
   "Runs Spacebase migrate."
   (interactive)
+  (message "Migrating...")
   (spacebase/with-project-directory
-   (let ((async-shell-command-buffer 'confirm-kill-process))
-     (async-shell-command "python manage.py migrate" "*Spacebase: migrate*"))))
+   (cjv/with-message
+    "Done!"
+    (start-process-shell-command "Spacebase migrate"
+                                 "*Spacebase: migrate*"
+                                 "python manage.py migrate"))))
 
 (defun spacebase/server-django-shell ()
   "Start a Django shell on a remote server."

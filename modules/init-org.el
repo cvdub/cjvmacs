@@ -353,6 +353,11 @@
   (advice-add 'org-capture-place-template :around 'cjv/org-capture-place-template-dont-delete-windows))
 
 (use-package org-roam
+  :after org
+  :bind (:map cjv/notes-map
+              :prefix-map cjv/org-roam-map
+              :prefix "r"
+              ("f" . #'org-roam-node-find))
   :init
   (org-roam-db-autosync-mode)
   :custom

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: spacebase-error
+# key: spacebase-error
+# --
+Hi $0,
+
+We saw that you experienced a server error on Spacebase when attempting to $1. I wanted to let you know that we deployed a fix for that issue, so you should now be able to access $2 without encountering an error.
+
+Please let us know if you continue to experience any issues, or if there's
+anything else we can help you with.
+
+Thanks!

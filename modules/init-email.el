@@ -33,9 +33,9 @@
   :bind (:map cjv/open-map
               ("m" . #'cjv/notmuch-inbox)
               ("M" . #'cjv/update-email)
-         :map notmuch-show-mode-map
+              :map notmuch-show-mode-map
               ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message))
-    :config
+  :config
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
 
   (defun cjv/notmuch-browse-url-or-notmuch-show-toggle-message ()

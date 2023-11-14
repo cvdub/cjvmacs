@@ -83,8 +83,8 @@
   ;; Show full subtree of matching items when narrowing to sparse trees.
   (push '(occur-tree . ancestors-full) org-show-context-detail)
 
-  ;; Capture
-  ; Display capture buffers in bottom side window
+  ;;;; Capture
+  ;; Display capture buffers in bottom side window
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
                  (display-buffer-in-side-window)
@@ -97,7 +97,7 @@
                  (window-height . 0.2)
                  (side . bottom)))
 
-  ; Don't delete other windows when opening capture template
+  ;; Don't delete other windows when opening capture template
   (defun cjv/org-capture-place-template-dont-delete-windows (oldfun &rest args)
     (cl-letf (((symbol-function 'delete-other-windows) 'ignore))
       (apply oldfun args)))
@@ -333,7 +333,7 @@
   :bind
   (:map cjv/notes-map
         ("j" . #'org-journal-new-entry)
-   :map org-journal-mode-map
+        :map org-journal-mode-map
         ("C-c l n" . #'org-journal-next-entry)
         ("C-c l p" . #'org-journal-previous-entry))
   :init

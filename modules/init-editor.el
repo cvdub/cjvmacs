@@ -112,12 +112,13 @@
   :hook (dired-mode . dired-omit-mode)
   :config
   (setq dired-omit-files (concat dired-omit-files
-                            "\\|^\\.DS_Store\\'"
-                            "\\|^\\.project\\(?:ile\\)?\\'"
-                            "\\|^\\.\\(?:svn\\|git\\)\\'"
-                            "\\|^\\.ccls-cache\\'"
-                            "\\|\\(?:\\.js\\)?\\.meta\\'"
-                            "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
+                                 "\\|^\\.DS_Store\\'"
+                                 "\\|^\\.project\\(?:ile\\)?\\'"
+                                 "\\|^\\.\\(?:svn\\|git\\)\\'"
+                                 "\\|^\\.ccls-cache\\'"
+                                 "\\|\\(?:\\.js\\)?\\.meta\\'"
+                                 "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
+
 
 (use-package dired-narrow
   :defer t

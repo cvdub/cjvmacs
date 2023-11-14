@@ -119,6 +119,12 @@
                                  "\\|\\(?:\\.js\\)?\\.meta\\'"
                                  "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
 
+(use-package dired-du
+  :after dired
+  :bind (:map dired-mode-map
+              ("C-c l u" . dired-du-mode))
+  :custom
+  (dired-du-size-format t))
 
 (use-package dired-narrow
   :defer t

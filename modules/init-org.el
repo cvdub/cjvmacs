@@ -358,7 +358,7 @@
               :prefix-map cjv/org-roam-map
               :prefix "r"
               ("f" . #'org-roam-node-find))
-  :init
+  :config
   (org-roam-db-autosync-mode)
   :custom
   (org-roam-directory (expand-file-name "roam/" org-directory))

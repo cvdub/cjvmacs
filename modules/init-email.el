@@ -1,7 +1,7 @@
 (use-package notmuch
   :defer t
   :init
-  (defvar cjv/email-sync-command "mbsync -Va && notmuch new")
+  (defvar cjv/email-sync-command "parallel mbsync -V ::: christian@cvdub.net christian@spacebaseapp.com christian@vanderwall.org cvanderwall14@gmail.com && notmuch new")
 
   (defun cjv/notmuch-inbox ()
     "Opens the notmuch inbox."

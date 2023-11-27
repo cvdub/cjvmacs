@@ -56,6 +56,9 @@
 (add-hook 'cjv/after-init-hook (lambda () (load custom-file 'noerror)))
 (load custom-file 'noerror)
 
+;;;; Auth sources
+(setq auth-sources (list (expand-file-name ".authinfo.gpg" user-emacs-directory)))
+
 ;;;; Modules
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
 

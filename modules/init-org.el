@@ -286,17 +286,26 @@
               (org-agenda-skip-function 'cjv/org-agenda-skip-function)))))
      ("b" "Agenda and next actions"
       ((agenda ""
-               ((org-agenda-span 1)
+               ((org-agenda-overriding-header "\nWork Agenda")
+                (org-agenda-span 1)
                 (org-agenda-start-on-weekday nil)
                 (org-agenda-dim-blocked-tasks 'nil)
-                (org-habit-show-habits nil)))
+                (org-habit-show-habits nil)
+                (org-agenda-files '("~/Documents/org/work.org"))))
        (todo "TODO"
-             ((org-agenda-overriding-header "\nWork")
+             ((org-agenda-overriding-header "\nWork Tasks")
               (org-agenda-files '("~/Documents/org/work.org"))
               (org-agenda-dim-blocked-tasks 'nil)
               (org-agenda-skip-function 'cjv/org-agenda-skip-function)))
+       (agenda ""
+               ((org-agenda-overriding-header "\nHome Agenda")
+                (org-agenda-span 1)
+                (org-agenda-start-on-weekday nil)
+                (org-agenda-dim-blocked-tasks 'nil)
+                (org-habit-show-habits nil)
+                (org-agenda-files '("~/Documents/org/home.org"))))
        (todo "TODO"
-             ((org-agenda-overriding-header "\nHome")
+             ((org-agenda-overriding-header "\nHome Tasks")
               (org-agenda-files '("~/Documents/org/home.org"))
               (org-agenda-dim-blocked-tasks 'nil)
               (org-agenda-skip-function 'cjv/org-agenda-skip-function)))

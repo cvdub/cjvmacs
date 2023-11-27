@@ -40,7 +40,6 @@
 
 ;; Map personal after init hook to elpaca's after init hook
 (add-hook 'elpaca-after-init-hook (lambda () (run-hooks 'cjv/after-init-hook)))
-(add-hook 'cjv/after-init-hook (lambda () (message "Running my after init!")))
 
 ;; Install use-package support
 (setq use-package-always-demand t)

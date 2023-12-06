@@ -294,7 +294,9 @@
 ;;;; Hideshow mode
 (use-package hideshow
   :elpaca nil
-  :hook (prog-mode . hs-minor-mode))
+  :hook (prog-mode . hs-minor-mode)
+  :custom
+  (hs-isearch-open nil))
 
 ;;;; Goto last change
 (use-package goto-last-change

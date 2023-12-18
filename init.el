@@ -1,5 +1,3 @@
-(defvar cjv/after-init-hook)
-
 ;;;; Elpaca
 (defvar elpaca-installer-version 0.6)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
@@ -38,9 +36,6 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-;; Map personal after init hook to elpaca's after init hook
-(add-hook 'elpaca-after-init-hook (lambda () (run-hooks 'cjv/after-init-hook)))
-
 ;; Install use-package support
 (setq use-package-always-demand t)
 (elpaca elpaca-use-package
@@ -50,10 +45,20 @@
   (setq elpaca-use-package-by-default t))
 (elpaca-wait)
 
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'elpaca-after-init-hook #'benchmark-init/deactivate 1))
+
 ;;;; Custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(add-hook 'cjv/after-init-hook (lambda () (load custom-file 'noerror)))
-(load custom-file 'noerror)
+(add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
+
+;;;; Reset GC threshold to 16 MB
+(add-hook 'elpaca-after-init-hook (lambda ()
+                                    (setq gc-cons-threshold (* 16 1024 1024)))
+          1)
 
 ;;;; Auth sources
 (setq auth-sources (list (expand-file-name ".authinfo.gpg" user-emacs-directory)))

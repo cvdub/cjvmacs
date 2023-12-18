@@ -34,9 +34,6 @@
 ;; Enable subword mode
 (global-subword-mode 1)
 
-;; Enable word wrap mode
-(global-word-wrap-whitespace-mode)
-
 ;; Use zap-up-to-char instead of zap-to-char.
 (substitute-key-definition #'zap-to-char #'zap-up-to-char global-map)
 
@@ -52,7 +49,7 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ;; Enable recent files mode
-(recentf-mode 1)
+(add-hook 'elpaca-after-init-hook #'recentf-mode)
 
 (defun cjv/fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."

@@ -7,10 +7,12 @@
 
 (use-package inf-lisp
   :elpaca nil
+  :defer t
   :custom (inferior-lisp-program "sbcl"))
 
 
 (use-package sly
+  :defer t
   :bind (:map sly-mode-map
               ("C-c o r" . cjv/lisp-open-repl))
   :config

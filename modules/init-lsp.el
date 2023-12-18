@@ -1,5 +1,6 @@
 (use-package eglot
   :elpaca nil
+  :defer t
   :bind (:map cjv/code-map
               ("f" . #'eglot-format-buffer)
               ("a" . #'eglot-code-actions))

@@ -1,3 +1,5 @@
+(use-package transient)
+
 (use-package magit
   :defer t
   :custom

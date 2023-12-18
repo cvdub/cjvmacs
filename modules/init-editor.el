@@ -102,7 +102,8 @@
   (dired-auto-revert-buffer t)
   (dired-create-destination-dirs 'ask)
   (dired-dwim-target t)
-  (dired-listing-switches "-alh"))
+  (dired-listing-switches "-alh")
+  (dired-mouse-drag-files t))
 
 (use-package dired-x
   :elpaca nil
@@ -372,5 +373,13 @@
 ;;   :elpaca (explain-pause-mode :host github :repo "lastquestion/explain-pause-mode")
 ;;   :config
 ;;   (explain-pause-mode))
+
+;;;; Helpful
+(use-package helpful
+  :elpaca t
+  :bind (("C-h f" . #'helpful-callable)
+         ("C-h k" . #'helpful-key)
+         ("C-h v" . #'helpful-variable)
+         ("C-h x" . #'helpful-command)))
 
 (provide 'init-editor)

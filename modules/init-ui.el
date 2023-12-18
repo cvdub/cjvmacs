@@ -217,4 +217,8 @@
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode))
 
+;;;; Solaire mode
+(use-package solaire-mode
+  :init (solaire-global-mode +1))
+
 (provide 'init-ui)

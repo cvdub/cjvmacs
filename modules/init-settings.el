@@ -32,7 +32,8 @@
                                     "GPG_TTY"
                                     "SSH_AUTH_SOCK"
                                     "ANSIBLE_CONFIG"
-                                    "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"))
+                                    "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"
+                                    "PATH"))
 
 ;;;; Window splitting
 ;; Don't split windows horizontally

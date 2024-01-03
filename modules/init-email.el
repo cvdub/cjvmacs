@@ -45,6 +45,15 @@
         (browse-url-at-point)
       (notmuch-show-toggle-message)))
 
+  (defun cjv/message-recipient-first-name ()
+    "Returns the first name of first email recipient, or nil if not found."
+    (interactive)
+    (save-excursion
+      (message-goto-to)
+      (beginning-of-line)
+      (when (re-search-forward "To: \\([^<]+\\) <.*>$" nil t)
+        (car (split-string (match-string-no-properties 1))))))
+
   :custom
   (message-directory "~/.mail/")
   (sendmail-program "/opt/homebrew/bin/msmtp")

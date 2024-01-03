@@ -23,4 +23,6 @@
   (eglot-events-buffer-size 2000000)
   (eglot-autoshutdown t))
 
+(setq-default eglot-workspace-configuration '(:pyright (:reportUnusedImport :json-false)))
+
 (provide 'init-lsp)

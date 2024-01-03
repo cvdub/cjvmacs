@@ -14,7 +14,8 @@
   :custom
   (python-shell-dedicated 'project)
   (python-interpreter "python3")
-  (python-indent-guess-indent-offset-verbose nil))
+  (python-indent-guess-indent-offset-verbose nil)
+  (python-check-command "ruff"))
 
 (use-package pyvenv
   :init
@@ -27,5 +28,8 @@
   :defer t
   :bind (:map cjv/code-map
               ("t" . #'python-pytest-dispatch)))
+
+(use-package flymake-ruff
+  :hook (eglot-managed-mode . flymake-ruff-load))
 
 (provide 'init-python)

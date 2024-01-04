@@ -29,7 +29,7 @@
   :bind (:map cjv/code-map
               ("t" . #'python-pytest-dispatch)))
 
-(use-package flymake-ruff
-  :hook (eglot-managed-mode . flymake-ruff-load))
+;; (use-package flymake-ruff
+;;   :hook (eglot-managed-mode . flymake-ruff-load))
 
 (provide 'init-python)

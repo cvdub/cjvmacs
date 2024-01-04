@@ -88,3 +88,4 @@
 (require 'init-tools)
 (require 'init-spelling)
 (require 'init-copilot)
+(require 'init-ledger)

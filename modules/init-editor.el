@@ -115,7 +115,8 @@
                                  "\\|^\\.\\(?:svn\\|git\\)\\'"
                                  "\\|^\\.ccls-cache\\'"
                                  "\\|\\(?:\\.js\\)?\\.meta\\'"
-                                 "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
+                                 "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
+                                 "\\|~\\$.*\\.\\(xls\\|xlsx\\|csv\\)\\'")))
 
 (use-package dired-du
   :after dired

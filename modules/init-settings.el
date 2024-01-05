@@ -34,7 +34,8 @@
                                     "ANSIBLE_CONFIG"
                                     "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"
                                     "PATH"
-                                    "LEDGER_FILE"))
+                                    "LEDGER_FILE"
+                                    "INFOPATH"))
 
 ;;;; Window splitting
 ;; Don't split windows horizontally

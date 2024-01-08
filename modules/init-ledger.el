@@ -1,22 +1,33 @@
 (use-package ledger-mode
+  :hook (ledger-mode . ledger-flymake-enable)
   :custom
-  (ledger-binary-path "hl")
-  (ledger-report-links-in-register nil)
-  (ledger-mode-should-check-version nil)
-  (ledger-report-auto-width nil)
-  (ledger-report-use-native-highlighting nil)
   (ledger-default-date-format "%Y-%m-%d")
   (ledger-post-amount-alignment-column 56)
-  (ledger-reports (("bal" "%(binary) [[ledger-mode-flags]] -f $(ledger-file) bal -V --infer-equity")
-                   ("reg" "%(binary) -f %(ledger-file) reg")
-                   ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-                   ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+  (ledger-report-use-strict nil)
+  (ledger-reconcile-default-commodity nil))
 
-(use-package flymake-hledger
-  :after (ledger-mode flymake)
-  :hook (ledger-mode . flymake-hledger-enable)
-  :custom
-  (flymake-hledger-command ("hl"))
-  (flymake-hledger-checks '("accounts" "commodities" "ordereddates")))
+(defvar cjv/ledger-file (getenv "LEDGER_FILE"))
+
+(defun cjv/ledger-import (file)
+  "Import file to ledger"
+  (interactive)
+  (let* ((cmd (string-join (list "ledger convert"
+                                 file
+                                 "--input-date-format '%m/%d/%Y'"
+                                 "--account 'Assets:Bank:Joint Checking'"
+                                 "--no-pager"
+                                 "--auto-match"
+                                 "--rich-data"
+                                 "--date-format '%Y-%m-%d'"
+                                 "--invert")
+                           " "))
+         (result (shell-command-to-string cmd))
+         (result (replace-regexp-in-string "\r" "" result))
+         (result (replace-regexp-in-string "^\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)\\( \\*\\)" "\\1" result)))
+    (unless (string= result "")
+      (append-to-file "\n" nil cjv/ledger-file)
+      (append-to-file result nil cjv/ledger-file))))
+
+;; (cjv/ledger-import "/Users/cjv/Downloads/Chase0125_Activity_20240105.CSV")
 
 (provide 'init-ledger)

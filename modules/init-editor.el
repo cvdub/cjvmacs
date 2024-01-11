@@ -384,4 +384,40 @@
          ("C-h v" . #'helpful-variable)
          ("C-h x" . #'helpful-command)))
 
+;;;; Toggle parenthesis
+(defun cjv/toggle-parens ()
+  "Toggle parens at cursor."
+  (interactive)
+  (let ((parens (funcall show-paren-data-function)))
+    (if parens
+        (let* ((start (if (< (nth 0 parens) (nth 2 parens))
+                          (nth 0 parens) (nth 2 parens)))
+               (end (if (< (nth 0 parens) (nth 2 parens))
+                        (nth 2 parens) (nth 0 parens)))
+               (startchar (buffer-substring-no-properties start (1+ start)))
+               (mismatch (nth 4 parens)))
+          (cl-flet ((replace-parens (pair start end)
+                      (goto-char start)
+                      (delete-char 1)
+                      (insert (substring pair 0 1))
+                      (goto-char end)
+                      (delete-char 1)
+                      (insert (substring pair 1 2))))
+            (save-excursion
+              (pcase startchar
+                ("(" (replace-parens "[]" start end))
+                ("[" (replace-parens "{}" start end))
+                ("{" (replace-parens "()" start end))))
+            (pcase (char-after)
+              (?\) (forward-char))
+              (?\] (forward-char))
+              (?\} (forward-char)))))
+      (message "No parens found"))))
+
+(bind-key (kbd "p") #'cjv/toggle-parens 'cjv/code-map)
+
+(defvar-keymap cjv/toggle-parens-repeat-map
+  :repeat t
+  "p" #'cjv/toggle-parens)
+
 (provide 'init-editor)

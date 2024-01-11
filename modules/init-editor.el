@@ -301,7 +301,9 @@
 ;;;; Goto last change
 (use-package goto-last-change
   :defer t
-  :bind ("M-g l" . #'goto-last-change))
+  :bind ("M-g l" . #'goto-last-change)
+  (:repeat-map goto-last-change-repeat-map
+               ("l" . goto-last-change)))
 
 ;;;; Snippets
 (use-package yasnippet

@@ -112,7 +112,9 @@
 ;;;; Tab Bar
 (use-package tab-bar
   :elpaca nil
-  :defer t
+  :init (tab-bar-mode 1)
+  :bind (:map tab-bar-map
+              ("C-<tab>" . #'tab-next))
   :custom
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)

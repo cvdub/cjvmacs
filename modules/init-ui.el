@@ -127,6 +127,12 @@
   :hook (elpaca-after-init . doom-modeline-mode)
   :config
   (add-to-list 'doom-modeline-continuous-word-count-modes 'org-journal-mode)
+
+  ;; Add tab name to vcs modeline
+  (doom-modeline-def-modeline 'vcs
+    '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
+    '(compilation misc-info battery irc mu4e gnus github debug minor-modes buffer-encoding major-mode process time))
+
   :custom
   (doom-modeline-enable-word-count t)
   (doom-modeline-battery nil)

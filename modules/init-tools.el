@@ -6,7 +6,7 @@
 
 (use-package pdf-tools
   :defer t
-  :config (pdf-tools-install :no-query))
+  :init (pdf-loader-install))
 
 (use-package dired-rsync
   :bind (:map dired-mode-map

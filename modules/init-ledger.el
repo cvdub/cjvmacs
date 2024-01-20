@@ -1,5 +1,28 @@
 (use-package ledger-mode
   :mode ("\\.csv.rules\\'" . ledger-mode)
+  :bind (:map ledger-mode-map
+              ("C-c C-e" . #'cjv/ledger-toggle-current-transaction-dwim))
+  :config
+  (defun cjv/ledger-toggle-transactions-in-region (beg end)
+    "Clears all transactions in region from BEG to END."
+    (interactive "r")
+    (save-excursion
+      (save-restriction
+        (goto-char beg)
+        (beginning-of-line)
+        (unless (looking-at ledger-payee-any-status-regex)
+          (ledger-navigate-next-xact))
+        (while (< (point) end)
+          (ledger-toggle-current-transaction)
+          (ledger-navigate-next-xact)))))
+
+  (defun cjv/ledger-toggle-current-transaction-dwim ()
+    "Toggle the transaction at point or all transactions in region."
+    (interactive)
+    (if (region-active-p)
+        (cjv/ledger-toggle-transactions-in-region (region-beginning) (region-end))
+      (ledger-toggle-current-transaction)))
+
   :custom
   (ledger-binary-path "hl")
   (ledger-report-links-in-register nil)

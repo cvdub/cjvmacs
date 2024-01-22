@@ -2,6 +2,7 @@
 (setq-default fill-column 80)
 (setq sentence-end-double-space nil)
 (repeat-mode 1)
+(setq mac-system-move-file-to-trash-use-finder t)
 
 ;; Move buffer line to the top, middle, then bottom when re-centering the current buffer line.
 (setq recenter-positions '(top middle bottom))

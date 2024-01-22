@@ -1,3 +1,8 @@
+;; Use Option as Meta on Mac
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super))
+
 (defvar cjv/global-keymap (make-keymap)
   "Keymap for cjv/keybindings-mode.")
 

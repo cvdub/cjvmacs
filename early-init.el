@@ -6,8 +6,6 @@
 ;; Disable package.el
 (setq package-enable-at-startup nil)
 
-;; Make title bar transparent
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-
-;; Remove internal border
-(add-to-list 'default-frame-alist '(internal-border-width . 0))
+;; Add some top margin
+(add-to-list 'default-frame-alist '(header-line-width . 1))
+(setq-default header-line-format "")

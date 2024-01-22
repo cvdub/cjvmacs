@@ -71,7 +71,14 @@
      'gruvbox-light-medium
      '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))))
 
+;; (defun cjv/customize-gruvbox-dark-medium (theme)
+;;   (when (eq theme 'gruvbox-dark-medium)
+;;     (custom-theme-set-faces
+;;      'gruvbox-dark-medium
+;;      '(internal-border ((t (:background "#282828" :foreground "#262626")))))))
+
 (add-to-list 'enable-theme-functions 'cjv/customize-gruvbox-light-medium)
+;; (add-to-list 'enable-theme-functions 'cjv/customize-gruvbox-dark-medium)
 
 (defun cjv/mac-set-theme-based-on-system ()
   "Sets Emacs theme based on Mac system dark/light."
@@ -174,7 +181,7 @@
   :hook ((prog-mode text-mode) . goggles-mode))
 
 ;;;; Solaire mode
-(use-package solaire-mode
-  :init (solaire-global-mode +1))
+;; (use-package solaire-mode
+;;   :init (solaire-global-mode +1))
 
 (provide 'init-ui)

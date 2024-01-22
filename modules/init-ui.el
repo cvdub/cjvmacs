@@ -103,7 +103,8 @@
 (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 (use-package visual-fill-column
   :defer t
-  :hook visual-line-mode)
+  :hook visual-line-mode
+  :custom (visual-fill-column-center-text t))
 
 ;;;; Write room
 (use-package writeroom-mode

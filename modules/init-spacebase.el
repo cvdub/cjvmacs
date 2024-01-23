@@ -12,17 +12,22 @@
   "Select a Spacebase server URL by name."
   (cdr (assoc (spacebase/get-server-name) spacebase/servers)))
 
-(defun spacebase/server-deploy ()
+(defun spacebase/server-deploy (prefix-arg)
   "Runs an async deploy command for Spacebase."
-  (interactive)
-  (let* ((default-directory (expand-file-name "provisioning/" spacebase/directory))
+  (interactive "P")
+  (let* ((prompt-for-task prefix-arg)
+         (default-directory (expand-file-name "provisioning/" spacebase/directory))
+
          (playbook "webservers.yml")
          (host (spacebase/get-server-name))
          (output-buffer (format "*deploy: %s*" host))
          (branch (completing-read "Select branch: " (magit-list-local-branch-names)
                                   nil t nil nil "master"))
          (command (format "ansible-playbook %s -i hosts/%s --extra-vars \"git_branch=%s\""
-                          playbook host branch)))
+                          playbook host branch))
+         (command (if prompt-for-task
+                      (format "%s --start-at-task=\"%s\"" command (read-string "Start at task: "))
+                    command)))
     (message "Deploying to %s to %s" branch host)
     (cjv/with-alert
      "Deploy complete!"

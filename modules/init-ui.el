@@ -111,7 +111,7 @@
 (use-package visual-fill-column
   :defer t
   :hook visual-line-mode
-  :custom (visual-fill-column-center-text t))
+  :custom (visual-fill-column-center-text nil))
 
 ;;;; Write room
 (use-package writeroom-mode

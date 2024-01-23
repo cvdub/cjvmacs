@@ -61,4 +61,7 @@
 
 (global-set-key (kbd "C-c w") cjv/window-map)
 
+;; Unbind Mac C-TAB
+(global-unset-key [(control tab)])
+
 (provide 'init-keybindings)

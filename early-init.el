@@ -7,5 +7,5 @@
 (setq package-enable-at-startup nil)
 
 ;; Add some top margin
-(add-to-list 'default-frame-alist '(header-line-width . 1))
+(add-to-list 'default-frame-alist '(header-line-width . 4))
 (setq-default header-line-format "")

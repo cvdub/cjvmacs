@@ -174,7 +174,7 @@
   (diff-hl-disable-on-remote))
 
 ;;;; Ligatures
-(mac-auto-operator-composition-mode)
+;; (mac-auto-operator-composition-mode)
 
 ;;;; Goggles
 (use-package goggles

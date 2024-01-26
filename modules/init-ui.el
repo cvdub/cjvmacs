@@ -16,10 +16,10 @@
 
 ;;;; Font
 (when window-system
-  (set-face-attribute 'default nil :family "Fira Code Retina" :height 140))
+  (set-face-attribute 'default nil :family "Fira Code" :height 140))
 
 (custom-set-faces
- '(fixed-pitch ((t (:family "Fira Code Retina" :height 140))))
+ '(fixed-pitch ((t (:family "Fira Code" :height 140))))
  '(variable-pitch ((t (:family "iA Writer Quattro S" :height 140)))))
 
 ;;;; Theme
@@ -61,6 +61,10 @@
          (theme (pcase appearance
                   ('light cjv/light-theme)
                   ('dark cjv/dark-theme))))
+    ;; Update title bar
+    (pcase appearance
+      ('light (shell-command "defaults write org.gnu.Emacs TransparentTitleBar LIGHT"))
+      ('dark (shell-command "defaults write org.gnu.Emacs TransparentTitleBar DARK")))
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)
     (enable-theme theme)))

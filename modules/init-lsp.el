@@ -20,7 +20,10 @@
   (add-to-list 'completion-category-overrides '(eglot (styles orderless)))
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   :custom
-  (eglot-events-buffer-size 2000)
-  (eglot-autoshutdown t))
+  (eglot-events-buffer-size 200000)
+  (eglot-autoshutdown t)
+  (eglot-workspace-configuration '(:pyright
+                                   (:reportUnusedImport :json-false
+                                                        :reportUnusedVariable :json-false))))
 
 (provide 'init-lsp)

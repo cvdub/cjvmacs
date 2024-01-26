@@ -2,10 +2,7 @@
   :elpaca nil
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-  :hook ((python-ts-mode . eglot-ensure)
-         (eglot-managed-mode . (lambda ()
-                                 (cond ((derived-mode-p 'python-base-mode)
-                                        (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))))
+  :hook ((python-ts-mode . eglot-ensure))
   :bind (:map python-ts-mode-map
               ("C-c o r" . cjv/python-open-shell))
   :config
@@ -31,5 +28,18 @@
   :defer t
   :bind (:map cjv/code-map
               ("t" . #'python-pytest-dispatch)))
+
+(use-package flymake-ruff
+  :after eglot
+  :hook (eglot-managed-mode . flymake-ruff-load)
+  :config
+  (defun cjv/filter-eglot-diagnostics (diags)
+    "Drop Pyright variable not accessed notes"
+    (list (seq-remove (lambda (d)
+                        (and (eq (flymake-diagnostic-type d) 'eglot-note)
+                             (s-starts-with? "Pyright:" (flymake-diagnostic-text d))
+                             (s-ends-with? "is not accessed" (flymake-diagnostic-text d))))
+                      (car diags))))
+  (advice-add 'eglot--report-to-flymake :filter-args #'cjv/filter-eglot-diagnostics))
 
 (provide 'init-python)

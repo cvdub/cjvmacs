@@ -91,39 +91,44 @@
   "Sets default-directory to Spacebase project root."
   `(let ((default-directory spacebase/directory))
      (hack-local-variables)
-     ,@body))
+     (pyvenv-workon "sb")
+     ,@body
+     (pyvenv-deactivate)))
 
 (defun spacebase/run-development-server ()
   "Runs the Spacebase development server."
   (interactive)
   (spacebase/with-project-directory
    (let ((async-shell-command-buffer 'confirm-kill-process)
-         (display-buffer-alist '(("*" (display-buffer-no-window)))))
-     (async-shell-command "python manage.py runserver" "*Spacebase: runserver*")
-     (async-shell-command "python manage.py celery_worker" "*Spacebase: celery_worker*")
-     (async-shell-command "python manage.py tailwind start" "*Spacebase: tailwind*"))))
+         (display-buffer-alist '(("*" (display-buffer-no-window))))
+         (commands '(("python manage.py runserver" "*Spacebase: runserver*")
+                     ("python manage.py celery_worker" "*Spacebase: celery_worker*")
+                     ("python manage.py tailwind start" "*Spacebase: tailwind*"))))
+     (dolist (command commands)
+       (-> (async-shell-command (car command) (cadr command))
+           (cjv/add-ansi-color-to-process-buffer))))))
 
 (defun spacebase/make-migrations ()
   "Runs Spacebase makemigrations."
   (interactive)
   (message "Making migrations...")
   (spacebase/with-project-directory
-   (cjv/with-message
-    "Done!"
-    (start-process-shell-command "Spacebase make migrations"
-                                 "*Spacebase: makemigrations*"
-                                 "python manage.py makemigrations"))))
+   (-> (start-process-shell-command "Spacebase make migrations"
+                                    "*Spacebase: makemigrations*"
+                                    "python manage.py makemigrations")
+       (cjv/add-message-to-process "Done!")
+       (cjv/add-ansi-color-to-process-buffer))))
 
 (defun spacebase/migrate ()
   "Runs Spacebase migrate."
   (interactive)
   (message "Migrating...")
   (spacebase/with-project-directory
-   (cjv/with-message
-    "Done!"
-    (start-process-shell-command "Spacebase migrate"
-                                 "*Spacebase: migrate*"
-                                 "python manage.py migrate"))))
+   (-> (start-process-shell-command "Spacebase migrate"
+                                    "*Spacebase: migrate*"
+                                    "python manage.py migrate")
+       (cjv/add-message-to-process "Done!")
+       (cjv/add-ansi-color-to-process-buffer))))
 
 (defun spacebase/server-django-shell ()
   "Start a Django shell on a remote server."
@@ -139,10 +144,10 @@
 (defvar spacebase/lyft-sftp-servers
   '(("Lyft Staging" .
      (:gpg-key-id "7046067B97E265ACA5878649064EA24D226C0AD6"
-      :destination "lyft-sftp-staging:/Spacebase-LyftLease-test/from Spacebase/"))
+                  :destination "lyft-sftp-staging:/Spacebase-LyftLease-test/from Spacebase/"))
     ("Lyft Production" .
      (:gpg-key-id "7EE93014F52B58740240F2D21AA46806B17E2129"
-      :destination "lyft-sftp-production:/Spacebase-LyftLease-prod/from Spacebase/"))))
+                  :destination "lyft-sftp-production:/Spacebase-LyftLease-prod/from Spacebase/"))))
 
 (defun spacebase/post-lyft-file (file gpg-key-id destination)
   "Encrypt and post file to Lyft's SFTP server."

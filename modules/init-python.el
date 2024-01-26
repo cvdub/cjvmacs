@@ -34,7 +34,7 @@
   :hook (eglot-managed-mode . flymake-ruff-load)
   :config
   (defun cjv/filter-eglot-diagnostics (diags)
-    "Drop Pyright variable not accessed notes"
+    "Drop Pyright variable not accessed notes."
     (list (seq-remove (lambda (d)
                         (and (eq (flymake-diagnostic-type d) 'eglot-note)
                              (s-starts-with? "Pyright:" (flymake-diagnostic-text d))

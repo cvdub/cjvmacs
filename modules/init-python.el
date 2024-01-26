@@ -2,7 +2,10 @@
   :elpaca nil
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-  :hook (python-ts-mode . eglot-ensure)
+  :hook ((python-ts-mode . eglot-ensure)
+         (eglot-managed-mode . (lambda ()
+                                 (cond ((derived-mode-p 'python-base-mode)
+                                        (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))))
   :bind (:map python-ts-mode-map
               ("C-c o r" . cjv/python-open-shell))
   :config
@@ -15,7 +18,7 @@
   (python-shell-dedicated 'project)
   (python-interpreter "python3")
   (python-indent-guess-indent-offset-verbose nil)
-  (python-check-command "ruff"))
+  (python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-")))
 
 (use-package pyvenv
   :init
@@ -28,8 +31,5 @@
   :defer t
   :bind (:map cjv/code-map
               ("t" . #'python-pytest-dispatch)))
-
-;; (use-package flymake-ruff
-;;   :hook (eglot-managed-mode . flymake-ruff-load))
 
 (provide 'init-python)

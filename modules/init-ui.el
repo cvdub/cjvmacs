@@ -209,4 +209,9 @@
                                "Welcome to the church of Emacs"
                                "While any text editor can save your files, only Emacs can save your soul"))
   (dashboard-hide-cursor t))
+
+;;;; Rainbow mode
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
+
 (provide 'init-ui)

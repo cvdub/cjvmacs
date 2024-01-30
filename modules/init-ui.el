@@ -188,4 +188,25 @@
 ;; (use-package solaire-mode
 ;;   :init (solaire-global-mode +1))
 
+;;;; Dashboard
+(use-package dashboard
+  :elpaca (dashboard :host github :repo "emacs-dashboard/emacs-dashboard"
+                     :remotes (("fork" :repo "cvdub/emacs-dashboard" :protocol ssh)))
+  :config
+  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (dashboard-setup-startup-hook)
+  (setq dashboard-force-refresh t)
+  :custom
+  (dashboard-startup-banner (expand-file-name "emacs.png" user-emacs-directory))
+  (dashboard-banner-logo-title nil)
+  (dashboard-center-content t)
+  (dashboard-vertically-center-content t)
+  (dashboard-items nil)
+  (dashboard-footer-messages '("The one true editor, Emacs!"
+                               "Free as free speech, free as free Beer"
+                               "Happy coding!"
+                               "Welcome to the church of Emacs"
+                               "While any text editor can save your files, only Emacs can save your soul"))
+  (dashboard-hide-cursor t))
 (provide 'init-ui)

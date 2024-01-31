@@ -61,10 +61,6 @@
          (theme (pcase appearance
                   ('light cjv/light-theme)
                   ('dark cjv/dark-theme))))
-    ;; Update title bar
-    (pcase appearance
-      ('light (shell-command "defaults write org.gnu.Emacs TransparentTitleBar LIGHT"))
-      ('dark (shell-command "defaults write org.gnu.Emacs TransparentTitleBar DARK")))
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)
     (enable-theme theme)))

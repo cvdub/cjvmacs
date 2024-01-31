@@ -207,7 +207,7 @@
   (dashboard-hide-cursor t))
 
 ;;;; Rainbow mode
-(use-package rainbow-mode
-  :hook (prog-mode . rainbow-mode))
+;; (use-package rainbow-mode
+;;   :hook (prog-mode . rainbow-mode))
 
 (provide 'init-ui)

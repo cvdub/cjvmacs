@@ -10,6 +10,7 @@
   :defer t
   :custom (inferior-lisp-program "sbcl"))
 
+(add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 
 (use-package sly
   :defer t

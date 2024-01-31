@@ -56,6 +56,7 @@
 
   :custom
   (message-directory "~/.mail/")
+  (message-send-mail-function 'message-send-mail-with-sendmail)
   (sendmail-program "/opt/homebrew/bin/msmtp")
   (mail-specify-envelope-from t)
   (message-sendmail-envelope-from 'header)

@@ -78,6 +78,8 @@
   (notmuch-wash-wrap-lines-length 80)
   (notmuch-search-oldest-first nil)
   (notmuch-archive-tags '("-inbox" "-unread"))
+  (notmuch-multipart/alternative-discouraged '("text/calendar" "text/plain" "text/html"))
+  (notmuch-show-text/html-blocked-images nil)
   ;; (mm-text-html-renderer 'shr)
   ;; (notmuch-show-text/html-blocked-images nil)
   ;; (notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
@@ -132,5 +134,17 @@
           ("cvanderwall14@gmail.com" ("any" "cvanderwall14@gmail.com" both) "cvanderwall14@gmail.com")
           ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org"))))
 
-(provide 'init-email)
+(use-package shr
+  :elpaca nil
+  :custom
+  (shr-use-colors nil)
+  (shr-use-fonts t)
+  (shr-max-width 70)
+  (shr-width 70)
+  (shr-discard-aria-hidden t)
+  (shr-use-xwidgets-for-media t)
+  (shr-cookie-policy t)
+  :custom-face
+  (shr-text ((t (:inherit variable-pitch)))))
 
+(provide 'init-email)

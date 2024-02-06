@@ -37,6 +37,7 @@
               ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message))
   :config
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
+  (add-hook 'message-send-hook #'notmuch-mua-attachment-check)
 
   (defun cjv/notmuch-browse-url-or-notmuch-show-toggle-message ()
     "Browse URL at point or toggle message at point."

@@ -39,6 +39,13 @@
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
   (add-hook 'message-send-hook #'notmuch-mua-attachment-check)
 
+  (defun cjv/notmuch-mua-empty-subject-check ()
+    "Request confirmation before sending a message with empty subject."
+    (when (and (null (message-field-value "Subject"))
+               (not (y-or-n-p "Subject is empty, send anyway? ")))
+      (error "Sending message cancelled: empty subject")))
+  (add-hook 'message-send-hook #'cjv/notmuch-mua-empty-subject-check)
+
   (defun cjv/notmuch-browse-url-or-notmuch-show-toggle-message ()
     "Browse URL at point or toggle message at point."
     (interactive)

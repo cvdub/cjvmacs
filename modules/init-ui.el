@@ -210,6 +210,7 @@
 
 ;;;; Rainbow mode
 ;; (use-package rainbow-mode
-;;   :hook (prog-mode . rainbow-mode))
+;;   :hook (prog-mode . rainbow-mode)
+;;   )
 
 (provide 'init-ui)

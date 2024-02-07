@@ -113,6 +113,8 @@
   :hook visual-line-mode
   :custom (visual-fill-column-center-text nil))
 
+(use-package adaptive-wrap)
+
 ;;;; Write room
 (use-package writeroom-mode
   :defer t

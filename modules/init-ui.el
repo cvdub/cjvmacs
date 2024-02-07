@@ -194,7 +194,7 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-force-refresh t)
   :custom
-  (dashboard-startup-banner (expand-file-name "emacs.png" user-emacs-directory))
+  (dashboard-startup-banner (expand-file-name "emacs-logo-gruvbox-dark.svg" user-emacs-directory))
   (dashboard-banner-logo-title nil)
   (dashboard-center-content t)
   (dashboard-vertically-center-content t)
@@ -204,7 +204,9 @@
                                "Happy coding!"
                                "Welcome to the church of Emacs"
                                "While any text editor can save your files, only Emacs can save your soul"))
-  (dashboard-hide-cursor t))
+  (dashboard-hide-cursor t)
+  :custom-face
+  (dashboard-footer-face ((t (:foreground "#83a598")))))
 
 ;;;; Rainbow mode
 ;; (use-package rainbow-mode

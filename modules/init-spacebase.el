@@ -99,14 +99,17 @@
   "Runs the Spacebase development server."
   (interactive)
   (spacebase/with-project-directory
-   (let ((async-shell-command-buffer 'confirm-kill-process)
+   (let ((kill-buffer-query-functions nil)
          (display-buffer-alist '(("*" (display-buffer-no-window))))
-         (commands '(("python manage.py runserver" "*Spacebase: runserver*")
-                     ("python manage.py celery_worker" "*Spacebase: celery_worker*")
-                     ("python manage.py tailwind start" "*Spacebase: tailwind*"))))
-     (dolist (command commands)
-       (-> (async-shell-command (car command) (cadr command))
-           (cjv/add-ansi-color-to-process-buffer))))))
+         (commands '(("Spacebase runserver" "*Spacebase: runserver*" "python manage.py runserver")
+                     ("Spacebase celery" "*Spacebase: celery_worker*" "python manage.py celery_worker")
+                     ("Spacebase tailwind" "*Spacebase: tailwind*" "python manage.py tailwind start"))))
+     (pcase-dolist (`(,name ,buffer ,command) commands)
+       (when-let ((process (get-buffer-process (get-buffer buffer))))
+         (delete-process process))
+       (-> (start-process-shell-command name buffer command)
+           (cjv/add-ansi-color-to-process-buffer)))))
+  (message "Started Spacebase development server"))
 
 (defun spacebase/make-migrations ()
   "Runs Spacebase makemigrations."

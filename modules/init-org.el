@@ -49,6 +49,17 @@
               ((todayp deadline) "Deadline:   ")
               (t "")))))
 
+  (defun cjv/org-agenda-priority-padding ()
+    (let ((priority (org-entry-get (point) "PRIORITY")))
+      (if (string= priority "B")
+          "     "
+        (format "[#%s] " priority))))
+
+  (defun cjv/org-agenda-format-item (s)
+    "Format string before display in org agenda."
+    (replace-regexp-in-string "\\(\\[#[A-Z0-9]+\\] \\).*\\(\\[#[A-Z0-9]+\\] \\)" "" s nil nil 2))
+  (advice-add 'org-agenda-format-item  :filter-return #'cjv/org-agenda-format-item)
+
   (defun cjv/org-subtask-p ()
     "Returns true if the heading at point is a subtask."
     (let ((subtask-p nil))
@@ -331,10 +342,10 @@
                           "......" "----------------"))
   (org-agenda-scheduled-leaders '("" "Sched.%2dx: "))
   (org-agenda-deadline-leaders '("" "In %3d d.: " "%2d d. ago: "))
-  (org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s%(cjv/org-agenda-element-padding)")
-                              (todo . " %i %-12:c")
-                              (tags . " %i %-12:c")
-                              (search . " %i %-12:c")))
+  (org-agenda-prefix-format '((agenda . "%(cjv/org-agenda-priority-padding)%-12:c%?-12t% s%(cjv/org-agenda-element-padding)")
+                              (todo . "%(cjv/org-agenda-priority-padding)%-12:c")
+                              (tags . "%-12:c")
+                              (search . "%-12:c")))
 
   ;; Babel
   (org-babel-load-languages '((emacs-lisp . t)

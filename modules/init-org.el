@@ -256,6 +256,10 @@
 
   ;; Agenda
   (org-agenda-window-setup 'current-window)
+  (org-agenda-sorting-strategy '((agenda habit-down time-up scheduled-up priority-down)
+                                 (todo priority-down category-keep)
+                                 (tags priority-down category-keep)
+                                 (search category-keep)))
   (org-agenda-custom-commands
    '(("h" "Agenda and home next actions"
       ((agenda ""

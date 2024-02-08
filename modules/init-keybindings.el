@@ -3,6 +3,13 @@
   (setq mac-option-modifier 'meta
         mac-command-modifier 'super))
 
+;; Unbind Mac C-TAB
+(global-unset-key [(control tab)])
+
+;; Disable suspend-frame binding
+(global-unset-key (kbd "C-z"))
+
+;;;; Keymaps
 (defvar cjv/global-keymap (make-keymap)
   "Keymap for cjv/keybindings-mode.")
 
@@ -17,10 +24,6 @@
 (add-to-list 'emulation-mode-map-alists
              `((cjv/keybindings-mode . ,cjv/global-keymap)))
 (define-key cjv/global-keymap (kbd "M-o") #'other-window)
-
-
-;; Disable suspend-frame binding
-(global-unset-key (kbd "C-z"))
 
 (defvar cjv/open-map (make-sparse-keymap)
   "Keymap for opening stuff.")
@@ -61,7 +64,9 @@
 
 (global-set-key (kbd "C-c w") cjv/window-map)
 
-;; Unbind Mac C-TAB
-(global-unset-key [(control tab)])
+(defvar cjv/toggle-map (make-sparse-keymap)
+  "Keymap for toggle commands.")
+
+(global-set-key (kbd "C-c t") cjv/toggle-map)
 
 (provide 'init-keybindings)

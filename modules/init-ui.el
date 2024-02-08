@@ -111,7 +111,14 @@
 (use-package visual-fill-column
   :defer t
   :hook visual-line-mode
-  :custom (visual-fill-column-center-text nil))
+  :bind (:map cjv/toggle-map
+              ("c" . #'cjv/visual-line-mode-toggle-center))
+  :config
+  (defun cjv/visual-line-mode-toggle-center ()
+    "Toggles centering text in visual line mode."
+    (interactive)
+    (setq-local visual-fill-column-center-text (not visual-fill-column-center-text))
+    (visual-fill-column-adjust)))
 
 (use-package adaptive-wrap)
 
@@ -119,9 +126,13 @@
 (use-package writeroom-mode
   :defer t
   :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
+  :bind (:map cjv/toggle-map
+              ("w" . #'writeroom-mode))
   :config
   (defun cjv/writeroom-increase-text-scaling ()
-    (text-scale-adjust 1)
+    (if writeroom-mode
+        (text-scale-adjust 1)
+      (text-scale-adjust 0))
     (visual-fill-column-adjust))
   :custom
   (writeroom-mode-line t)

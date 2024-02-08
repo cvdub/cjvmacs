@@ -346,6 +346,7 @@
                               (todo . "%(cjv/org-agenda-priority-padding)%-12:c")
                               (tags . "%-12:c")
                               (search . "%-12:c")))
+  (org-habit-graph-column 45)
 
   ;; Babel
   (org-babel-load-languages '((emacs-lisp . t)

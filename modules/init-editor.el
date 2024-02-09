@@ -371,7 +371,17 @@
 
 ;;;; Apheleia (auto formatting)
 (use-package apheleia
-  :init (apheleia-global-mode +1))
+  :init (apheleia-global-mode +1)
+  :config
+  (push '(djlint . ("djlint"
+                    filepath
+                    "--reformat"
+                    "--format-css"
+                    "--format-js"
+                    "--quiet"
+                    "--profile"
+                    "django"))
+        apheleia-formatters))
 
 ;;;; Explain Pause Mode
 ;; (use-package explain-pause-mode

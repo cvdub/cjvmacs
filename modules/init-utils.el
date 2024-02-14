@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
+;;;; Processes
 (cl-defun cjv/alert (title body &optional (sound "default"))
   "Sends a MacOS alert."
   (start-process-shell-command
@@ -51,6 +52,26 @@
     (comint-mode))
   (set-process-filter process 'comint-output-filter))
 
+(cl-defun cjv/start-process (name buffer command &key message alert display kill)
+  "Starts a process with NAME, BUFFER, and COMMAND.
+
+Optionally, displays a MESSAGE or ALERT on completion."
+  (when-let* ((buffer (get-buffer buffer))
+              (process (get-buffer-process buffer))
+              (delete (or kill (y-or-n-p "Kill existing process? "))))
+    (delete-process process))
+  (let ((process (start-process-shell-command name buffer command)))
+    (when display
+      (display-buffer buffer))
+    (message "Started process: %s" name)
+    (cjv/add-ansi-color-to-process-buffer process)
+    (when message
+      (cjv/add-message-to-process process message))
+    (when alert
+      (cjv/add-alert-to-process process alert))
+    process))
+
+;;;; Windows
 (defmacro cjv/with-bottom-window (&rest body)
   "Open buffer created by BODY in bottom window."
   `(let ((display-buffer-alist '(("*"

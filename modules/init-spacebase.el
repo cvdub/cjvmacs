@@ -28,12 +28,10 @@
          (command (if prompt-for-task
                       (format "%s --start-at-task=\"%s\"" command (read-string "Start at task: "))
                     command)))
-    (message "Deploying to %s to %s" branch host)
-    (cjv/with-alert
-     "Deploy complete!"
-     (start-process-shell-command (format "Deploy %s to %s" branch host)
-                                  output-buffer
-                                  command))))
+    (cjv/start-process (format "Deploy %s to %s" branch host)
+                       output-buffer
+                       command
+                       :alert "Deploy complete!")))
 
 (defun spacebase/rebuild-test-db ()
   "Regenerates Spacebase test databases."
@@ -55,10 +53,7 @@
          (command (cl-loop for command-string in sub-commands
                            nconc (mapcar (lambda (db) (format command-string db)) test-dbs) into command
                            finally (return (string-join command " && ")))))
-    (message "Rebuilding Spacebase test DB...")
-    (cjv/with-message
-     "Done!"
-     (start-process-shell-command "Rebuild Spacebase test DB" "*spacebase-rebuild-test-db*" command))))
+    (cjv/start-process "Rebuild Spacebase test DB" "*spacebase-rebuild-test-db*" command :message "Done!")))
 
 (defun spacebase/update-local-db ()
   "Updates local Spacebase DB to match production."
@@ -105,10 +100,7 @@
                      ("Spacebase celery" "*Spacebase: celery_worker*" "python manage.py celery_worker")
                      ("Spacebase tailwind" "*Spacebase: tailwind*" "python manage.py tailwind start"))))
      (pcase-dolist (`(,name ,buffer ,command) commands)
-       (when-let ((process (get-buffer-process (get-buffer buffer))))
-         (delete-process process))
-       (-> (start-process-shell-command name buffer command)
-           (cjv/add-ansi-color-to-process-buffer)))))
+       (cjv/start-process name buffer command :kill t))))
   (message "Started Spacebase development server"))
 
 (defun spacebase/make-migrations ()
@@ -116,22 +108,20 @@
   (interactive)
   (message "Making migrations...")
   (spacebase/with-project-directory
-   (-> (start-process-shell-command "Spacebase make migrations"
-                                    "*Spacebase: makemigrations*"
-                                    "python manage.py makemigrations")
-       (cjv/add-message-to-process "Done!")
-       (cjv/add-ansi-color-to-process-buffer))))
+   (cjv/start-process "Spacebase make migrations"
+                      "*Spacebase: makemigrations*"
+                      "python manage.py makemigrations"
+                      :message "Done!")))
 
 (defun spacebase/migrate ()
   "Runs Spacebase migrate."
   (interactive)
   (message "Migrating...")
   (spacebase/with-project-directory
-   (-> (start-process-shell-command "Spacebase migrate"
-                                    "*Spacebase: migrate*"
-                                    "python manage.py migrate")
-       (cjv/add-message-to-process "Done!")
-       (cjv/add-ansi-color-to-process-buffer))))
+   (cjv/start-process "Spacebase migrate"
+                      "*Spacebase: migrate*"
+                      "python manage.py migrate"
+                      :message "Done!")))
 
 (defun spacebase/server-django-shell ()
   "Start a Django shell on a remote server."

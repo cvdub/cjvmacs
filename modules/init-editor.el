@@ -138,8 +138,16 @@
 (use-package rg
   :defer t
   :commands rg-menu
-  :bind ("C-c s" . #'rg-menu)
+  :bind (("C-c s" . #'rg-menu)
+         :map rg-mode-map
+         ("<S-return>" . #'cjv/compile-goto-error-same-window))
   :config
+  (defun cjv/compile-goto-error-same-window ()
+    "Run compile-goto-error but open in same window."
+    (interactive)
+    (cjv/with-same-window
+     (compile-goto-error)))
+
   (rg-define-toggle "-g '!*migrations'" (kbd "M") t)
   (rg-define-toggle "-g '!*tests'" (kbd "T"))
   (rg-define-toggle "--context 3" (kbd "C")))

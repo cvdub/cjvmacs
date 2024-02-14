@@ -60,6 +60,14 @@
                                   (side . bottom)))))
      ,@body))
 
+
+(defmacro cjv/with-same-window (&rest body)
+  "Ensure buffer opened by BODY opens in the current window."
+  `(let ((display-buffer-overriding-action
+          '(display-buffer-same-window (inhibit-same-window . nil))))
+     ,@body))
+
+
 (defun cjv/post-to-sftp (file dest)
   "Put FILE to SFTP server located at DEST."
   (shell-command

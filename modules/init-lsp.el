@@ -19,6 +19,7 @@
   ;; Configure up corfu
   (add-to-list 'completion-category-overrides '(eglot (styles orderless)))
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  (fset #'eglot--snippet-expansion-fn #'ignore)
   :custom
   (eglot-events-buffer-size 200000)
   (eglot-autoshutdown t)

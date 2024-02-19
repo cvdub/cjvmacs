@@ -78,7 +78,10 @@
   (notmuch-wash-wrap-lines-length 80)
   (notmuch-search-oldest-first nil)
   (notmuch-archive-tags '("-inbox" "-unread"))
-  (notmuch-multipart/alternative-discouraged '("text/calendar" "text/plain" "text/html"))
+  (notmuch-multipart/alternative-discouraged '("text/x-amp-html"
+                                               "text/calendar"
+                                               "text/plain"
+                                               "text/html"))
   (notmuch-show-text/html-blocked-images nil)
   ;; (mm-text-html-renderer 'shr)
   ;; (notmuch-show-text/html-blocked-images nil)

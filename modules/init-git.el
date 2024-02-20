@@ -8,6 +8,8 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package forge
-  :after magit)
+  :after magit
+  :custom
+  (forge-owned-accounts '(("cvdub" remote-name "fork"))))
 
 (provide 'init-git)

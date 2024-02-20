@@ -1,5 +1,5 @@
 (use-package typescript-ts-mode
-  :elpaca nil
+  :ensure nil
   :defer t
   :mode ("\\.ts\\'")
   :hook (typescript-ts-mode . eglot-ensure)

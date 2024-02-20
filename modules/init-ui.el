@@ -143,7 +143,7 @@
 
 ;;;; Tab Bar
 (use-package tab-bar
-  :elpaca nil
+  :ensure nil
   :init (tab-bar-mode 1)
   :bind (:map tab-bar-map
               ("C-<tab>" . #'tab-next))
@@ -199,7 +199,7 @@
 
 ;;;; Dashboard
 (use-package dashboard
-  :elpaca (dashboard :host github :repo "emacs-dashboard/emacs-dashboard"
+  :ensure (dashboard :host github :repo "emacs-dashboard/emacs-dashboard"
                      :remotes (("fork" :repo "cvdub/emacs-dashboard" :protocol ssh)))
   :config
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)

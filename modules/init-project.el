@@ -1,5 +1,5 @@
 (use-package project
-  :elpaca nil
+  :ensure nil
   :config
   (defvar cjv/project-ignored-directories '("/opt/homebrew/")
     "Directories ignored by project.el.")

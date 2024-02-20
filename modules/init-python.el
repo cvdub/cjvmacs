@@ -1,5 +1,5 @@
 (use-package python
-  :elpaca nil
+  :ensure nil
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   :hook ((python-ts-mode . eglot-ensure))
@@ -30,7 +30,7 @@
               ("t" . #'python-pytest-dispatch)))
 
 (use-package flymake-ruff
-  :elpaca (flymake-ruff :host github :repo "erickgnavar/flymake-ruff"
+  :ensure (flymake-ruff :host github :repo "erickgnavar/flymake-ruff"
                         :remotes (("fork" :repo "cvdub/flymake-ruff" :protocol ssh)))
   :after eglot
   :hook (eglot-managed-mode . flymake-ruff-load)

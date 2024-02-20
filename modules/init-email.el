@@ -138,7 +138,7 @@
           ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org"))))
 
 (use-package shr
-  :elpaca nil
+  :ensure nil
   :custom
   (shr-use-colors nil)
   (shr-use-fonts t)

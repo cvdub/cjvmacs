@@ -1,5 +1,5 @@
 (use-package copilot
-  :elpaca (:host github :repo "zerolfx/copilot.el"
+  :ensure (:host github :repo "zerolfx/copilot.el"
                  :files ("dist" "*.el"))
   :defer t
   ;; :hook (prog-mode . copilot-mode)

@@ -67,7 +67,7 @@
 
 ;;;; Lorem ipsum
 (use-package lorem-ipsum
-  :elpaca (lorem-ipsum :host github :repo "jschaf/emacs-lorem-ipsum"
+  :ensure (lorem-ipsum :host github :repo "jschaf/emacs-lorem-ipsum"
                        :remotes (("fork" :repo "cvdub/emacs-lorem-ipsum" :protocl ssh)))
   :defer t)
 
@@ -97,7 +97,7 @@
 
 ;;;; Dired
 (use-package dired
-  :elpaca nil
+  :ensure nil
   :hook ((dired-mode . turn-on-gnus-dired-mode)
          (dired-mode . (lambda () (toggle-truncate-lines 1))))
   :custom
@@ -108,7 +108,7 @@
   (dired-mouse-drag-files t))
 
 (use-package dired-x
-  :elpaca nil
+  :ensure nil
   :hook (dired-mode . dired-omit-mode)
   :config
   (setq dired-omit-files (concat dired-omit-files
@@ -167,7 +167,7 @@
     (add-to-list 'completion-at-point-functions f)))
 
 (use-package vertico
-  :elpaca (vertico :files (:defaults "extensions/*"))
+  :ensure (vertico :files (:defaults "extensions/*"))
   :init
   (vertico-mode)
   :custom
@@ -302,7 +302,7 @@
 
 ;;;; Hideshow mode
 (use-package hideshow
-  :elpaca nil
+  :ensure nil
   :hook (prog-mode . hs-minor-mode)
   :custom
   (hs-isearch-open nil))
@@ -326,7 +326,7 @@
 
 ;;;; Ediff
 (use-package ediff
-  :elpaca nil
+  :ensure nil
   :config
   (defun cjv/ediff-copy-both-to-C ()
     "Copies Ediff contents of A and B to C."
@@ -373,7 +373,7 @@
 
 ;;;; Flyspell
 (use-package flyspell
-  :elpaca nil
+  :ensure nil
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
 
@@ -393,13 +393,13 @@
 
 ;;;; Explain Pause Mode
 ;; (use-package explain-pause-mode
-;;   :elpaca (explain-pause-mode :host github :repo "lastquestion/explain-pause-mode")
+;;   :ensure (explain-pause-mode :host github :repo "lastquestion/explain-pause-mode")
 ;;   :config
 ;;   (explain-pause-mode))
 
 ;;;; Helpful
 (use-package helpful
-  :elpaca t
+  :ensure t
   :bind (("C-h f" . #'helpful-callable)
          ("C-h k" . #'helpful-key)
          ("C-h v" . #'helpful-variable)

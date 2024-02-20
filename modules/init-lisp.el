@@ -6,7 +6,7 @@
          (scheme-mode . enable-paredit-mode)))
 
 (use-package inf-lisp
-  :elpaca nil
+  :ensure nil
   :defer t
   :custom (inferior-lisp-program "sbcl"))
 

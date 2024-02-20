@@ -40,7 +40,7 @@
                     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
 
 (use-package flymake-hledger
-  :elpaca (flymake-hledger :host github :repo "DamienCassou/flymake-hledger"
+  :ensure (flymake-hledger :host github :repo "DamienCassou/flymake-hledger"
                            :remotes (("fork" :repo "cvdub/flymake-hledger" :protocol ssh)))
   :after ledger-mode
   :hook (ledger-mode . flymake-hledger-enable)

@@ -1,5 +1,5 @@
 (use-package eshell
-  :elpaca nil
+  :ensure nil
   :defer t
   :commands cjv/open-eshell
   :bind (:map cjv/open-map

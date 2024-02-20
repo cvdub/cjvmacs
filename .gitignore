@@ -17,4 +17,4 @@
 /recentf
 /elpaca
 /forge-database.sqlite
-/.DS_Store
+*.DS_Store

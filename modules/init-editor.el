@@ -316,17 +316,18 @@
 
 ;;;; Snippets
 (use-package yasnippet
-  :defer 2
+  :defer 5
   :init
   (defvar yas-verbosity 2)
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
-  :defer t)
+  :after yasnipped)
 
 ;;;; Ediff
 (use-package ediff
   :ensure nil
+  :defer t
   :config
   (defun cjv/ediff-copy-both-to-C ()
     "Copies Ediff contents of A and B to C."
@@ -399,7 +400,7 @@
 
 ;;;; Helpful
 (use-package helpful
-  :ensure t
+  :defer t
   :bind (("C-h f" . #'helpful-callable)
          ("C-h k" . #'helpful-key)
          ("C-h v" . #'helpful-variable)

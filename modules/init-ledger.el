@@ -1,4 +1,5 @@
 (use-package ledger-mode
+  :defer t
   :mode ("\\.csv.rules\\'" . ledger-mode)
   :bind (:map ledger-mode-map
               ("C-c C-e" . #'cjv/ledger-toggle-current-transaction-dwim))

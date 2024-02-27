@@ -25,27 +25,24 @@
 ;; Disable bell
 (setq ring-bell-function #'ignore)
 
-
-;; Ensure environment variables are loaded
-(defvar cjv/environment-variables '("PYTHONPATH"
-                                    "PYTHONSTARTUP"
-                                    "GPG_TTY"
-                                    "SSH_AUTH_SOCK"
-                                    "ANSIBLE_CONFIG"
-                                    "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"
-                                    "PATH"
-                                    "LEDGER_FILE"
-                                    "INFOPATH"))
-
 ;;;; Window splitting
 ;; Don't split windows horizontally
 (setq split-height-threshold 90)
 
+;; Ensure environment variables are loaded
 (use-package exec-path-from-shell
   :defer 2
   :init
   (exec-path-from-shell-initialize)
-  :config
-  (mapc #'exec-path-from-shell-copy-env cjv/environment-variables))
+  :custom
+  (exec-path-from-shell-variables'("PYTHONPATH"
+                                   "PYTHONSTARTUP"
+                                   "GPG_TTY"
+                                   "SSH_AUTH_SOCK"
+                                   "ANSIBLE_CONFIG"
+                                   "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"
+                                   "PATH"
+                                   "LEDGER_FILE"
+                                   "INFOPATH")))
 
 (provide 'init-settings)

@@ -443,47 +443,12 @@
   "p" #'cjv/toggle-parens)
 
 ;;;; Tree-sitter
-(use-package treesit
-  :ensure nil
-  :preface
-  (setq treesit-language-source-alist
-        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash" "v0.20.5"))
-          (commonlisp . ("https://github.com/tree-sitter-grammars/tree-sitter-commonlisp" "v0.3.1"))
-          (css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
-          (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile" "v0.1.2"))
-          (elisp . ("https://github.com/Wilfred/tree-sitter-elisp" "1.3.0"))
-          (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
-          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.3"))
-          (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
-          (markdown . ("https://github.com/ikatyang/tree-sitter-markdown" "v0.7.1"))
-          (org . ("https://github.com/milisims/tree-sitter-org" "v1.3.1"))
-          (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
-          (regex . ("https://github.com/tree-sitter/tree-sitter-regex" "v0.20.0"))
-          (scheme . ("https://github.com/6cdh/tree-sitter-scheme" "v0.6.0"))
-          (scss . ("https://github.com/serenadeai/tree-sitter-scss" "v1.0.0"))
-          (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.5" "tsx/src"))
-          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.5" "typescript/src"))
-          (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))))
-
-  (defun my/treesit-install-grammars ()
-    "Install absent Tree-sitter grammars."
-    (interactive)
-    (dolist (grammar treesit-language-source-alist)
-      (message "%s" grammar)
-      (unless (treesit-language-available-p (car grammar))
-        (treesit-install-language-grammar (car grammar)))))
-
-  (dolist (mapping '((css-mode . css-ts-mode)
-                     (js-json-mode . json-ts-mode)
-                     (js2-mode . js-ts-mode)
-                     (python-mode . python-ts-mode)
-                     (sh-mode . bash-ts-mode)
-                     (typescript-mode . typescript-ts-mode)
-                     (yaml-mode . yaml-ts-mode)))
-    (add-to-list 'major-mode-remap-alist mapping))
-
+(use-package treesit-auto
   :config
-  (my/treesit-install-grammars))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode)
+  :custom
+  (treesit-auto-install 'prompt))
 
 ;;;; Combobulate
 (use-package combobulate

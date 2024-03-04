@@ -2,7 +2,6 @@
   :ensure nil
   :defer t
   :init
-  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   :hook ((python-ts-mode . eglot-ensure))
   :bind (:map python-ts-mode-map
               ("C-c o r" . cjv/python-open-shell))

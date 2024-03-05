@@ -177,6 +177,9 @@
   :config
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-checkbox-statistics-todo))
 
+;;;; hl-line
+(add-hook 'prog-mode-hook (lambda () (hl-line-mode 1)))
+
 ;;;; Diff HL
 (use-package diff-hl
   :defer t

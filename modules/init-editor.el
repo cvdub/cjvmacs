@@ -159,7 +159,8 @@
   :init
   (global-corfu-mode)
   :custom
-  (corfu-auto t))
+  (corfu-auto t)
+  (corfu-auto-delay 0.33))
 
 (use-package cape
   :init

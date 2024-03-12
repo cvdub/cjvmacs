@@ -464,4 +464,21 @@
          (json-ts-mode . combobulate-mode)
          (tsx-ts-mode . combobulate-mode)))
 
+
+;;;; Profiler
+(use-package profiler
+  :ensure nil
+  :commands (cjv/toggle-map)
+  :bind (:map cjv/toggle-map
+              ("p" . #'cjv/profiler-toggle))
+  :config
+  (defun cjv/profiler-toggle ()
+    "Toggles the profiler."
+    (interactive)
+    (if (profiler-running-p)
+        (progn
+          (profiler-stop)
+          (profiler-report))
+      (call-interactively #'profiler-start))))
+
 (provide 'init-editor)

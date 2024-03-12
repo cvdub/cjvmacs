@@ -21,7 +21,7 @@
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   (fset #'eglot--snippet-expansion-fn #'ignore)
   :custom
-  (eglot-events-buffer-size 200000)
+  (eglot-events-buffer-size 0)
   (eglot-autoshutdown t)
   (eglot-workspace-configuration '(:pyright
                                    (:reportUnusedImport :json-false

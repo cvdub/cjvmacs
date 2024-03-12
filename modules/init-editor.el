@@ -160,7 +160,8 @@
   (global-corfu-mode)
   :custom
   (corfu-auto t)
-  (corfu-auto-delay 0.33))
+  (corfu-auto-delay 0.33)
+  (corfu-on-exact-match 'show))
 
 (use-package cape
   :init

@@ -9,6 +9,7 @@
   :init (pdf-loader-install))
 
 (use-package dired-rsync
+  :defer t
   :bind (:map dired-mode-map
               ("C-c C-r" . dired-rsync)))
 

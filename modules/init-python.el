@@ -33,7 +33,7 @@
 (use-package flymake-ruff
   :ensure (flymake-ruff :host github :repo "erickgnavar/flymake-ruff"
                         :remotes (("fork" :repo "cvdub/flymake-ruff" :protocol ssh)))
-  :after eglot
+  :defer 10
   :hook (eglot-managed-mode . flymake-ruff-load)
   :config
   (defun cjv/filter-eglot-diagnostics (diags)

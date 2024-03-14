@@ -319,9 +319,10 @@
 ;;;; Snippets
 (use-package yasnippet
   :defer 5
-  :init
-  (defvar yas-verbosity 2)
-  (yas-global-mode 1))
+  :config
+  (yas-global-mode 1)
+  :custom
+  (yas-verbosity 2))
 
 (use-package yasnippet-snippets
   :after yasnipped)
@@ -454,8 +455,9 @@
 
 ;;;; Combobulate
 (use-package combobulate
-  :preface (setq combobulate-key-prefix "C-c b")
+  :defer t
   :ensure (combobulate :host github :repo "mickeynp/combobulate")
+  :preface (setq combobulate-key-prefix "C-c b")
   ;; :hook ((python-ts-mode . combobulate-mode)
   ;;        (js-ts-mode . combobulate-mode)
   ;;        (html-ts-mode . combobulate-mode)

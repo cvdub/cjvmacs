@@ -139,6 +139,7 @@
 
 (use-package shr
   :ensure nil
+  :defer t
   :custom
   (shr-use-colors nil)
   (shr-use-fonts t)

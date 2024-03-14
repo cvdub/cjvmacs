@@ -182,9 +182,9 @@
 
 ;;;; Diff HL
 (use-package diff-hl
-  :defer t
+  :defer 5
   :hook (dired-mode . diff-hl-dired-mode-unless-remote)
-  :init
+  :config
   (global-diff-hl-mode)
   :custom
   (diff-hl-disable-on-remote))
@@ -194,6 +194,7 @@
 
 ;;;; Goggles
 (use-package goggles
+  :defer t
   :hook ((prog-mode text-mode) . goggles-mode))
 
 ;;;; Solaire mode

@@ -41,8 +41,18 @@
    '(org-special-keyword ((t (:height .9))))
    '(org-date ((t (:inherit font-lock-comment-face :height .9))))
    '(org-drawer ((t (:height .9))))
-   '(org-block-begin-line ((t (:height .9))))
-   '(org-block-end-line ((t (:height .9))))
+   '(org-block-begin-line ((t (:inherit org-special-keyword
+                                        :height .8
+                                        :background nil
+                                        :underline (:color foreground-color
+                                                           :style line
+                                                           :position t)))))
+   '(org-block-end-line ((t (:inherit org-special-keyword
+                                      :height .8
+                                      :background nil
+                                      :underline (:color foreground-color
+                                                         :style line
+                                                         :position 16)))))
    '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro S")))))
   (custom-declare-face '+org-todo-todo '((t (:inherit (org-todo fixed-pitch) :weight bold))) "")
   (custom-declare-face '+org-todo-done '((t (:inherit (org-done fixed-pitch) :weight bold))) "")

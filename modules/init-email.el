@@ -1,5 +1,6 @@
 (use-package notmuch
   :defer t
+  :commands notmuch-refresh-all-buffers
   :init
   (defvar cjv/email-sync-command "parallel mbsync -V ::: christian@cvdub.net christian@spacebaseapp.com christian@vanderwall.org cvanderwall14@gmail.com && notmuch new")
 

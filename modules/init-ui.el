@@ -16,7 +16,8 @@
 
 ;;;; Font
 (when window-system
-  (set-face-attribute 'default nil :family "Fira Code" :height 140))
+  (set-face-attribute 'default nil :family "Fira Code" :height 140)
+  (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji" :size 11)))
 
 (custom-set-faces
  '(fixed-pitch ((t (:family "Fira Code" :height 140))))

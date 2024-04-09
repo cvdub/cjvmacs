@@ -11,6 +11,15 @@
     (interactive)
     (cjv/with-bottom-window (run-python nil 'project t)))
 
+  ;; Fix for python bug
+  (defun python-pdbtrack-unset-tracked-buffer ()
+    "Untrack currently tracked buffer."
+    (when (and (buffer-live-p python-pdbtrack-tracked-buffer)
+               overlay-arrow-position)
+      (with-current-buffer python-pdbtrack-tracked-buffer
+        (set-marker overlay-arrow-position nil)))
+    (setq python-pdbtrack-tracked-buffer nil))
+
   :custom
   (python-shell-dedicated 'project)
   (python-interpreter "python3")

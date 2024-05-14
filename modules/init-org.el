@@ -201,6 +201,7 @@
                            (deldeadline . "Removed deadline, was %S on %t")
                            (refile . "Refiled on %t")
                            (clock-out . "")))
+  (org-reverse-note-order t)
 
   ;; Enable speed commands, and activate t hem on any of the asterisks
   ;; at the beginning of the line.

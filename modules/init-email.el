@@ -81,7 +81,8 @@
   (notmuch-archive-tags '("-inbox" "-unread"))
   (notmuch-multipart/alternative-discouraged '("text/x-amp-html"
                                                "text/calendar"
-                                               "text/html"))
+                                               "text/html"
+                                               "multipart/related"))
   (notmuch-show-text/html-blocked-images nil)
   ;; (mm-text-html-renderer 'shr)
   ;; (notmuch-show-text/html-blocked-images nil)

@@ -21,7 +21,7 @@
 
 (custom-set-faces
  '(fixed-pitch ((t (:family "Fira Code" :height 140))))
- '(variable-pitch ((t (:family "iA Writer Quattro S" :height 140)))))
+ '(variable-pitch ((t (:family "iA Writer Quattro V" :height 140 :weight medium)))))
 
 ;;;; Theme
 (use-package gruvbox-theme
@@ -54,7 +54,7 @@
                                       :underline (:color foreground-color
                                                          :style line
                                                          :position 16)))))
-   '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro S")))))
+   '(org-quote ((t (:inherit variable-pitch :slant normal :family "iA Writer Quattro V" :weight medium)))))
   (custom-declare-face '+org-todo-todo '((t (:inherit (org-todo fixed-pitch) :weight bold))) "")
   (custom-declare-face '+org-todo-done '((t (:inherit (org-done fixed-pitch) :weight bold))) "")
   (custom-declare-face '+org-todo-onhold '((t (:inherit (font-lock-constant-face org-todo fixed-pitch) :weight bold))) "")

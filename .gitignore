@@ -16,5 +16,5 @@
 /.org-id-locations
 /recentf
 /elpaca
-/forge-database.sqlite
+/forge-database*.sqlite
 *.DS_Store

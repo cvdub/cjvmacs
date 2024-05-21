@@ -53,6 +53,9 @@
 ;; Enable recent files mode
 (add-hook 'elpaca-after-init-hook #'recentf-mode)
 
+;; Disable scratch message
+(setq initial-scratch-message nil)
+
 (defun cjv/fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."
   (interactive)

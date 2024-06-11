@@ -19,3 +19,4 @@
 /forge-database*.sqlite
 *.DS_Store
 /elpa/
+/.authinfo.gpg

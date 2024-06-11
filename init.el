@@ -104,5 +104,5 @@
 (require 'init-docker)
 (require 'init-tools)
 (require 'init-spelling)
-(require 'init-copilot)
+(require 'init-ai)
 (require 'init-ledger)

@@ -69,4 +69,9 @@
 
 (global-set-key (kbd "C-c t") cjv/toggle-map)
 
+(defvar cjv/ai-map (make-sparse-keymap)
+  "Keymap for AI related commands.")
+
+(global-set-key (kbd "C-c a") cjv/ai-map)
+
 (provide 'init-keybindings)

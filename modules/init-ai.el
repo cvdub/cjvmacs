@@ -9,4 +9,9 @@
               ("C-<tab>" . #'copilot-accept-completion-by-word)
               ("C-TAB" . #'copilot-accept-completion-by-word)))
 
-(provide 'init-copilot)
+(use-package gptel
+  :bind (:map cjv/ai-map
+        ("g" . #'gptel))
+  :custom (gptel-default-mode 'org-mode))
+
+(provide 'init-ai)

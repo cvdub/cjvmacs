@@ -11,7 +11,9 @@
 
 (use-package gptel
   :bind (:map cjv/ai-map
-        ("g" . #'gptel))
-  :custom (gptel-default-mode 'org-mode))
+              ("g" . #'gptel))
+  :custom
+  (gptel-default-mode 'org-mode)
+  (gptel-model "gpt-4o"))
 
 (provide 'init-ai)

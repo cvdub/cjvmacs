@@ -1,7 +1,8 @@
 (use-package notmuch
-  :defer t
   :commands notmuch-refresh-all-buffers
   :init
+  (setq mail-user-agent 'notmuch-user-agent)
+
   (defvar cjv/email-sync-command "parallel mbsync -V ::: christian@cvdub.net christian@spacebaseapp.com christian@vanderwall.org cvanderwall14@gmail.com && notmuch new")
 
   (defun cjv/notmuch-inbox ()
@@ -63,6 +64,16 @@
       (when (re-search-forward "To: \\([^<]+\\) <.*>$" nil t)
         (car (split-string (match-string-no-properties 1))))))
 
+  (defun cjv/message-cite-function ()
+    (let ((bindings (if (symbolp message-cite-style)
+	                      (symbol-value message-cite-style)
+	                    message-cite-style)))
+      (cl-progv (mapcar #'car bindings)
+          (mapcar (lambda (binding) (eval (cadr binding) t)) bindings)
+        (message-cite-original))))
+
+  (setq notmuch-mua-cite-function #'cjv/message-cite-function)
+
   :custom
   (message-directory "~/.mail/")
   (message-send-mail-function 'message-send-mail-with-sendmail)
@@ -110,33 +121,35 @@
            nil ;; No organization header
            (("Fcc" . "christian@cvdub.net/Sent -inbox -unread -new +sent"))
            nil ;; No extra body text
-           "~/.signature")
+           "~/.mail/christian@cvdub.net/.signature")
           ("christian@spacebaseapp.com"
            nil ;; Does not refer to any other identity
            "Christian Vanderwall <christian@spacebaseapp.com>"
            "Spacebase"
            (("Fcc" . "christian@spacebaseapp.com/Sent -inbox -unread -new +sent"))
            nil ;; No extra body text
-           "~/.signature")
+           "~/.mail/christian@spacebaseapp.com/.signature")
           ("cvanderwall14@gmail.com"
            nil ;; Does not refer to any other identity
            "Christian Vanderwall <cvanderwall14@gmail.com>"
            nil ;; No organization header
            (("Fcc" . "cvanderwall14@gmail.com/Sent -inbox -unread -new +sent"))
            nil ;; No extra body text
-           "~/.signature")
+           "~/.mail/cvanderwall14@gmail.com/.signature")
           ("christian@vanderwall.org"
            nil ;; Does not refer to any other identity
            "Christian Vanderwall <christian@vanderwall.org>"
            nil ;; No organization header
            (("Fcc" . "christian@vanderwall.org/Sent -inbox -unread -new +sent"))
            nil ;; No extra body text
-           "~/.signature"))
+           "~/.mail/christian@vanderwall.org/.signature"))
         gnus-alias-identity-rules
         '(("christian@cvdub.net" ("any" "christian@cvdub.net" both) "christian@cvdub.net")
           ("christian@spacebaseapp.com" ("any" "christian@spacebaseapp.com" both) "christian@spacebaseapp.com")
           ("cvanderwall14@gmail.com" ("any" "cvanderwall14@gmail.com" both) "cvanderwall14@gmail.com")
-          ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org"))))
+          ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org")))
+
+  (add-hook 'message-setup-hook 'gnus-alias-determine-identity))
 
 (use-package shr
   :ensure nil

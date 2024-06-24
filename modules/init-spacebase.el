@@ -12,10 +12,10 @@
   "Select a Spacebase server URL by name."
   (cdr (assoc (spacebase/get-server-name) spacebase/servers)))
 
-(defun spacebase/server-deploy (prefix-arg)
+(defun spacebase/server-deploy (prefix-arg &optional prompt-for-task)
   "Runs an async deploy command for Spacebase."
   (interactive "P")
-  (let* ((prompt-for-task prefix-arg)
+  (let* ((skip-assets prefix-arg)
          (default-directory (expand-file-name "provisioning/" spacebase/directory))
 
          (playbook "webservers.yml")
@@ -23,8 +23,12 @@
          (output-buffer (format "*deploy: %s*" host))
          (branch (completing-read "Select branch: " (magit-list-local-branch-names)
                                   nil t nil nil "master"))
-         (command (format "ansible-playbook %s -i hosts/%s --extra-vars \"git_branch=%s\""
-                          playbook host branch))
+         (extra-vars (list (format "git_branch=%s" branch)))
+         (extra-vars (if skip-assets
+                         (cons "skip_assets=true" extra-vars)
+                       extra-vars))
+         (extra-vars (string-join extra-vars " "))
+         (command (format "ansible-playbook %s -i hosts/%s --extra-vars \"%s\"" playbook host extra-vars))
          (command (if prompt-for-task
                       (format "%s --start-at-task=\"%s\"" command (read-string "Start at task: "))
                     command)))
@@ -32,6 +36,11 @@
                        output-buffer
                        command
                        :alert "Deploy complete!")))
+
+(defun spacebase/server-deploy-from-task (prefix-arg)
+  "Runs an async deploy command for Spacebase, starting from a specific task."
+  (interactive "P")
+  (spacebase/server-deploy prefix-arg t))
 
 (defun spacebase/rebuild-test-db ()
   "Regenerates Spacebase test databases."
@@ -165,6 +174,7 @@
 
 (bind-key (kbd "s") cjv/spacebase-map cjv/my-map)
 (bind-key (kbd "d") #'spacebase/server-deploy cjv/spacebase-map)
+(bind-key (kbd "D") #'spacebase/server-deploy-from-task cjv/spacebase-map)
 (bind-key (kbd "u") #'spacebase/update-local-db cjv/spacebase-map)
 (bind-key (kbd "t") #'spacebase/rebuild-test-db cjv/spacebase-map)
 (bind-key (kbd "l") #'spacebase/open-logs cjv/spacebase-map)

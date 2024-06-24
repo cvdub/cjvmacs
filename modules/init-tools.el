@@ -5,8 +5,8 @@
   (ansible-vault-password-file nil))
 
 (use-package pdf-tools
-  :defer t
-  :init (pdf-loader-install))
+  :defer 5
+  :init (pdf-tools-install))
 
 (use-package dired-rsync
   :defer t

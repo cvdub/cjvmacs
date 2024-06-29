@@ -3,6 +3,14 @@
   :mode ("\\.csv.rules\\'" . ledger-mode)
   :bind (:map ledger-mode-map
               ("C-c C-e" . #'cjv/ledger-toggle-current-transaction-dwim))
+
+  :init
+  (defvar cjv/ledger-import-files-directory
+    "/Users/cjv/Documents/personal/finance/ledger/import/files")
+
+  (defvar cjv/ledger-import-files-regex
+    "\\(Chase[0-9]+_Activity.*\\|Transaction\\|activity\\)\\.csv")
+
   :config
   (defun cjv/ledger-toggle-transactions-in-region (beg end)
     "Clears all transactions in region from BEG to END."
@@ -23,6 +31,16 @@
     (if (region-active-p)
         (cjv/ledger-toggle-transactions-in-region (region-beginning) (region-end))
       (ledger-toggle-current-transaction)))
+
+  (defun cjv/ledger-move-import-files ()
+    "Moves import files from Downloads to ledger files directory."
+    (interactive)
+    (dolist (file (directory-files "~/Downloads/" t))
+      (message file)
+      (let ((filename (file-name-nondirectory file)))
+        (when (string-match cjv/ledger-import-files-regex filename)
+          (rename-file file (expand-file-name (cjv/append-date-to-filename filename)
+                                              cjv/ledger-import-files-directory))))))
 
   :custom
   (ledger-binary-path "hl")

@@ -94,4 +94,12 @@ Optionally, displays a MESSAGE or ALERT on completion."
   (shell-command
    (format "sftp \"%s\" <<< $\'put \"%s\"\'" dest file)))
 
+(defun cjv/append-date-to-filename (filename)
+  "Append the current date in YYYY-MM-DD format to FILENAME."
+  (let* ((current-date (format-time-string "%Y-%m-%d"))
+         (base (file-name-sans-extension filename))
+         (ext (file-name-extension filename))
+         (ext (if ext (concat "." ext) "")))
+    (format "%s-%s%s" base current-date ext)))
+
 (provide 'init-utils)

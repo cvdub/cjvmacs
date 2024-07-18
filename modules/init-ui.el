@@ -44,13 +44,13 @@
    '(org-drawer ((t (:height .9))))
    '(org-block-begin-line ((t (:inherit org-special-keyword
                                         :height .8
-                                        :background nil
+                                        :background unspecified
                                         :underline (:color foreground-color
                                                            :style line
                                                            :position t)))))
    '(org-block-end-line ((t (:inherit org-special-keyword
                                       :height .8
-                                      :background nil
+                                      :background unspecified
                                       :underline (:color foreground-color
                                                          :style line
                                                          :position 16)))))

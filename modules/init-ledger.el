@@ -54,6 +54,7 @@
                     ("bs" "%(binary) -f %(ledger-file) bs -V")
                     ("checking" "%(binary) -f %(ledger-file) bs 'joint checking' credit")
                     ("is" "%(binary) -f %(ledger-file) is")
+                    ("expenses" "%(binary) -f %(ledger-file) is -b '2 months ago' -M -S -2")
                     ("reg" "%(binary) -f %(ledger-file) reg")
                     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
                     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))

@@ -241,4 +241,17 @@
 ;;   :hook (prog-mode . rainbow-mode)
 ;;   )
 
+;;;; Indent bars
+(use-package indent-bars
+  :ensure (indent-bars :host github :repo "jdtsmith/indent-bars")
+  :bind (:map cjv/toggle-map
+              ("i" . #'indent-bars-mode))
+  :config
+  (require 'indent-bars-ts)
+  :custom
+  (indent-bars-treesit-support t)
+  (indent-bars-treesit-ignore-blank-lines-types '("module"))
+  (indent-bars-treesit-scope '((python function_definition class_definition for_statement
+	                                     if_statement with_statement while_statement))))
+
 (provide 'init-ui)

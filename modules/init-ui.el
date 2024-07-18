@@ -254,4 +254,9 @@
   (indent-bars-treesit-scope '((python function_definition class_definition for_statement
 	                                     if_statement with_statement while_statement))))
 
+;;;; Info colors
+(use-package info-colors
+  :ensure (info-colors :host github :repo "ubolonton/info-colors")
+  :config (add-hook 'Info-selection-hook 'info-colors-fontify-node))
+
 (provide 'init-ui)

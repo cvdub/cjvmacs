@@ -99,6 +99,28 @@
 
   (setq notmuch-mua-cite-function #'cjv/message-cite-function)
 
+  (defun cjv/notmuch-search-show-thread-maybe-new-window (&rest args)
+    "Create a new window and switch to it if there is only one window open."
+    (when (= (length (window-list)) 1)
+      (split-window-right)
+      (other-window 1)))
+
+  (advice-add 'notmuch-search-show-thread
+              :before #'cjv/notmuch-search-show-thread-maybe-new-window)
+
+  (defun cjv/notmuch-bury-or-kill-this-buffer-maybe-delete-window ()
+    "Delete window after killing notmuch-show buffer if notmuch-search is open in the other window."
+    (when (and (= (length (window-list)) 2)
+               (seq-some (lambda (window)
+                           (unless (eq window (selected-window))
+                             (with-selected-window window
+                               (eq major-mode 'notmuch-search-mode))))
+                         (window-list)))
+      (delete-window)))
+
+  (advice-add 'notmuch-bury-or-kill-this-buffer
+              :after #'cjv/notmuch-bury-or-kill-this-buffer-maybe-delete-window)
+
   :custom
   (message-directory "~/.mail/")
   (message-send-mail-function 'message-send-mail-with-sendmail)

@@ -28,6 +28,29 @@
          nil
          'local))))
 
+  (defconst cjv/message-cite-style-gmail
+    '((message-cite-function  'message-cite-original)
+      (message-citation-line-function  'message-insert-formatted-citation-line)
+      (message-cite-reply-position 'above)
+      (message-yank-prefix  "    ")
+      (message-yank-cited-prefix  "    ")
+      (message-yank-empty-prefix  "    ")
+      (message-citation-line-format "On %a, %b %e, %Y at %R %p %f wrote:\n"))
+    "Message citation style used by Gmail.  Use with `message-cite-style'.")
+
+  ;; On Mon, Jul 1, 2024 at 8:10 AM Willms, Beverly <Beverly.Willms@united.com> wrote:
+
+  (defun cjv/toggle-message-cite-style ()
+    "Toggle message-cite-style between bottom posting and gmail."
+    (interactive)
+    (if message-cite-style
+        (progn
+          (message "Message cite style switched to: bottom posting")
+          (setq message-cite-style nil))
+      (progn
+        (message "Message cite style switched to: Gmail")
+        (setq message-cite-style 'cjv/message-cite-style-gmail))))
+
   :hook ((notmuch-show-mode . mixed-pitch-mode)
          (notmuch-message-mode . mixed-pitch-mode)
          (notmuch-message-mode . visual-line-mode)
@@ -36,7 +59,9 @@
               ("m" . #'cjv/notmuch-inbox)
               ("M" . #'cjv/update-email)
               :map notmuch-show-mode-map
-              ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message))
+              ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message)
+              :map cjv/toggle-map
+              ("m" . #'cjv/toggle-message-cite-style))
   :config
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
   (add-hook 'message-send-hook #'notmuch-mua-attachment-check)

@@ -3,7 +3,7 @@
   :init
   (setq mail-user-agent 'notmuch-user-agent)
 
-  (defvar cjv/email-sync-command "parallel mbsync -V ::: christian@cvdub.net christian@spacebaseapp.com christian@vanderwall.org cvanderwall14@gmail.com && notmuch new")
+  (defvar cjv/email-sync-command "mbsync -a && notmuch new")
 
   (defun cjv/notmuch-inbox ()
     "Opens the notmuch inbox."

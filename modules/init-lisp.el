@@ -10,8 +10,6 @@
   :defer t
   :custom (inferior-lisp-program "sbcl"))
 
-(add-hook 'emacs-lisp-mode-hook #'flymake-mode)
-
 (use-package sly
   :defer t
   :bind (:map sly-mode-map
@@ -24,5 +22,7 @@
      (if (sly-connected-p)
          (sly-mrepl)
        (sly)))))
+
+(add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 
 (provide 'init-lisp)

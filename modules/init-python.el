@@ -23,8 +23,7 @@
   :custom
   (python-shell-dedicated 'project)
   (python-interpreter "python3")
-  (python-indent-guess-indent-offset-verbose nil)
-  (python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-")))
+  (python-indent-guess-indent-offset-verbose nil))
 
 (use-package pyvenv
   :defer 5
@@ -44,14 +43,17 @@
                         :remotes (("fork" :repo "cvdub/flymake-ruff" :protocol ssh)))
   :defer 10
   :hook (eglot-managed-mode . flymake-ruff-load)
+  ;; :custom
+  ;; (flymake-ruff-program-args ("check" "-" "--output-format" "concise" "--exit-zero" "--quiet"))
   :config
-  (defun cjv/filter-eglot-diagnostics (diags)
-    "Drop Pyright variable not accessed notes."
-    (list (seq-remove (lambda (d)
-                        (and (eq (flymake-diagnostic-type d) 'eglot-note)
-                             (s-starts-with? "Pyright:" (flymake-diagnostic-text d))
-                             (s-ends-with? "is not accessed" (flymake-diagnostic-text d))))
-                      (car diags))))
-  (advice-add 'eglot--report-to-flymake :filter-args #'cjv/filter-eglot-diagnostics))
+  ;; (defun cjv/filter-eglot-diagnostics (diags)
+  ;;   "Drop Pyright variable not accessed notes."
+  ;;   (list (seq-remove (lambda (d)
+  ;;                       (and (eq (flymake-diagnostic-type d) 'eglot-note)
+  ;;                            (s-starts-with? "Pyright:" (flymake-diagnostic-text d))
+  ;;                            (s-ends-with? "is not accessed" (flymake-diagnostic-text d))))
+  ;;                     (car diags))))
+  ;; (advice-add 'eglot--report-to-flymake :filter-args #'cjv/filter-eglot-diagnostics)
+  )
 
 (provide 'init-python)

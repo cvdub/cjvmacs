@@ -267,6 +267,7 @@
       "* TODO %i%?\n- %a")))
 
   ;; Agenda
+  (org-agenda-tags-column -120)
   (org-agenda-window-setup 'current-window)
   (org-agenda-sorting-strategy '((agenda habit-down time-up scheduled-up priority-down)
                                  (todo priority-down category-keep)

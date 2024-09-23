@@ -59,7 +59,8 @@
               ("m" . #'cjv/notmuch-inbox)
               ("M" . #'cjv/update-email)
               :map notmuch-show-mode-map
-              ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message)
+              ;; ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message)
+              ;; ("q" . #'cjv/notmuch-bury-or-kill-this-buffer-maybe-delete-window)
               :map cjv/toggle-map
               ("m" . #'cjv/toggle-message-cite-style))
   :config
@@ -105,21 +106,36 @@
       (split-window-right)
       (other-window 1)))
 
-  (advice-add 'notmuch-search-show-thread
-              :before #'cjv/notmuch-search-show-thread-maybe-new-window)
+  ;; (advice-add 'notmuch-search-show-thread
+  ;;             :before #'cjv/notmuch-search-show-thread-maybe-new-window)
 
   (defun cjv/notmuch-bury-or-kill-this-buffer-maybe-delete-window ()
     "Delete window after killing notmuch-show buffer if notmuch-search is open in the other window."
+    (interactive)
+    (notmuch-bury-or-kill-this-buffer)
     (when (and (= (length (window-list)) 2)
                (seq-some (lambda (window)
                            (unless (eq window (selected-window))
                              (with-selected-window window
                                (eq major-mode 'notmuch-search-mode))))
                          (window-list)))
-      (delete-window)))
+      (delete-window)
+      (notmuch-refresh-this-buffer)))
 
-  (advice-add 'notmuch-bury-or-kill-this-buffer
-              :after #'cjv/notmuch-bury-or-kill-this-buffer-maybe-delete-window)
+  (defun cjv/notmuch-show-archive-message-refresh-notmuch-search ()
+    "Refresh notmuch-search buffer after archiving a message."
+    (walk-windows
+     (lambda (window)
+       (with-current-buffer (window-buffer window)
+         (when (eq major-mode 'notmuch-search-mode)
+           (notmuch-refresh-this-buffer))))))
+
+  ;; (advice-add 'notmuch-show-archive-message-then-next-or-next-thread
+  ;;             :after #'cjv/notmuch-show-archive-message-refresh-notmuch-search)
+
+  (add-to-list 'display-buffer-alist
+               '((major-mode . notmuch-show-mode)
+                 (inhibit-same-window . t)))
 
   :custom
   (message-directory "~/.mail/")

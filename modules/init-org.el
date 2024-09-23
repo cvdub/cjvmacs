@@ -1,5 +1,5 @@
 (use-package org
-  :ensure nil
+  :ensure t
   :defer t
   :commands (cjv/org-open-agenda
              cjv/org-open-work-todo-file

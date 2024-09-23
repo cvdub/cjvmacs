@@ -214,7 +214,7 @@
 
 ;;;; Dashboard
 (use-package dashboard
-  :ensure (dashboard :host github :repo "emacs-dashboard/emacs-dashboard"
+  :ensure (dashboard :fetcher github :repo "emacs-dashboard/emacs-dashboard"
                      :remotes (("fork" :repo "cvdub/emacs-dashboard" :protocol ssh)))
   :config
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
@@ -243,7 +243,7 @@
 
 ;;;; Indent bars
 (use-package indent-bars
-  :ensure (indent-bars :host github :repo "jdtsmith/indent-bars")
+  :ensure (indent-bars :fetcher github :repo "jdtsmith/indent-bars")
   :bind (:map cjv/toggle-map
               ("i" . #'indent-bars-mode))
   :config
@@ -256,7 +256,7 @@
 
 ;;;; Info colors
 (use-package info-colors
-  :ensure (info-colors :host github :repo "ubolonton/info-colors")
+  :ensure (info-colors :fetcher github :repo "ubolonton/info-colors")
   :config (add-hook 'Info-selection-hook 'info-colors-fontify-node))
 
 (provide 'init-ui)

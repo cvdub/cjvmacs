@@ -70,7 +70,7 @@
 
 ;;;; Lorem ipsum
 (use-package lorem-ipsum
-  :ensure (lorem-ipsum :host github :repo "jschaf/emacs-lorem-ipsum"
+  :ensure (lorem-ipsum :fetcher github :repo "jschaf/emacs-lorem-ipsum"
                        :remotes (("fork" :repo "cvdub/emacs-lorem-ipsum" :protocl ssh)))
   :defer t)
 
@@ -400,7 +400,7 @@
 
 ;;;; Explain Pause Mode
 ;; (use-package explain-pause-mode
-;;   :ensure (explain-pause-mode :host github :repo "lastquestion/explain-pause-mode")
+;;   :ensure (explain-pause-mode :fetcher github :repo "lastquestion/explain-pause-mode")
 ;;   :config
 ;;   (explain-pause-mode))
 
@@ -459,7 +459,7 @@
 ;;;; Combobulate
 (use-package combobulate
   :defer t
-  :ensure (combobulate :host github :repo "mickeynp/combobulate")
+  :ensure (combobulate :fetcher github :repo "mickeynp/combobulate")
   :preface (setq combobulate-key-prefix "C-c b")
   ;; :hook ((python-ts-mode . combobulate-mode)
   ;;        (js-ts-mode . combobulate-mode)

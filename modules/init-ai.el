@@ -1,6 +1,6 @@
 (use-package copilot
-  :ensure (:host github :repo "zerolfx/copilot.el"
-                 :files ("dist" "*.el"))
+  :ensure (:fetcher github :repo "zerolfx/copilot.el"
+                    :files ("dist" "*.el"))
   :defer t
   ;; :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map

@@ -40,7 +40,7 @@
               ("t" . #'python-pytest-dispatch)))
 
 (use-package flymake-ruff
-  :ensure (flymake-ruff :host github :repo "erickgnavar/flymake-ruff"
+  :ensure (flymake-ruff :fetcher github :repo "erickgnavar/flymake-ruff"
                         :remotes (("fork" :repo "cvdub/flymake-ruff" :protocol ssh)))
   :defer 10
   :hook (eglot-managed-mode . flymake-ruff-load)

@@ -369,7 +369,7 @@
   (org-journal-dir (expand-file-name "journal/" org-directory)))
 
 (use-package ol-notmuch
-  :defer t)
+  :ensure (ol-notmuch :fetcher github :repo "tarsius/ol-notmuch"))
 
 (defun cjv/org-capture-place-template-dont-delete-windows (oldfun &rest args)
   (cl-letf (((symbol-function 'delete-other-windows) 'ignore))

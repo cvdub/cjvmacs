@@ -388,15 +388,18 @@
 (use-package apheleia
   :init (apheleia-global-mode +1)
   :config
-  (push '(djlint . ("djlint"
-                    filepath
-                    "--reformat"
-                    "--format-css"
-                    "--format-js"
-                    "--quiet"
-                    "--profile"
-                    "django"))
-        apheleia-formatters))
+  (dolist (formatter
+           '((djlint . ("djlint"
+                        filepath
+                        "--reformat"
+                        "--format-css"
+                        "--format-js"
+                        "--quiet"
+                        "--profile"
+                        "django"))
+             (ruff-sort-imports . ("ruff" "check" "-" "--select" "I" "--fix" "--quiet"))
+             (ruff . ("ruff" "format" "-" "--quiet"))))
+    (push formatter apheleia-formatters)))
 
 ;;;; Explain Pause Mode
 ;; (use-package explain-pause-mode

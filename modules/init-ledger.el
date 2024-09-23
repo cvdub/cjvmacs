@@ -36,11 +36,14 @@
     "Moves import files from Downloads to ledger files directory."
     (interactive)
     (dolist (file (directory-files "~/Downloads/" t))
-      (message file)
-      (let ((filename (file-name-nondirectory file)))
+      (let ((filename (file-name-nondirectory file))
+            (num-moved 0))
+        (message "%s" num-moved)
         (when (string-match cjv/ledger-import-files-regex filename)
           (rename-file file (expand-file-name (cjv/append-date-to-filename filename)
-                                              cjv/ledger-import-files-directory))))))
+                                              cjv/ledger-import-files-directory))
+          (cl-incf num-moved))
+        (message "Moved %s file(s)" num-moved))))
 
   :custom
   (ledger-binary-path "hl")

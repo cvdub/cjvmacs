@@ -27,6 +27,10 @@
   (sly-auto-start 'always)
   (sly-command-switch-to-existing-lisp 'always))
 
+(use-package sly-asdf
+  :after sly
+  :init
+  (add-to-list 'sly-contribs 'sly-asdf 'append))
 
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 

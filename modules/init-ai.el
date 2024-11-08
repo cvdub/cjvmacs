@@ -14,6 +14,6 @@
               ("g" . #'gptel))
   :custom
   (gptel-default-mode 'org-mode)
-  (gptel-model "gpt-4o-mini"))
+  (gptel-model 'gpt-4o-mini))
 
 (provide 'init-ai)

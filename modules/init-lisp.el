@@ -18,10 +18,15 @@
   (defun cjv/lisp-open-repl ()
     "Opens sly REPL in a bottom side window."
     (interactive)
+    (sly-mrepl)
     (cjv/with-bottom-window
      (if (sly-connected-p)
-         (sly-mrepl)
-       (sly)))))
+         (switch-to-buffer-other-window (sly-mrepl #'display-buffer))
+       (sly))))
+  :custom
+  (sly-auto-start 'always)
+  (sly-command-switch-to-existing-lisp 'always))
+
 
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 

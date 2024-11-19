@@ -165,18 +165,18 @@
 
   ;; Shortcuts
   (defun cjv/org-open-agenda ()
-    (interactive)
     "Open custom org agenda."
+    (interactive)
     (org-agenda nil "b"))
 
   (defun cjv/org-open-work-todo-file ()
-    (interactive)
     "Open work todo file."
+    (interactive)
     (find-file "~/Documents/org/work.org"))
 
   (defun cjv/org-open-personal-todo-file ()
-    (interactive)
     "Open personal todo file."
+    (interactive)
     (find-file "~/Documents/org/home.org"))
 
   :custom

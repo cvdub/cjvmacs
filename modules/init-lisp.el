@@ -29,8 +29,9 @@
 
 (use-package sly-asdf
   :after sly
-  :init
-  (add-to-list 'sly-contribs 'sly-asdf 'append))
+  :init (add-to-list 'sly-contribs 'sly-asdf 'append)
+  :bind (:map sly-mode-map
+              ("C-c c l" . #'sly-asdf-load-system)))
 
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 

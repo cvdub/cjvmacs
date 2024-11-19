@@ -309,11 +309,6 @@
                 (org-agenda-dim-blocked-tasks 'nil)
                 (org-habit-show-habits nil)
                 (org-agenda-files '("~/Documents/org/work.org"))))
-       (todo "TODO"
-             ((org-agenda-overriding-header "\nWork Tasks")
-              (org-agenda-files '("~/Documents/org/work.org"))
-              (org-agenda-dim-blocked-tasks 'nil)
-              (org-agenda-skip-function 'cjv/org-agenda-skip-function)))
        (agenda ""
                ((org-agenda-overriding-header "\nHome Agenda")
                 (org-agenda-span 1)
@@ -321,6 +316,11 @@
                 (org-agenda-dim-blocked-tasks 'nil)
                 (org-habit-show-habits nil)
                 (org-agenda-files '("~/Documents/org/home.org"))))
+       (todo "TODO"
+             ((org-agenda-overriding-header "\nWork Tasks")
+              (org-agenda-files '("~/Documents/org/work.org"))
+              (org-agenda-dim-blocked-tasks 'nil)
+              (org-agenda-skip-function 'cjv/org-agenda-skip-function)))
        (todo "TODO"
              ((org-agenda-overriding-header "\nHome Tasks")
               (org-agenda-files '("~/Documents/org/home.org"))

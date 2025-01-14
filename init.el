@@ -19,9 +19,6 @@ not started from a shell."
   "Removes MINOR-MODE from minor-mode-alist."
   (setq minor-mode-alist (assq-delete-all minor-mode minor-mode-alist)))
 
-(defvar user-emacs-cache-directory (expand-file-name ".local/cache/" user-emacs-directory)
-  "Directory for emacs cache files.")
-
 ;; Packages
 (use-package package
   :config (package-initialize)
@@ -29,7 +26,7 @@ not started from a shell."
   (package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 		      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 		      ("melpa" . "https://melpa.org/packages/")))
-  (package-user-dir (expand-file-name "packages/" user-emacs-directory))
+  (package-user-dir (expand-file-name "packages/" user-emacs-local-directory))
   (package-native-compile t))
 
 ;; Emacs
@@ -54,6 +51,22 @@ not started from a shell."
   (kept-old-versions 2)
   (create-lockfiles nil))
 
+(use-package bookmark
+  :custom
+  (bookmark-file (expand-file-name "bookmarks" user-emacs-local-directory)))
+
+(use-package project
+  :defer t
+  :custom
+  (project-list-file (expand-file-name "projects" user-emacs-local-directory)))
+
+(use-package transient
+  :defer t
+  :custom
+  (transient-history-file (expand-file-name "transient/history.el" user-emacs-local-directory))
+  (transient-levels-file (expand-file-name "transient/levels.el" user-emacs-local-directory))
+  (transient-values-file (expand-file-name "transient/values.el" user-emacs-local-directory)))
+
 ;; UI
 (use-package emacs
   :custom
@@ -71,6 +84,7 @@ not started from a shell."
     (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji" :size 11))))
 
 (use-package modus-themes
+  :ensure t
   :after faces
   :config
   (message "Loaded modus!")
@@ -140,7 +154,8 @@ not started from a shell."
   :custom
   (savehist-mode t)
   (savehist-autosave-interval 60)
-  (savehist-additional-variables '(search-ring regexp-search-ring)))
+  (savehist-additional-variables '(search-ring regexp-search-ring))
+  (savehist-file (expand-file-name "history" user-emacs-cache-directory)))
 
 (use-package recentf
   :custom
@@ -172,3 +187,14 @@ not started from a shell."
 (use-package elec-pair
   :custom
   (electric-pair-mode t))
+
+;; Tools
+(use-package eshell
+  :defer t
+  :custom
+  (eshell-directory-name (expand-file-name "eshell/" user-emacs-cache-directory)))
+
+(use-package tramp
+  :defer t
+  :custom
+  (tramp-persistency-file-name (expand-file-name "tramp" user-emacs-local-directory)))

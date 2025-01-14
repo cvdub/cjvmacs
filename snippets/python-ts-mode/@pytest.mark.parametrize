@@ -1,8 +1,0 @@
-# key: @p
-# name: @pytest.mark.parametrize
-# --
-@pytest.mark.parametrize("$1",
-  (
-    ($0),
-  )
-)

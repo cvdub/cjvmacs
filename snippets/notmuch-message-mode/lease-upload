@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: lease-upload
-# key: lease-upload
-# --
-Hi $0`(cjv/message-recipient-first-name)`,
-
-I uploaded the attached document${1:$$(yas-choose-value '("s" ""))} to Spacebase and assigned ${1:$(if (string= yas-text "") "it" "them")} to our abstraction team. We'll let you know as soon as the update is complete.
-
-Thanks!

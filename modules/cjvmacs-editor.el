@@ -45,6 +45,10 @@
   (kept-old-versions 2)
   (create-lockfiles nil))
 
+(use-package auth-source
+  :defer t
+  :custom (auth-sources (list (expand-file-name "authinfo.gpg" user-emacs-local-directory))))
+
 (use-package bookmark
   :custom
   (bookmark-file (expand-file-name "bookmarks" user-emacs-local-directory)))

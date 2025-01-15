@@ -25,7 +25,7 @@
 
 (use-package cus-edit
   :config
-  (load custom-file t)
+  (add-hook 'after-init-hook (lambda () (load custom-file t)))
   :custom
   (custom-file (expand-file-name "custom.el" user-emacs-directory))
   (user-mail-address "christian@cvdub.net"))

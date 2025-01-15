@@ -24,9 +24,10 @@
 ;;; Code:
 
 (use-package emacs
+  :bind ("C-+" . #'global-text-scale-adjust)
   :custom
   (tool-bar-mode nil)
-  (ring-bell-function 'silent)
+  (ring-bell-function 'ignore)
   (use-short-answers t)
   (use-dialog-box nil))
 
@@ -40,16 +41,30 @@
 
 (use-package modus-themes
   :ensure t
-  :after faces
   :config
-  (modus-themes-load-theme 'modus-vivendi)
+  (modus-themes-load-theme 'modus-vivendi-deuteranopia)
+  (with-eval-after-load 'org
+    (set-face-attribute 'org-todo nil :inherit 'fixed-pitch :weight 'bold :foreground (modus-themes-get-color-value 'red-faint))
+    (set-face-attribute 'org-checkbox-statistics-todo nil :height 0.7 :foreground (modus-themes-get-color-value 'fg-dim))
+    (set-face-attribute 'org-drawer nil :height 0.8)
+    (set-face-attribute 'org-property-value nil :inherit 'variable-pitch :height 0.9))
   :custom
   (modus-themes-mixed-fonts t)
-  (modus-themes-variable-pitch-ui t))
+  (modus-themes-variable-pitch-ui t)
+  (modus-themes-headings '((0 . (1.5))
+                           (1 . (1.25))
+                           (2 . (1.25))
+                           (t . (1.1 semibold))))
+  (modus-themes-common-palette-overrides '((fg-heading-0 fg-alt)
+                                           (fg-heading-1 cyan-faint)
+                                           (fg-heading-2 blue-faint)
+                                           (fg-heading-3 fg-alt)
+                                           (fringe unspecified))))
 
 (use-package custom
   :custom
-  (custom-enabled-themes '(modus-vivendi)))
+  (custom-safe-themes t)
+  (custom-enabled-themes '(modus-vivendi-deuteranopia)))
 
 (use-package frame
   :custom

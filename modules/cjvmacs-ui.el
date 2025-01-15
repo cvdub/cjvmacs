@@ -29,7 +29,8 @@
   (tool-bar-mode nil)
   (ring-bell-function 'ignore)
   (use-short-answers t)
-  (use-dialog-box nil))
+  (use-dialog-box nil)
+  (fill-column 100))
 
 (use-package faces
   :config
@@ -77,6 +78,11 @@
 (use-package hl-line
   :custom
   (global-hl-line-mode t))
+
+(use-package visual-fill-column
+  :ensure t
+  :defer t
+  :hook (text-mode . visual-line-fill-column-mode))
 
 (provide 'cjvmacs-ui)
 

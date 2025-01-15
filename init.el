@@ -61,6 +61,7 @@ not started from a shell."
 (require 'cjvmacs-tools)
 (require 'cjvmacs-org)
 (require 'cjvmacs-email)
+(require 'cjvmacs-python)
 
 (setq elisp-flymake-byte-compile-load-path load-path)
 

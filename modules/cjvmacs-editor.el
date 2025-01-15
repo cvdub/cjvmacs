@@ -90,6 +90,13 @@
   :custom
   (hs-isearch-open nil))
 
+(use-package treesit
+  :custom
+  (treesit-extra-load-path (list (expand-file-name "tree-sitter"
+                                                   user-emacs-local-directory)))
+  (treesit-language-source-alist '((python
+                                   "https://github.com/tree-sitter/tree-sitter-python"))))
+
 (provide 'cjvmacs-editor)
 
 ;;; cjvmacs-editor.el ends here

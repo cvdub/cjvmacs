@@ -55,21 +55,20 @@ not started from a shell."
 
 ;; Load modules
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
+(require 'cjvmacs-utils)
+(require 'cjvmacs-keybindings)
 (require 'cjvmacs-ui)
 (require 'cjvmacs-editor)
 (require 'cjvmacs-completion)
 (require 'cjvmacs-tools)
+(require 'cjvmacs-ai)
 (require 'cjvmacs-org)
 (require 'cjvmacs-email)
 (require 'cjvmacs-python)
-(require 'cjvmacs-ai)
+(require 'cjvmacs-html)
+(require 'cjvmacs-js)
+(require 'cjvmacs-lisp)
 
 (setq elisp-flymake-byte-compile-load-path load-path)
 
 ;;; init.el ends here
-
-
-
-
-
-

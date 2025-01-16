@@ -23,7 +23,6 @@
 ;; Python config for CJVmacs
 
 ;;; Code:
-(use-package eglot)
 
 (use-package python
   :hook (python-ts-mode . eglot-ensure)
@@ -38,8 +37,16 @@
   (pyvenv-tracking-mode 1))
 
 (use-package flymake-ruff
+  :ensure t
   :defer t
   :hook (eglot-managed-mode . flymake-ruff-load))
 
+(use-package python-pytest
+  :ensure t
+  :defer t
+  :bind (:map cjv/code-map
+              ("t" . #'python-pytest-dispatch)))
+
 (provide 'cjvmacs-python)
+
 ;;; cjvmacs-python.el ends here

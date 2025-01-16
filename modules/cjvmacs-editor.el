@@ -31,19 +31,55 @@
   (user-mail-address "christian@cvdub.net"))
 
 (use-package emacs
+  :config
+  ;; Use zap-up-to-char instead of zap-to-char.
+  (substitute-key-definition #'zap-to-char #'zap-up-to-char global-map)
+
+  ;; Use DWIM functions to change case
+  (substitute-key-definition #'upcase-word #'upcase-dwim global-map)
+  (substitute-key-definition #'downcase-word #'downcase-dwim global-map)
+  (substitute-key-definition #'capitalize-word #'capitalize-dwim global-map)
+
+  ;; Replace fill-paragraph with fill/unfill version
+  (defun cjv/fill-or-unfill ()
+    "Like `fill-paragraph', but unfill if used twice."
+    (interactive)
+    (let ((fill-column
+           (if (eq last-command 'cjv/fill-or-unfill)
+               (progn (setq this-command nil)
+                      (point-max))
+             fill-column)))
+      (call-interactively #'fill-paragraph)))
+
+  (substitute-key-definition #'fill-paragraph #'cjv/fill-or-unfill global-map)
+  
   :custom
+  ;; Editor config
+  (sentence-end-double-space nil)
+  (load-prefer-newer t)
+  (initial-scratch-message nil)
+  (tab-always-indent 'complete)
+  
   ;; Autosave
   (auto-save-no-message t)
   (remote-file-name-inhibit-auto-save t)
   (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   (auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" user-emacs-cache-directory))
   ;; Backups
+
   (backup-directory-alist `((".*" . ,temporary-file-directory)))
   (backup-by-copying t)
+  (version-control t)
   (delete-old-versions t)
   (kept-new-versions 6)
   (kept-old-versions 2)
   (create-lockfiles nil))
+
+(use-package simple
+  :custom
+  (indent-tabs-mode nil)
+  (save-interprogram-paste-before-kill t)
+  (kill-whole-line t))
 
 (use-package auth-source
   :defer t
@@ -71,7 +107,8 @@
 
 (use-package files
   :custom
-  (require-final-newline t))
+  (require-final-newline t)
+  (view-read-only t))
 
 (use-package autorevert
   :custom
@@ -99,7 +136,188 @@
   (treesit-extra-load-path (list (expand-file-name "tree-sitter"
                                                    user-emacs-local-directory)))
   (treesit-language-source-alist '((python
-                                   "https://github.com/tree-sitter/tree-sitter-python"))))
+                                    "https://github.com/tree-sitter/tree-sitter-python"))))
+
+(use-package apheleia
+  :ensure t
+  :init (apheleia-global-mode +1)
+  :config
+  (dolist (formatter
+           '((djlint . ("djlint"
+                        filepath
+                        "--reformat"
+                        "--format-css"
+                        "--format-js"
+                        "--quiet"
+                        "--profile"
+                        "django"))
+             (ruff-sort-imports . ("ruff" "check" "-" "--select" "I" "--fix" "--quiet"))
+             (ruff . ("ruff" "format" "-" "--quiet"))))
+    (push formatter apheleia-formatters)))
+
+(use-package eglot
+  :custom
+  (eglot-events-buffer-size 0)
+  (eglot-autoshutdown t))
+
+(use-package repeat
+  :config
+  (put 'other-window 'repeat-map nil) ; Disable repeat for other-window
+  :custom
+  (repeat-mode t))
+
+(use-package window
+  :bind (:map window-prefix-map
+              ("w" . #'window-swap-states)))
+
+(use-package subword
+  :custom
+  (global-subword-mode t))
+
+(use-package multiple-cursors
+  :ensure t
+  :defer t
+  :init
+  (defvar cjv/multiple-cursors-map (make-sparse-keymap)
+    "Keymap for multiple cursors stuff.")
+  (bind-key (kbd "C-m") cjv/multiple-cursors-map ctl-x-map)
+  :bind (("M-3" . #'mc/mark-next-like-this)
+         ("M-4" . #'mc/mark-previous-like-this)
+         ("M-#" . #'mc/unmark-next-like-this)
+         ("M-$" . #'mc/unmark-previous-like-this)
+         :map cjv/multiple-cursors-map
+         ("a" . #'mc/mark-all-dwim)
+         ("d" . #'mc/mark-all-symbols-like-this-in-defun)
+         ("e" . #'mc/edit-lines)
+         ("i" . #'mc/insert-numbers)
+         ("C-a" . #'mc/edit-beginnings-of-lines)
+         ("C-e" . #'mc/edit-ends-of-lines)))
+
+(use-package avy
+  :ensure t
+  :bind ("C-'" . avy-goto-subword-1)
+  :custom
+  (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
+
+(use-package dired
+  :hook (dired-mode . turn-on-gnus-dired-mode)
+  :custom
+  (dired-auto-revert-buffer t)
+  (dired-create-destination-dirs 'ask)
+  (dired-dwim-target t)
+  (dired-listing-switches "-alh")
+  (dired-mouse-drag-files t))
+
+(use-package dired-x
+  :hook (dired-mode . dired-omit-mode)
+  :config
+  (setq dired-omit-files (concat dired-omit-files
+                                 "\\|^\\.DS_Store\\'"
+                                 "\\|^\\.project\\(?:ile\\)?\\'"
+                                 "\\|^\\.\\(?:svn\\|git\\)\\'"
+                                 "\\|^\\.ccls-cache\\'"
+                                 "\\|\\(?:\\.js\\)?\\.meta\\'"
+                                 "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
+                                 "\\|~\\$.*\\.\\(xls\\|xlsx\\|csv\\)\\'")))
+
+(use-package diredfl
+  :ensure t
+  :hook (dired-mode . diredfl-mode))
+
+(use-package rg
+  :ensure t
+  :defer t
+  :commands rg-menu
+  :bind (("C-c s" . #'rg-menu)
+         :map rg-mode-map
+         ("<S-return>" . #'cjv/compile-goto-error-same-window))
+  :config
+  (defun cjv/compile-goto-error-same-window ()
+    "Run compile-goto-error but open in same window."
+    (interactive)
+    (cjv/with-same-window
+     (compile-goto-error)))
+  (rg-define-toggle "-g '!*migrations'" (kbd "M") t)
+  (rg-define-toggle "-g '!*tests'" (kbd "T"))
+  (rg-define-toggle "--context 3" (kbd "C")))
+
+(use-package goto-last-change
+  :ensure t
+  :defer t
+  :bind ("M-g l" . #'goto-last-change)
+  (:repeat-map goto-last-change-repeat-map
+               ("l" . goto-last-change)))
+
+(use-package expand-region
+  :ensure t
+  :defer t
+  :bind ("M-2" . 'er/expand-region))
+
+(use-package envrc
+  :ensure t
+  :init (envrc-global-mode))
+
+(use-package flyspell
+  :defer t
+  :hook ((text-mode . flyspell-mode)
+         (prog-mode . flyspell-prog-mode)))
+
+(defun cjv/toggle-parens ()
+  "Toggle parens at cursor."
+  (interactive)
+  (let ((parens (funcall show-paren-data-function)))
+    (if parens
+        (let* ((start (if (< (nth 0 parens) (nth 2 parens))
+                          (nth 0 parens) (nth 2 parens)))
+               (end (if (< (nth 0 parens) (nth 2 parens))
+                        (nth 2 parens) (nth 0 parens)))
+               (startchar (buffer-substring-no-properties start (1+ start)))
+               (mismatch (nth 4 parens)))
+          (cl-flet ((replace-parens (pair start end)
+                      (goto-char start)
+                      (delete-char 1)
+                      (insert (substring pair 0 1))
+                      (goto-char end)
+                      (delete-char 1)
+                      (insert (substring pair 1 2))))
+            (save-excursion
+              (pcase startchar
+                ("(" (replace-parens "[]" start end))
+                ("[" (replace-parens "{}" start end))
+                ("{" (replace-parens "()" start end))))
+            (pcase (char-after)
+              (?\) (forward-char))
+              (?\] (forward-char))
+              (?\} (forward-char)))))
+      (message "No parens found"))))
+
+(bind-key (kbd "p") #'cjv/toggle-parens 'cjv/code-map)
+
+(defvar-keymap cjv/toggle-parens-repeat-map
+  :repeat t
+  "p" #'cjv/toggle-parens)
+
+(use-package profiler
+  :defer t
+  :commands (cjv/toggle-map)
+  :bind (:map cjv/toggle-map
+              ("p" . #'cjv/profiler-toggle))
+  :config
+  (defun cjv/profiler-toggle ()
+    "Toggles the profiler."
+    (interactive)
+    (if (profiler-running-p)
+        (progn
+          (profiler-stop)
+          (profiler-report))
+      (call-interactively #'profiler-start))))
+
+(use-package flymake
+  :defer t
+  :hook prog-mode
+  :bind (:map flymake-mode-map
+              ("M-n" . #'flymake-goto-next-error)
+              ("M-p" . #'flymake-goto-prev-error)))
 
 (provide 'cjvmacs-editor)
 

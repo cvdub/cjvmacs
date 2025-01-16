@@ -32,7 +32,10 @@
   :hook (org-mode . variable-pitch-mode)
   :bind (("<f10>" . #'org-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
-         ("<S-f10>" . #'cjv/org-open-personal-todo-file))
+         ("<S-f10>" . #'cjv/org-open-personal-todo-file)
+         :map org-mode-map
+         ("M-p" . #'org-metaup)
+         ("M-n" . #'org-metadown))
   :config
   (defun cjv/org-open-work-todo-file ()
     "Open work todo file."
@@ -43,6 +46,7 @@
     "Open personal todo file."
     (interactive)
     (find-file "~/Documents/org/home.org"))
+
   :custom
   (org-directory "~/Documents/org/")
   (org-agenda-files (list org-directory))

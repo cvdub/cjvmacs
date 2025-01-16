@@ -30,4 +30,5 @@
   (gptel-default-mode 'org-mode))
 
 (provide 'cjvmacs-ai)
+
 ;;; cjvmacs-ai.el ends here

@@ -49,9 +49,7 @@
 (use-package simple
   :custom
   (completion-auto-select t)
-  (completion-show-help nil)
-  (indent-tabs-mode nil)
-  (column-number-mode t))
+  (completion-show-help nil))
 
 (use-package completion-preview
   :bind (:map completion-preview-active-mode-map
@@ -61,19 +59,22 @@
   (hide-minor-mode 'completion-preview-mode)
   :custom
   (completion-preview-message-format "%i/%n possible completions")
-  (global-completion-preview-mode t))
+  (global-completion-preview-mode t)
+  (completion-preview-idle-delay 0.2))
 
 (use-package savehist
+  :init
+  (setq savehist-file (expand-file-name "history" user-emacs-cache-directory))
   :custom
   (savehist-mode t)
   (savehist-autosave-interval 60)
-  (savehist-additional-variables '(search-ring regexp-search-ring))
-  (savehist-file (expand-file-name "history" user-emacs-cache-directory)))
+  (savehist-additional-variables '(search-ring regexp-search-ring)))
 
 (use-package recentf
+  :init
+  (setq recentf-save-file (expand-file-name "recentf" user-emacs-cache-directory))
   :custom
   (recentf-mode t)
-  (recentf-save-file (expand-file-name "recentf" user-emacs-cache-directory))
   (recentf-max-saved-items 500)
   (recentf-auto-cleanup 'never))
 

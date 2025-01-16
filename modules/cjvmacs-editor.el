@@ -115,7 +115,8 @@
   (global-auto-revert-mode t))
 
 (use-package ffap
-  :config (ffap-bindings))
+  :defer t
+  :hook (after-init-hook . ffap-bindings))
 
 (use-package editorconfig
   :custom
@@ -156,6 +157,7 @@
     (push formatter apheleia-formatters)))
 
 (use-package eglot
+  :defer t
   :custom
   (eglot-events-buffer-size 0)
   (eglot-autoshutdown t))

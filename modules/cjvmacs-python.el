@@ -33,8 +33,8 @@
 
 (use-package pyvenv
   :ensure t
-  :init
-  (pyvenv-tracking-mode 1))
+  :custom
+  (pyvenv-tracking-mode t))
 
 (use-package flymake-ruff
   :ensure t

@@ -13,7 +13,22 @@
 (defvar user-emacs-cache-directory (expand-file-name "cache/" user-emacs-local-directory)
   "Directory for Emacs cache files.")
 
+;; Set these variables early to ensure emacs dir isn't cluttered
 (startup-redirect-eln-cache (expand-file-name "eln-cache" user-emacs-cache-directory))
+(setq elisp-flymake-byte-compile-load-path load-path
+      savehist-file (expand-file-name "history" user-emacs-cache-directory))
 
 ;; Disable double buffering (makes cursor movement feel snappier on MacOS)
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
+;; Add homebrew bin to path early so Emacs can find gcc for native comp
+(setenv "PATH" "/opt/homebrew/bin/")
+
+;; Configure package.el
+(setq package-user-dir (expand-file-name "packages/" user-emacs-local-directory)
+      package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+		         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+		         ("melpa" . "https://melpa.org/packages/"))
+      package-native-compile t)
+
+;; (setq use-package-compute-statistics t)

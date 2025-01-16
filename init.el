@@ -23,35 +23,18 @@
 
 ;;; Code:
 
-;; Packages
-(use-package package
-  :config (package-initialize)
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize)
   :custom
-  (package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-		      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-		      ("melpa" . "https://melpa.org/packages/")))
-  (package-user-dir (expand-file-name "packages/" user-emacs-local-directory))
-  (package-native-compile t))
-
-;; Utils
-(defun set-exec-path-from-shell-PATH ()
-  "Set up variable `exec-path' and PATH environment variable to match shell.
-
-This is particularly useful under Mac OS X and macOS, where GUI apps are
-not started from a shell."
-  (interactive)
-  (let ((path-from-shell (replace-regexp-in-string
-			  "[ \t\n]*$" "" (shell-command-to-string
-					  "$SHELL --login -c 'echo $PATH'"
-					  ))))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
-
-(set-exec-path-from-shell-PATH)
-
-(defun hide-minor-mode (minor-mode)
-  "Remove MINOR-MODE from `minor-mode-alist'."
-  (setq minor-mode-alist (assq-delete-all minor-mode minor-mode-alist)))
+  (exec-path-from-shell-variables '("ANSIBLE_CONFIG"
+                                    "INFOPATH"
+                                    "MANPATH"
+                                    "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"
+                                    "PATH"
+                                    "PYTHONPATH"
+                                    "PYTHONSTARTUP"))
+  (exec-path-from-shell-arguments '("-l")))
 
 ;; Load modules
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
@@ -68,7 +51,6 @@ not started from a shell."
 (require 'cjvmacs-html)
 (require 'cjvmacs-js)
 (require 'cjvmacs-lisp)
-
-(setq elisp-flymake-byte-compile-load-path load-path)
+(require 'cjvmacs-spacebase)
 
 ;;; init.el ends here

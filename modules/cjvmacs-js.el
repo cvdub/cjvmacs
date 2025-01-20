@@ -1,9 +1,8 @@
-;;; cjvmacs-ai.el --- AI config for CJVmacs -*- lexical-binding: t; -*-
+;;; cjvmacs-js.el --- JS config for CJVmacs          -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025  Christian Vanderwall
 
 ;; Author: Christian Vanderwall <christian@cvdub.net>
-;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,25 +19,24 @@
 
 ;;; Commentary:
 
-;; AI config for CJVmacs
+;; JS config for CJVmacs
 
 ;;; Code:
 
-(defvar cjv/ai-map (make-sparse-keymap)
-  "Keymap for my AI commands.")
-
-(global-set-key (kbd "C-c a") cjv/ai-map)
-
-(use-package gptel
-  :ensure t
+(use-package typescript-ts-mode
   :defer t
-  :bind (:map cjv/ai-map
-              ("g" . #'gptel)
-              ("a" . #'gptel-add)
-              ("s" . #'gptel-send))
+  :mode ("\\.ts\\'")
+  :hook (typescript-ts-mode . eglot-ensure)
   :custom
-  (gptel-default-mode 'org-mode))
+  (typescript-ts-mode-indent-offset 2))
 
-(provide 'cjvmacs-ai)
+(use-package js-mode
+  :defer t
+  :init
+  (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))
+  :custom
+  (js-indent-level 2))
 
-;;; cjvmacs-ai.el ends here
+(provide 'cjvmacs-js)
+
+;;; cjvmacs-js.el ends here

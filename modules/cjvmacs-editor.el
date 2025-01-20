@@ -91,6 +91,9 @@
 
 (use-package project
   :defer t
+  :bind (:map project-prefix-map
+              ("r" . #'project-recompile)
+              ("R" . #'project-query-replace-regexp))
   :custom
   (project-list-file (expand-file-name "projects" user-emacs-local-directory)))
 
@@ -128,19 +131,24 @@
 
 (use-package hideshow
   :ensure nil
+  :diminish hs-minor-mode
   :hook (prog-mode . hs-minor-mode)
   :custom
   (hs-isearch-open nil))
 
 (use-package treesit
+  :init
+  (setq treesit-language-source-alist '((python "https://github.com/tree-sitter/tree-sitter-python")
+                                        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+                                        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+                                        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
   :custom
   (treesit-extra-load-path (list (expand-file-name "tree-sitter"
-                                                   user-emacs-local-directory)))
-  (treesit-language-source-alist '((python
-                                    "https://github.com/tree-sitter/tree-sitter-python"))))
+                                                   user-emacs-local-directory))))
 
 (use-package apheleia
   :ensure t
+  :diminish apheleia-mode
   :init (apheleia-global-mode +1)
   :config
   (dolist (formatter
@@ -170,9 +178,12 @@
 
 (use-package window
   :bind (:map window-prefix-map
-              ("w" . #'window-swap-states)))
+              ("w" . #'window-swap-states))
+  :custom
+  (split-height-threshold 90))
 
 (use-package subword
+  :diminish subword-mode
   :custom
   (global-subword-mode t))
 
@@ -193,7 +204,9 @@
          ("e" . #'mc/edit-lines)
          ("i" . #'mc/insert-numbers)
          ("C-a" . #'mc/edit-beginnings-of-lines)
-         ("C-e" . #'mc/edit-ends-of-lines)))
+         ("C-e" . #'mc/edit-ends-of-lines))
+  :custom
+  (mc/list-file (expand-file-name "mc-lists.el" user-emacs-local-directory)))
 
 (use-package avy
   :ensure t
@@ -257,9 +270,12 @@
 
 (use-package envrc
   :ensure t
-  :init (envrc-global-mode))
+  :diminish envrc-mode
+  :init
+  (envrc-global-mode))
 
 (use-package flyspell
+  :diminish flyspell-mode
   :defer t
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
@@ -319,7 +335,25 @@
   :hook prog-mode
   :bind (:map flymake-mode-map
               ("M-n" . #'flymake-goto-next-error)
-              ("M-p" . #'flymake-goto-prev-error)))
+              ("M-p" . #'flymake-goto-prev-error))
+  :custom
+  (flymake-mode-line-format '(" "
+                              flymake-mode-line-exception
+                              flymake-mode-line-counters)))
+
+(use-package ispell
+  :defer t
+  :custom
+  (ispell-dictionary "en")
+  (ispell-personal-dictionary "~/.config/aspell/personal-dictionary.pws"))
+
+(use-package url-cache
+  :defer t
+  :custom
+  (url-cache-directory (expand-file-name "url/cache" user-emacs-cache-directory)))
+
+(use-package markdown-mode
+  :ensure t)
 
 (provide 'cjvmacs-editor)
 

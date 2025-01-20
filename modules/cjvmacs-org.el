@@ -27,6 +27,7 @@
 (use-package org
   :ensure t
   :defer t
+  :diminish org-indent-mode
   :commands (cjv/org-open-work-todo-file
              cjv/org-open-personal-todo-file)
   :hook (org-mode . variable-pitch-mode)
@@ -68,7 +69,15 @@
                         "SOME(s)"
                         "|"
                         "DONE(d)"
-                        "CANC(c)"))))
+                        "CANC(c)")))
+  (org-todo-keyword-faces
+   '(("TODO" . org-todo)
+     ("DELE" . org-todo-someday)
+     ("SOME" . org-todo-someday)
+     ("HOLD" . org-todo-someday)
+     ("WAIT" . org-todo-someday)
+     ("DONE" . org-todo-done)
+     ("CANC" . org-todo-done))))
 
 (provide 'cjvmacs-org)
 

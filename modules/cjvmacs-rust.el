@@ -1,9 +1,8 @@
-;;; cjvmacs-ai.el --- AI config for CJVmacs -*- lexical-binding: t; -*-
+;;; cjvmacs-rust.el --- Rust config for CJVmacs      -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025  Christian Vanderwall
 
 ;; Author: Christian Vanderwall <christian@cvdub.net>
-;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,25 +19,18 @@
 
 ;;; Commentary:
 
-;; AI config for CJVmacs
+;; Rust config for CJVmacs
 
 ;;; Code:
 
-(defvar cjv/ai-map (make-sparse-keymap)
-  "Keymap for my AI commands.")
-
-(global-set-key (kbd "C-c a") cjv/ai-map)
-
-(use-package gptel
+(use-package rust-mode
   :ensure t
   :defer t
-  :bind (:map cjv/ai-map
-              ("g" . #'gptel)
-              ("a" . #'gptel-add)
-              ("s" . #'gptel-send))
-  :custom
-  (gptel-default-mode 'org-mode))
+  :init
+  (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
+  :hook ((rust-ts-mode . eglot-ensure)
+         (rust-ts-mode . (lambda () (setq-local compile-command "cargo build")))))
 
-(provide 'cjvmacs-ai)
+(provide 'cjvmacs-rust)
 
-;;; cjvmacs-ai.el ends here
+;;; cjvmacs-rust.el ends here

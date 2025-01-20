@@ -33,6 +33,7 @@
   (fill-column 100))
 
 (use-package simple
+  :diminish visual-line-mode
   :custom
   (column-number-mode t))
 
@@ -42,15 +43,38 @@
     (set-face-attribute 'default nil :family "Fira Code" :height 140)
     (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
     (set-face-attribute 'variable-pitch nil :family "iA Writer Quattro V" :height 1.0)
-    (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji" :size 11))))
+    (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji" :size 11)))
+  (custom-declare-face 'org-todo-done '((t (:inherit (org-todo)))) "")
+  (custom-declare-face 'org-todo-someday '((t (:inherit (org-todo)))) ""))
+
+;; (defvar cjv/theme 'modus-vivendi-deuteranopia)
+(defvar cjv/theme 'modus-operandi-deuteranopia)
 
 (use-package modus-themes
   :ensure t
   :config
-  (modus-themes-load-theme 'modus-vivendi-deuteranopia)
+  (modus-themes-load-theme cjv/theme)
   (with-eval-after-load 'org
-    (set-face-attribute 'org-todo nil :inherit 'fixed-pitch :weight 'bold :foreground (modus-themes-get-color-value 'red))
-    (set-face-attribute 'org-checkbox-statistics-todo nil :height 0.7 :foreground (modus-themes-get-color-value 'fg-dim))
+    (set-face-attribute 'org-todo nil
+                        :inherit 'fixed-pitch
+                        :weight 'bold
+                        :foreground (modus-themes-get-color-value 'red))
+    (set-face-attribute 'org-todo-done nil
+                        :inherit 'org-todo
+                        :foreground (modus-themes-get-color-value 'green-intense))
+    (set-face-attribute 'org-done nil
+                        :foreground (modus-themes-get-color-value 'fg-dim))
+    (set-face-attribute 'org-todo-someday nil
+                        :inherit 'org-todo
+                        :foreground (modus-themes-get-color-value 'bg-active))
+    (set-face-attribute 'org-tag nil
+                        :inherit 'fixed-pitch
+                        :weight 'bold
+                        :height 0.6
+                        :foreground (modus-themes-get-color-value 'green-faint))
+    (set-face-attribute 'org-checkbox-statistics-todo nil
+                        :height 0.7
+                        :foreground (modus-themes-get-color-value 'fg-dim))
     (set-face-attribute 'org-drawer nil :height 0.8)
     (set-face-attribute 'org-property-value nil :inherit 'variable-pitch :height 0.9))
   :custom
@@ -71,7 +95,7 @@
 (use-package custom
   :custom
   (custom-safe-themes t)
-  (custom-enabled-themes '(modus-vivendi-deuteranopia)))
+  (custom-enabled-themes (list cjv/theme)))
 
 (use-package frame
   :custom
@@ -89,6 +113,13 @@
   :ensure t
   :defer t
   :hook (text-mode . visual-line-fill-column-mode))
+
+(use-package diminish
+  :ensure t)
+
+(use-package face-remap
+  :defer t
+  :diminish buffer-face-mode)
 
 (provide 'cjvmacs-ui)
 

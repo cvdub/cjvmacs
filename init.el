@@ -52,5 +52,6 @@
 (require 'cjvmacs-js)
 (require 'cjvmacs-lisp)
 (require 'cjvmacs-spacebase)
+(require 'cjvmacs-rust)
 
 ;;; init.el ends here

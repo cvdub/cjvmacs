@@ -52,11 +52,10 @@
   (completion-show-help nil))
 
 (use-package completion-preview
+  :diminish completion-preview-mode
   :bind (:map completion-preview-active-mode-map
 	      ("M-n" . #'completion-preview-next-candidate)
 	      ("M-p". #'completion-preview-prev-candidate))
-  :config
-  (hide-minor-mode 'completion-preview-mode)
   :custom
   (completion-preview-message-format "%i/%n possible completions")
   (global-completion-preview-mode t)

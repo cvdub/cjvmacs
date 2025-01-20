@@ -1,9 +1,8 @@
-;;; cjvmacs-ai.el --- AI config for CJVmacs -*- lexical-binding: t; -*-
+;;; cjvmacs-html.el --- HTML config for CJVmacs      -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025  Christian Vanderwall
 
 ;; Author: Christian Vanderwall <christian@cvdub.net>
-;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,25 +19,31 @@
 
 ;;; Commentary:
 
-;; AI config for CJVmacs
+;; HTML config for CJVmacs
 
 ;;; Code:
 
-(defvar cjv/ai-map (make-sparse-keymap)
-  "Keymap for my AI commands.")
-
-(global-set-key (kbd "C-c a") cjv/ai-map)
-
-(use-package gptel
+(use-package web-mode
   :ensure t
   :defer t
-  :bind (:map cjv/ai-map
-              ("g" . #'gptel)
-              ("a" . #'gptel-add)
-              ("s" . #'gptel-send))
-  :custom
-  (gptel-default-mode 'org-mode))
+  :mode ("\\.html?\\'"
+         "\\.phtml\\'"
+         "\\.tpl\\.php\\'"
+         "\\.[agj]sp\\'"
+         "\\.as[cp]x\\'"
+         "\\.erb\\'"
+         "\\.mustache\\'"
+         "\\.djhtml\\'")
+  :init
+  ;; Disable pairing {/}
+  (add-hook
+   'web-mode-hook
+   '(lambda ()
+      (setq-local electric-pair-inhibit-predicate
+                  (lambda (c)
+                    (if (char-equal c ?{) t (electric-pair-default-inhibit c)))))))
 
-(provide 'cjvmacs-ai)
 
-;;; cjvmacs-ai.el ends here
+(provide 'cjvmacs-html)
+
+;;; cjvmacs-html.el ends here

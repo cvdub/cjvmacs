@@ -65,6 +65,10 @@
 ;;   :custom
 ;;   (forge-owned-accounts '(("cvdub" remote-name "fork"))))
 
+(use-package ansible
+  :ensure t
+  :defer t)
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

@@ -358,7 +358,7 @@
 
 (use-package help
   :bind (:map help-map
-              ("'" . #'describe-face)))
+              ("'" . #'describe-char)))
 
 (provide 'cjvmacs-editor)
 

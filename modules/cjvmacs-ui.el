@@ -53,7 +53,7 @@
   :custom
   (ef-cyprus-palette-overrides '((bg-mode-line bg-active)
                                  (prose-done fg-dim)
-                                 (bg-))))
+                                 (mail-recipient blue-faint))))
 
 (use-package cjv-faces
   :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))

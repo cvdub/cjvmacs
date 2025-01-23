@@ -56,6 +56,7 @@
    (org-tag :inherit 'fixed-pitch :height 0.8)
    (org-checkbox :inherit 'fixed-pitch)
    (org-checkbox-statistics-todo :inherit 'fixed-pitch :height 0.8 :weight 'bold)
+   (org-checkbox-statistics-done :inherit 'fixed-pitch :height 0.8 :weight 'bold)
    (org-drawer :height 0.8)
    (org-special-keyword :height 0.8)
    (org-property-value :inherit 'variable-pitch :height 0.9 :weight 'bold)))

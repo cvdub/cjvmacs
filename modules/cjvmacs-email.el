@@ -26,6 +26,7 @@
 (use-package notmuch
   :ensure t
   :commands notmuch-refresh-all-buffers
+  :hook (notmuch-show-mode . variable-pitch-mode)
   :init
   (setq mail-user-agent 'notmuch-user-agent)
 

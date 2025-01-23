@@ -166,6 +166,7 @@
 
 (use-package eglot
   :defer t
+  :hook (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1)))
   :custom
   (eglot-events-buffer-size 0)
   (eglot-autoshutdown t))
@@ -354,6 +355,10 @@
 
 (use-package markdown-mode
   :ensure t)
+
+(use-package help
+  :bind (:map help-map
+              ("'" . #'describe-face)))
 
 (provide 'cjvmacs-editor)
 

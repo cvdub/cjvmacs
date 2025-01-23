@@ -37,65 +37,33 @@
   :custom
   (column-number-mode t))
 
-(use-package faces
-  :config
-  (when (display-graphic-p)
-    (set-face-attribute 'default nil :family "Fira Code" :height 140)
-    (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
-    (set-face-attribute 'variable-pitch nil :family "iA Writer Quattro V" :height 1.0)
-    (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji" :size 11)))
-  (custom-declare-face 'org-todo-done '((t (:inherit (org-todo)))) "")
-  (custom-declare-face 'org-todo-someday '((t (:inherit (org-todo)))) ""))
-
-;; (defvar cjv/theme 'modus-vivendi-deuteranopia)
-(defvar cjv/theme 'modus-operandi-deuteranopia)
-
-(use-package modus-themes
-  :ensure t
-  :config
-  (modus-themes-load-theme cjv/theme)
-  (with-eval-after-load 'org
-    (set-face-attribute 'org-todo nil
-                        :inherit 'fixed-pitch
-                        :weight 'bold
-                        :foreground (modus-themes-get-color-value 'red))
-    (set-face-attribute 'org-todo-done nil
-                        :inherit 'org-todo
-                        :foreground (modus-themes-get-color-value 'green-intense))
-    (set-face-attribute 'org-done nil
-                        :foreground (modus-themes-get-color-value 'fg-dim))
-    (set-face-attribute 'org-todo-someday nil
-                        :inherit 'org-todo
-                        :foreground (modus-themes-get-color-value 'bg-active))
-    (set-face-attribute 'org-tag nil
-                        :inherit 'fixed-pitch
-                        :weight 'bold
-                        :height 0.6
-                        :foreground (modus-themes-get-color-value 'green-faint))
-    (set-face-attribute 'org-checkbox-statistics-todo nil
-                        :height 0.7
-                        :foreground (modus-themes-get-color-value 'fg-dim))
-    (set-face-attribute 'org-drawer nil :height 0.8)
-    (set-face-attribute 'org-property-value nil :inherit 'variable-pitch :height 0.9))
-  :custom
-  (modus-themes-mixed-fonts t)
-  (modus-themes-variable-pitch-ui t)
-  (modus-themes-headings '((0 . (1.25))
-                           (1 . (1.25))
-                           (2 . (1.15))
-                           (t . (1.1 semibold))))
-  (modus-themes-common-palette-overrides '(;; (bg-main "#021213")
-                                           ;; (fg-main "#EFEDE7")
-                                           (fg-heading-0 fg-alt)
-                                           (fg-heading-1 blue-faint)
-                                           (fg-heading-2 cyan)
-                                           (fg-heading-3 fg-alt)
-                                           (fringe unspecified))))
-
 (use-package custom
   :custom
-  (custom-safe-themes t)
-  (custom-enabled-themes (list cjv/theme)))
+  (custom-safe-themes t))
+
+(use-package ef-themes
+  :ensure t
+  :config
+  (ef-themes-select 'ef-cyprus)
+  (with-eval-after-load 'org
+    (ef-themes-with-colors
+      (set-face-attribute 'org-todo-done nil :foreground green-faint)
+      (set-face-attribute 'org-todo-someday nil :foreground border)
+      (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim)))
+  :custom
+  (ef-cyprus-palette-overrides '((bg-mode-line bg-active)
+                                 (prose-done fg-dim)
+                                 (bg-))))
+
+(use-package cjv-faces
+  :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))
+  :config
+  (load-theme 'cjv-faces t)
+  (add-hook 'ef-themes-post-load-hook (lambda ()
+                                        (load-theme 'cjv-faces t)))
+  :custom
+  (cjv-faces-fixed-pitch-font-family "Fira Code")
+  (cjv-faces-variable-pitch-font-family "iA Writer Quattro V"))
 
 (use-package frame
   :custom
@@ -106,6 +74,8 @@
   (eldoc-minor-mode-string nil))
 
 (use-package hl-line
+  :bind (:map cjv/toggle-map
+              ("h" . #'hl-line-mode))
   :custom
   (global-hl-line-mode t))
 
@@ -119,7 +89,73 @@
 
 (use-package face-remap
   :defer t
-  :diminish buffer-face-mode)
+  :diminish buffer-face-mode
+  :bind (:map cjv/toggle-map
+              ("v" . #'variable-pitch-mode)))
+
+(use-package mixed-pitch
+  :ensure t
+  :defer t
+  ;; :hook (Info-mode . mixed-pitch-mode)
+  :config
+  (dolist (face '(notmuch-tag-face
+                  notmuch-show-part-button-type-button
+                  message-mml))
+    (add-to-list 'mixed-pitch-fixed-pitch-faces face))
+  (dolist (face '(message-header-subject
+                  message-header-to
+                  message-header-other))
+    (setq mixed-pitch-fixed-pitch-faces (remove face mixed-pitch-fixed-pitch-faces))))
+
+(use-package writeroom-mode
+  :ensure t
+  :defer t
+  :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
+  :bind (:map cjv/toggle-map
+              ("w" . #'writeroom-mode))
+  :config
+  (defun cjv/writeroom-increase-text-scaling ()
+    (if writeroom-mode
+        (text-scale-adjust 1)
+      (text-scale-adjust 0))
+    (visual-fill-column-adjust))
+  :custom
+  (writeroom-mode-line t)
+  (writeroom-maximize-window nil)
+  (writeroom-fullscreen-effect 'maximized))
+
+(use-package tab-bar
+  :init (tab-bar-mode 1)
+  :bind (:map tab-bar-map
+              ("C-<tab>" . #'tab-next))
+  :custom
+  (tab-bar-new-button-show nil)
+  (tab-bar-close-button-show nil)
+  (tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
+  (tab-bar-show nil))
+
+(use-package diff-hl
+  :ensure t
+  :defer 5
+  :hook (dired-mode . diff-hl-dired-mode-unless-remote)
+  :config
+  (global-diff-hl-mode)
+  :custom
+  (diff-hl-disable-on-remote))
+
+(use-package rainbow-mode
+  :ensure t
+  :defer t
+  :custom
+  (rainbow-html-colors nil)
+  (rainbow-x-colors nil))
+
+(use-package kurecolor
+  :ensure t
+  :defer t)
+
+(use-package fontify-face
+  :vc (:url "https://github.com/Fuco1/fontify-face.git") )
 
 (provide 'cjvmacs-ui)
 

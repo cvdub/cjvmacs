@@ -69,6 +69,10 @@
   :ensure t
   :defer t)
 
+(use-package autothemer
+  :ensure t
+  :defer t)
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

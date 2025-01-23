@@ -62,6 +62,12 @@
 
 (global-set-key (kbd "C-c m") cjv/my-map)
 
+(defvar cjv/notes-map (make-sparse-keymap)
+  "Keymap for notes related commands.")
+
+(global-set-key (kbd "C-c n") cjv/notes-map)
+
+;;;; Shortcuts
 (defun cjv/open-downloads ()
   "Opens the downloads directory."
   (interactive)

@@ -31,40 +31,10 @@
 
 (deftheme cjv-faces
   "CJVmacs theme for font sizes and styles.")
+
 (put 'cjv-faces 'theme-immediate t)
 
-;;;; Defaults
-(cjv-faces-update-faces
- (default :family cjv-faces-fixed-pitch-font-family :height cjv-faces-fixed-pitch-font-size)
- (fixed-pitch :family cjv-faces-fixed-pitch-font-family)
- (variable-pitch :family cjv-faces-variable-pitch-font-family :height cjv-faces-variable-pitch-font-scaling-factor)
- (font-lock-constant-face :weight 'medium)
- (font-lock-keyword-face :weight 'medium)
- (font-lock-builtin-face :weight 'medium))
-
-;;;; Org
-(with-eval-after-load 'org  
-  (cjv-faces-update-faces
-   (org-document-title :height 1.25)
-   (org-level-1 :weight 'extra-bold :height 1.2)
-   (org-level-2 :weight 'bold :height 1.1)
-   (org-todo :inherit 'fixed-pitch)
-   (org-document-info-keyword :height 0.9)
-   (org-meta-line :height 0.9)
-   (org-block-begin-line :height 0.8)
-   (org-block-end-line :height 0.8)
-   (org-tag :inherit 'fixed-pitch :height 0.8)
-   (org-checkbox :inherit 'fixed-pitch)
-   (org-checkbox-statistics-todo :inherit 'fixed-pitch :height 0.8 :weight 'bold)
-   (org-checkbox-statistics-done :inherit 'fixed-pitch :height 0.8 :weight 'bold)
-   (org-drawer :height 0.8)
-   (org-special-keyword :height 0.8)
-   (org-property-value :inherit 'variable-pitch :height 0.9 :weight 'bold)))
-
-(with-eval-after-load 'message
-  (cjv-faces-update-faces
-   (message-header-name :height 0.8)
-   (message-mml :height 0.9)))
+(cjv-faces-update-faces cjv-faces-face-attributes)
 
 (provide-theme 'cjv-faces)
 

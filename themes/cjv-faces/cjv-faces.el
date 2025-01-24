@@ -52,27 +52,64 @@
   :group 'cjv-faces
   :type '(float))
 
-(defun cjv-faces-update-face (face &rest attrs)
-  "Merge ATTRS with existing attributes on FACE."
-  (let* ((existing-attrs (if (facep face)
-                             (face-all-attributes face (selected-frame))
-                           nil))
-         (existing-attrs (seq-remove (lambda (pair)
-                                       (or (member (cdr pair) (list 'unspecified nil))
-                                           (plist-member attrs (car pair))))
-                                     existing-attrs))
-         (existing-attrs (flatten-tree existing-attrs)))
-    (apply #'custom-theme-set-faces `(cjv-faces (,face ((t ,(append attrs existing-attrs))))))))
+(defcustom cjv-faces-face-attributes
+  '((default :family cjv-faces-fixed-pitch-font-family
+             :height cjv-faces-fixed-pitch-font-size)
+    (fixed-pitch :family cjv-faces-fixed-pitch-font-family)
+    (variable-pitch :family cjv-faces-variable-pitch-font-family
+                    :height cjv-faces-variable-pitch-font-scaling-factor)
+    (font-lock-constant-face :weight medium)
+    (font-lock-keyword-face :weight medium)
+    (font-lock-builtin-face :weight medium)
 
-(defmacro cjv-faces-update-faces (&rest body)
-  "Merge existing face attributes with attributes in BODY."
-  (let ((result (mapcar (lambda (row)
-                          (let ((face (car row))
-                                (attrs (cdr row)))
-                            `(cjv-faces-update-face (quote ,face) ,@attrs)))
-                        body)))
-    `(let ((custom--inhibit-theme-enable nil))
-       ,@result)))
+    ;; Org
+    (org-document-title :height 1.25)
+    (org-level-1 :weight extra-bold
+                 :height 1.2)
+    (org-level-2 :weight bold
+                 :height 1.1)
+    (org-todo :inherit fixed-pitch)
+    (org-document-info-keyword :height 0.9)
+    (org-meta-line :height 0.9)
+    (org-block-begin-line :height 0.8)
+    (org-block-end-line :height 0.8)
+    (org-tag :inherit fixed-pitch
+             :height 0.8)
+    (org-checkbox :inherit fixed-pitch)
+    (org-checkbox-statistics-todo :inherit fixed-pitch
+                                  :height 0.8
+                                  :weight bold)
+    (org-checkbox-statistics-done :inherit fixed-pitch
+                                  :height 0.8
+                                  :weight bold)
+    (org-drawer :height 0.8)
+    (org-special-keyword :height 0.8)
+    (org-property-value :inherit variable-pitch
+                        :height 0.9
+                        :weight bold)
+
+    ;; Message
+    (message-header-name :height 0.8
+                         :weight semibold
+                         :inherit fixed-pitch)
+    (message-mml :height 0.8
+                 :weight semibold
+                 :inherit fixed-pitch))
+  "List of faces and attributes to remap."
+  :group 'cjv-faces
+  :type '(alist :key-type symbol :value-type (list)))
+
+(defun cjv-faces--symbol-or-value (v)
+  "Evaluate V if its a custom variable, otherwise return as is."
+  (if (custom-variable-p v)
+      (eval v)
+    v))
+
+(defun cjv-faces-update-faces (face-attributes)
+  "Update face attributes according to FACE-ATTRIBUTES."
+  (cl-loop for (face . attrs) in face-attributes
+           for attrs = (mapcar #'cjv-faces--symbol-or-value attrs)
+           do (apply #'custom-theme-set-faces `(cjv-faces (,face ((t ,@attrs)))))))
 
 ;;;; Add themes from package to path
 

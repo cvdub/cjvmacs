@@ -99,6 +99,64 @@
   :group 'cjv-faces
   :type '(alist :key-type symbol :value-type (list)))
 
+(defcustom cjv-faces-emoji-fontset-properties nil
+  "Fontset properties to use for emojis.
+
+If nil, the default emoji fontset is not altered."
+  :group 'cjv-faces
+  :type '(plist))
+
+(defvar cjv-faces--default-emoji-fontset-properties nil
+  "Cached value for the default emoji fontset properties.")
+
+(defconst cjv-faces--fontset-properties '(:name
+                                          :family
+                                          :foundry
+                                          :weight
+                                          :slant
+                                          :width
+                                          :size
+                                          :adstyle
+                                          :registry
+                                          :dpi
+                                          :spacing
+                                          :avgwidth
+                                          :script
+                                          :lang
+                                          :otf
+                                          :type))
+
+(defun cjv-faces--update-emoji-fontset-properties (property-list)
+  "Update the emoji fontset according to PROPERTY-LIST.
+
+The default values are saved and restored when this theme is disabled."
+  (cl-loop with font = (font-at 0 nil "😎")
+           for property in cjv-faces--fontset-properties
+           for value = (font-get font property)
+           when (and value (or (not (listp value)) (car value)))
+           append (list property value) into font-spec-properties
+           finally
+           (unless cjv-faces--default-emoji-fontset-properties
+             (setq cjv-faces--default-emoji-fontset-properties font-spec-properties))
+           (set-fontset-font
+            t 'emoji
+            (apply #'font-spec (append font-spec-properties property-list)))))
+
+(advice-add 'enable-theme :after
+            (lambda (theme)
+              (when (and (eq theme 'cjv-faces)
+                         cjv-faces-emoji-fontset-properties)
+                (cjv-faces--update-emoji-fontset-properties
+                 cjv-faces-emoji-fontset-properties))))
+
+(advice-add 'disable-theme :after
+            (lambda (theme)
+              (when (and (eq theme 'cjv-faces)
+                         cjv-faces--default-emoji-fontset-properties)
+                (message "DISABLED!")
+                (cjv-faces--update-emoji-fontset-properties
+                 cjv-faces--default-emoji-fontset-properties))))
+
 (defun cjv-faces--symbol-or-value (v)
   "Evaluate V if its a custom variable, otherwise return as is."
   (if (custom-variable-p v)

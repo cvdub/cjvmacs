@@ -63,7 +63,8 @@
                                         (load-theme 'cjv-faces t)))
   :custom
   (cjv-faces-fixed-pitch-font-family "Fira Code")
-  (cjv-faces-variable-pitch-font-family "iA Writer Quattro V"))
+  (cjv-faces-variable-pitch-font-family "iA Writer Quattro V")
+  (cjv-faces-emoji-fontset-properties '(:family "Apple Color Emoji" :size 11)))
 
 (use-package frame
   :custom

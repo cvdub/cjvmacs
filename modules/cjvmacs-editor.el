@@ -52,14 +52,16 @@
       (call-interactively #'fill-paragraph)))
 
   (substitute-key-definition #'fill-paragraph #'cjv/fill-or-unfill global-map)
-  
+
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
   :custom
   ;; Editor config
   (sentence-end-double-space nil)
   (load-prefer-newer t)
   (initial-scratch-message nil)
   (tab-always-indent 'complete)
-  
+
   ;; Autosave
   (auto-save-no-message t)
   (remote-file-name-inhibit-auto-save t)

@@ -318,7 +318,7 @@
 
 (use-package profiler
   :defer t
-  :commands (cjv/toggle-map)
+  :commands (cjv/profiler-toggle)
   :bind (:map cjv/toggle-map
               ("p" . #'cjv/profiler-toggle))
   :config

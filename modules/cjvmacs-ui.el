@@ -133,7 +133,7 @@
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
-  (tab-bar-show nil))
+  (tab-bar-show 1))
 
 (use-package diff-hl
   :ensure t

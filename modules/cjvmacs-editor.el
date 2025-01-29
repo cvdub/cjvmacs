@@ -164,7 +164,10 @@
                         "django"))
              (ruff-sort-imports . ("ruff" "check" "-" "--select" "I" "--fix" "--quiet"))
              (ruff . ("ruff" "format" "-" "--quiet"))))
-    (push formatter apheleia-formatters)))
+    (push formatter apheleia-formatters))
+  (dolist (major-mode '(python-mode python-ts-mode))
+    (setf (alist-get major-mode apheleia-mode-alist)
+          (list 'ruff-sort-imports 'ruff))))
 
 (use-package eglot
   :defer t

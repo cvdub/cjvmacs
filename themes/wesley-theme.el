@@ -28,6 +28,8 @@
 
 (require 'autothemer)
 
+(add-to-list 'custom-theme-load-path "/Users/cjv/.config/emacs/themes/")
+
 (unless (>= emacs-major-version 24)
   (error "Requires Emacs 24 or later"))
 
@@ -49,7 +51,7 @@
  wesley "The perfect theme"
  ;; Specify the color classes used by the theme
  ((((class color) (min-colors #xFFFFFF)))
-  
+
   ;; Specify the color palette, color columns correspond to each of the classes above.
   (bg-0 "#021112")
   (bg-1 "#041E20")
@@ -64,10 +66,10 @@
   (fg-3 "#E7E4DA")
   (fg-4 "#D7D2C1")
   (fg-5 "#CFC9B4")
-  
-  (dark-green "#008F6B")
-  (green "#00AC80")
-  (light-green "#00E0A8")
+
+  (dark-green "#446C37")
+  (green "#66A253")
+  (light-green "#94C186")
 
   (dark-blue "#4E81BC")
   (blue "#6290C3")
@@ -84,11 +86,11 @@
   (dark-orange "#EC6A32")
   (orange "#EF8354")
   (light-orange "#F3A07C")
-  
+
   )
 
  ;; Specifications for Emacs faces.
- ;; Simpler than deftheme, just specify a face name and 
+ ;; Simpler than deftheme, just specify a face name and
  ;; a plist of face definitions (nested for :underline, :box etc.)
  ((default (:background bg-1 :foreground fg-1))
   (cursor (:background fg-1))
@@ -106,11 +108,11 @@
 
   (font-lock-builtin-face (:foreground light-blue))
   (font-lock-comment-face (:foreground bg-5))
-  (font-lock-constant-face (:foreground fg-4))  
+  (font-lock-constant-face (:foreground light-orange))
   (font-lock-function-name-face (:foreground light-blue))
   (font-lock-keyword-face (:foreground blue))
   (font-lock-string-face (:foreground fg-4))
-  (font-lock-number-face (:foreground fg-4)) 
+  (font-lock-number-face (:foreground fg-4))
   (font-lock-variable-name-face (:foreground light-blue))
   (font-lock-type-face (:foreground light-orange))
   (font-lock-property-face (:foreground light-blue))
@@ -127,11 +129,11 @@
   (homoglyph (:foreground light-orange))
   (match (:foreground bg-1 :background light-blue))
   )
- 
+
 
  ;; Forms after the face specifications are evaluated.
  ;; (palette vars can be used, read below for details.)
- 
+
  ;; (custom-theme-set-variables 'example-name
  ;;                             `(ansi-color-names-vector [,example-red
  ;;                                                        ,example-green
@@ -143,7 +145,5 @@
  )
 
 (provide-theme 'wesley)
-
-(defconst foo "123")
 
 ;;; wesley-theme.el ends here

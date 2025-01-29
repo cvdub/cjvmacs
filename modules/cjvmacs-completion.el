@@ -30,9 +30,14 @@
   (which-key-idle-delay 0.75)
   (which-key-lighter nil))
 
-(use-package icomplete
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
   :custom
-  (fido-vertical-mode t))
+  (vertico-resize nil)
+  (vertico-scroll-margin 0)
+  (vertico-count 12))
 
 (use-package scroll-bar
   :custom
@@ -40,8 +45,6 @@
 
 (use-package minibuffer
   :custom
-  ;; (completion-styles '(flex basic))
-  ;; (completion-category-overrides '((file (styles basic partial-completion))))
   (completions-detailed nil)
   (completions-format 'one-column)
   (completions-max-height 20)
@@ -50,8 +53,8 @@
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  (completion-styles '(orderless))
+  (completion-category-overrides '((file (styles basic orderless)))))
 
 (use-package marginalia
   :ensure t
@@ -76,8 +79,8 @@
 (use-package savehist
   :init
   (setq savehist-file (expand-file-name "history" user-emacs-cache-directory))
+  (savehist-mode 1)
   :custom
-  (savehist-mode t)
   (savehist-autosave-interval 60)
   (savehist-additional-variables '(search-ring regexp-search-ring)))
 

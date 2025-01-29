@@ -40,11 +40,23 @@
 
 (use-package minibuffer
   :custom
-  (completion-styles '(basic flex))
-  (completions-detailed t)
+  ;; (completion-styles '(flex basic))
+  ;; (completion-category-overrides '((file (styles basic partial-completion))))
+  (completions-detailed nil)
   (completions-format 'one-column)
   (completions-max-height 20)
   (completions-sort 'historical))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
 
 (use-package simple
   :custom

@@ -84,10 +84,13 @@
 (use-package recentf
   :init
   (setq recentf-save-file (expand-file-name "recentf" user-emacs-cache-directory))
+  :bind (:map ctl-x-map
+              ("C-r" . #'recentf))
   :custom
-  (recentf-mode t)
+  (recentf-auto-cleanup 'never)
   (recentf-max-saved-items 500)
-  (recentf-auto-cleanup 'never))
+  :config
+  (recentf-mode 1))
 
 (provide 'cjvmacs-completion)
 

@@ -157,7 +157,8 @@
   :defer t)
 
 (use-package fontify-face
-  :vc (:url "https://github.com/Fuco1/fontify-face.git") )
+  :vc (:url "https://github.com/Fuco1/fontify-face.git"
+            :rev :newest))
 
 (provide 'cjvmacs-ui)
 

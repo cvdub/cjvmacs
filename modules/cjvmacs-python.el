@@ -27,8 +27,17 @@
   :hook (python-ts-mode . eglot-ensure)
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+  :bind (:map python-ts-mode-map
+              ("C-c o r" . cjv/python-open-repl))
   :custom
-  (python-shell-dedicated 'project))
+  (python-shell-dedicated 'project)
+  :config
+  (defun cjv/python-open-repl (&optional prefix)
+    (interactive "P")
+    (if prefix
+        (run-python nil 'project t)
+      (cjv/with-bottom-window
+       (run-python nil 'project t)))))
 
 (use-package pyvenv
   :ensure t

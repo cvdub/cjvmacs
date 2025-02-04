@@ -68,13 +68,13 @@
                  :height 1.2)
     (org-level-2 :weight bold
                  :height 1.1)
-    (org-todo :inherit fixed-pitch)
+    (org-todo :inherit fixed-pitch :weight bold)
     (org-document-info-keyword :height 0.9)
     (org-meta-line :height 0.9)
-    (org-block-begin-line :height 0.8)
-    (org-block-end-line :height 0.8)
+    (org-block-begin-line :height 0.8 :inherit fixed-pitch)
     (org-tag :inherit fixed-pitch
-             :height 0.8)
+             :height 0.8
+             :weight bold)
     (org-checkbox :inherit fixed-pitch)
     (org-checkbox-statistics-todo :inherit fixed-pitch
                                   :height 0.8
@@ -87,6 +87,7 @@
     (org-property-value :inherit variable-pitch
                         :height 0.9
                         :weight bold)
+
 
     ;; Message
     (message-header-name :height 0.8

@@ -39,7 +39,8 @@
 
 (use-package custom
   :custom
-  (custom-safe-themes t))
+  (custom-safe-themes t)
+  (custom-theme-directory (expand-file-name "themes" user-emacs-directory)))
 
 (use-package ef-themes
   :ensure t

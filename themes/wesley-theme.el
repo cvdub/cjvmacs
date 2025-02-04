@@ -128,6 +128,17 @@
   (highlight (:background bg-4 :foreground fg-1))
   (homoglyph (:foreground light-orange))
   (match (:foreground bg-1 :background light-blue))
+
+  ;; Tabs
+  (tab-bar (:background bg-2))
+  (tab-bar-tab (:foreground fg-2 :background bg-1))
+  (tab-bar-tab-inactive (:foreground fg-5 :background bg-3))
+
+  ;; Org
+  (org-block (:foreground fg-1 :background bg-0))
+  (org-block-begin-line (:foreground fg-5 :underline (:color bg-2 :position t) :extend t))
+  (org-block-end-line (:foreground fg-5 :overline bg-2 :extend t))
+  (org-verbatim (:foreground light-blue))
   )
 
 

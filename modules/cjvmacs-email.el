@@ -200,6 +200,7 @@
 
 (use-package gnus-alias
   :ensure t
+  :init (add-hook 'message-setup-hook #'gnus-alias-determine-identity)
   :bind (:map notmuch-message-mode-map
               ("C-c C-f o" . gnus-alias-select-identity))
   :config
@@ -237,9 +238,7 @@
         '(("christian@cvdub.net" ("any" "christian@cvdub.net" both) "christian@cvdub.net")
           ("christian@spacebaseapp.com" ("any" "christian@spacebaseapp.com" both) "christian@spacebaseapp.com")
           ("cvanderwall14@gmail.com" ("any" "cvanderwall14@gmail.com" both) "cvanderwall14@gmail.com")
-          ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org")))
-
-  (add-hook 'message-setup-hook #'gnus-alias-determine-identity))
+          ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org"))))
 
 (use-package shr
   :ensure nil

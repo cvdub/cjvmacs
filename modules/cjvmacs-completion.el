@@ -74,7 +74,7 @@
   :custom
   (completion-preview-message-format "%i/%n possible completions")
   (global-completion-preview-mode t)
-  (completion-preview-idle-delay 0.2))
+  (completion-preview-idle-delay nil))
 
 (use-package savehist
   :init

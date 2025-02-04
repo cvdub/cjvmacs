@@ -55,6 +55,8 @@
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+  (defalias 'list-buffers 'ibuffer)
+
   :custom
   ;; Editor config
   (sentence-end-double-space nil)

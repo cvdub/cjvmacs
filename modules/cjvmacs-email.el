@@ -163,6 +163,30 @@
                '((major-mode . notmuch-show-mode)
                  (inhibit-same-window . t)))
 
+  ;; Inline images
+  (defun cjv/notmuch--create-responsive-image (image-data &optional max-width)
+    (let* ((max-width (or max-width (truncate (* (frame-pixel-width) 0.8))))
+           (image (create-image image-data nil t))
+           (width (car (image-size image t))))
+      (if (> width max-width)
+          (create-image image-data nil t :width max-width)
+        image)))
+
+  (defun cjv/notmuch-show-inline-cid-images (&optional _msg _depth)
+    "Replace [cid:...] references with inline images in notmuch-show."
+    (interactive)
+    (message "Replacing inline images!")
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "\\[cid:\\(.*\\.png.*\\)\\]" nil t)
+        (let* ((cid (match-string 1))
+               (image-data (notmuch-show--get-cid-content cid))) ;; Retrieve the attachment
+          (when image-data
+            (replace-match "")
+            (insert-image (cjv/notmuch--create-responsive-image (car image-data))))))))
+
+  (add-hook 'notmuch-show-hook #'cjv/notmuch-show-inline-cid-images)
+
   :custom
   (message-directory "~/.mail/")
   (message-send-mail-function 'message-send-mail-with-sendmail)

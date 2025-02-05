@@ -178,7 +178,7 @@
     (message "Replacing inline images!")
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward "\\[cid:\\(.*\\.png.*\\)\\]" nil t)
+      (while (re-search-forward "\\[cid:\\(.*\\.[png|jpg].*\\)\\]" nil t)
         (let* ((cid (match-string 1))
                (image-data (notmuch-show--get-cid-content cid))) ;; Retrieve the attachment
           (when image-data

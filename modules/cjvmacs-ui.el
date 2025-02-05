@@ -40,12 +40,22 @@
 (use-package custom
   :custom
   (custom-safe-themes t)
-  (custom-theme-directory (expand-file-name "themes" user-emacs-directory)))
+  (custom-theme-directory (expand-file-name "themes" user-emacs-directory))
+  :config
+  (defun cjv/update-macos-titlebar (&optional _theme)
+    "Make MacOS titlebar transparent on all frames."
+    (when (eq system-type 'darwin)
+      (dolist (frame (frame-list))
+        (modify-frame-parameters
+         frame `((ns-transparent-titlebar . t)
+                 (ns-appearance . ,(frame-parameter frame 'background-mode)))))))
+
+  (add-hook 'enable-theme-functions #'cjv/update-macos-titlebar))
 
 (use-package ef-themes
   :ensure t
   :config
-  (ef-themes-select 'ef-cyprus)
+  (load-theme 'ef-cyprus)
   (with-eval-after-load 'org
     (ef-themes-with-colors
       (set-face-attribute 'org-todo-done nil :foreground green-faint)
@@ -59,14 +69,17 @@
 
 (use-package cjv-faces
   :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))
-  :config
-  (load-theme 'cjv-faces t)
-  (add-hook 'ef-themes-post-load-hook (lambda ()
-                                        (load-theme 'cjv-faces t)))
   :custom
   (cjv-faces-fixed-pitch-font-family "Fira Code")
   (cjv-faces-variable-pitch-font-family "iA Writer Quattro V")
-  (cjv-faces-emoji-fontset-properties '(:family "Apple Color Emoji" :size 11)))
+  (cjv-faces-emoji-fontset-properties '(:family "Apple Color Emoji" :size 11))
+  :config
+  (load-theme 'cjv-faces)
+  ;; (add-hook 'enable-theme-functions (lambda (theme)
+  ;;                                     (unless (eq theme 'cjv-faces)
+  ;;                                       (message theme)
+  ;;                                       (enable-theme 'cjv-faces))))
+  )
 
 (use-package frame
   :custom

@@ -154,7 +154,6 @@ The default values are saved and restored when this theme is disabled."
             (lambda (theme)
               (when (and (eq theme 'cjv-faces)
                          cjv-faces--default-emoji-fontset-properties)
-                (message "DISABLED!")
                 (cjv-faces--update-emoji-fontset-properties
                  cjv-faces--default-emoji-fontset-properties))))
 

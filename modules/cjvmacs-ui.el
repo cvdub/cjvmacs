@@ -161,6 +161,10 @@
   :vc (:url "https://github.com/Fuco1/fontify-face.git"
             :rev :newest))
 
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+
 (provide 'cjvmacs-ui)
 
 ;;; cjvmacs-ui.el ends here

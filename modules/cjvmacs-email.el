@@ -165,7 +165,7 @@
 
   ;; Inline images
   (defun cjv/notmuch--create-responsive-image (image-data &optional max-width)
-    (let* ((max-width (or max-width (truncate (* (frame-pixel-width) 0.8))))
+    (let* ((max-width (or max-width (truncate (* (window-pixel-width) 0.95))))
            (image (create-image image-data nil t))
            (width (car (image-size image t))))
       (if (> width max-width)

@@ -145,7 +145,8 @@
   (setq treesit-language-source-alist '((python "https://github.com/tree-sitter/tree-sitter-python")
                                         (rust "https://github.com/tree-sitter/tree-sitter-rust")
                                         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-                                        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+                                        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+                                        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
   :custom
   (treesit-extra-load-path (list (expand-file-name "tree-sitter"
                                                    user-emacs-local-directory))))

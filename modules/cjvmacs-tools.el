@@ -73,6 +73,10 @@
   :ensure t
   :defer t)
 
+(use-package yaml-ts-mode
+  :defer t
+  :mode ("\\.ya?ml\\'"))
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

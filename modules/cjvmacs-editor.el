@@ -224,6 +224,7 @@
 
 (use-package dired
   :hook (dired-mode . turn-on-gnus-dired-mode)
+  :defer t
   :custom
   (dired-auto-revert-buffer t)
   (dired-create-destination-dirs 'ask)
@@ -246,6 +247,12 @@
 (use-package diredfl
   :ensure t
   :hook (dired-mode . diredfl-mode))
+
+(use-package dired-rsync
+  :ensure t
+  :after dired
+  :bind (:map dired-mode-map
+              ("C-c C-r" . dired-rsync)))
 
 (use-package rg
   :ensure t

@@ -178,6 +178,38 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
+(use-package dashboard
+  :ensure t
+  :hook (dashboard-mode . (lambda ()
+                            (setq-local global-hl-line-mode nil)))
+  :custom
+  (dashboard-startup-banner (expand-file-name "emacs-logo-gruvbox-dark.svg" user-emacs-local-directory))
+  (dashboard-banner-logo-title nil)
+  (dashboard-center-content t)
+  (dashboard-vertically-center-content t)
+  (dashboard-items nil)
+  (dashboard-footer-messages '("The one true editor, Emacs!"
+                               "Free as free speech, free as free Beer"
+                               "Happy coding!"
+                               "Welcome to the church of Emacs"
+                               "While any text editor can save your files, only Emacs can save your soul"))
+  (dashboard-hide-cursor t)
+  :custom-face
+  (dashboard-footer-face ((t (:foreground "#83a598"))))
+  :config
+
+  ;; Redefine dashboard-resize-on-hook so it forces refresh on resize
+  (defun dashboard-resize-on-hook (&optional _)
+    "Re-render dashboard on window size change."
+    (let ((space-win (get-buffer-window dashboard-buffer-name))
+          (frame-win (frame-selected-window)))
+      (when (and space-win
+                 (not (window-minibuffer-p frame-win)))
+        (with-selected-window space-win
+          (dashboard-insert-startupify-lists t)))))
+
+  (dashboard-setup-startup-hook))
+
 (provide 'cjvmacs-ui)
 
 ;;; cjvmacs-ui.el ends here

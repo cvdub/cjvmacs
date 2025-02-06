@@ -3,7 +3,6 @@
 ;; Copyright (C) 2025  Christian Vanderwall
 
 ;; Author: Christian Vanderwall <christian@cvdub.net>
-;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -76,6 +75,11 @@
 (use-package yaml-ts-mode
   :defer t
   :mode ("\\.ya?ml\\'"))
+
+(use-package pdf-tools
+  :ensure t
+  :defer 5
+  :init (pdf-tools-install))
 
 (provide 'cjvmacs-tools)
 

@@ -85,6 +85,13 @@
   (pdf-loader-install))
 
 
+(use-package systemd
+  :ensure t
+  :defer t)
+
+(use-package sudo-edit
+  :ensure t
+  :defer t)
 
 (provide 'cjvmacs-tools)
 

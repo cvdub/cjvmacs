@@ -92,7 +92,13 @@
 
 (use-package gruvbox-theme
   :ensure t
-  :config)
+  :config
+  (defun cjv/customize-gruvbox-light-medium (theme)
+    (when (eq theme 'gruvbox-light-medium)
+      (custom-theme-set-faces
+       'gruvbox-light-medium
+       '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))))
+  (add-to-list 'enable-theme-functions 'cjv/customize-gruvbox-light-medium))
 
 (use-package cjv-faces
   :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))

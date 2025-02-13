@@ -66,7 +66,9 @@
 
 (use-package ansible
   :ensure t
-  :defer t)
+  :defer t
+  :custom
+  (ansible-vault-password-file "/Users/cjv/.config/ansible/vault-password.sh"))
 
 (use-package autothemer
   :ensure t

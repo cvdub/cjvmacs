@@ -23,6 +23,10 @@
 
 ;;; Code:
 
+(defvar cjv/themes '(gruvbox-dark-medium
+                     gruvbox-light-medium
+                     ef-cyprus))
+
 (use-package emacs
   :bind ("C-+" . #'global-text-scale-adjust)
   :custom
@@ -38,6 +42,8 @@
   (column-number-mode t))
 
 (use-package custom
+  :bind (:map cjv/toggle-map
+              ("t" . #'cjv/rotate-theme))
   :custom
   (custom-safe-themes t)
   (custom-theme-directory (expand-file-name "themes" user-emacs-directory))
@@ -50,22 +56,39 @@
          frame `((ns-transparent-titlebar . t)
                  (ns-appearance . ,(frame-parameter frame 'background-mode)))))))
 
-  (add-hook 'enable-theme-functions #'cjv/update-macos-titlebar))
+  (add-hook 'enable-theme-functions #'cjv/update-macos-titlebar)
+
+  (defun cjv/rotate-theme ()
+    "Rotate between themes in `cjv/themes'."
+    (interactive)
+    (let* ((current-theme (car (remove 'cjv-faces custom-enabled-themes)))
+           (index (cl-position current-theme cjv/themes))
+           (next-theme (or (nth (1+ index) cjv/themes)
+                           (car cjv/themes))))
+      (disable-theme current-theme)
+      (load-theme next-theme)
+      (load-theme 'cjv-faces)))
+
+  (load-theme (car cjv/themes)))
 
 (use-package ef-themes
   :ensure t
-  :config
-  (load-theme 'ef-cyprus)
-  (with-eval-after-load 'org
-    (ef-themes-with-colors
-      (set-face-attribute 'org-todo-done nil :foreground green-faint)
-      (set-face-attribute 'org-todo-someday nil :foreground border)
-      (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim)))
+  :defer t
   :custom
   (ef-cyprus-palette-overrides '((bg-mode-line bg-active)
                                  (prose-done fg-dim)
                                  (mail-recipient blue-faint)
-                                 (bg-region bg-cyan-subtle))))
+                                 (bg-region bg-cyan-subtle)))
+  :config
+  (with-eval-after-load 'org
+    (ef-themes-with-colors
+      (set-face-attribute 'org-todo-done nil :foreground green-faint)
+      (set-face-attribute 'org-todo-someday nil :foreground border)
+      (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
+
+(use-package gruvbox-theme
+  :ensure t
+  :config)
 
 (use-package cjv-faces
   :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))

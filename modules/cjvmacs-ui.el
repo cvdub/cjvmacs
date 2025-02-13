@@ -34,7 +34,11 @@
   (ring-bell-function 'ignore)
   (use-short-answers t)
   (use-dialog-box nil)
-  (fill-column 100))
+  (fill-column 100)
+  (frame-resize-pixelwise t)
+  :config
+  (modify-all-frames-parameters  '((border-width . 0)
+                                   (internal-border-width . 0))))
 
 (use-package simple
   :diminish visual-line-mode

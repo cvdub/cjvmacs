@@ -80,8 +80,11 @@
 
 (use-package pdf-tools
   :ensure t
-  :defer 5
-  :init (pdf-tools-install))
+  :defer t
+  :init
+  (pdf-loader-install))
+
+
 
 (provide 'cjvmacs-tools)
 

@@ -58,11 +58,11 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;; (use-package forge
-;;   :ensure t
-;;   :after magit
-;;   :custom
-;;   (forge-owned-accounts '(("cvdub" remote-name "fork"))))
+(use-package forge
+  :ensure t
+  :after magit
+  :custom
+  (forge-database-file (expand-file-name "forge-database.sqlite" user-emacs-local-directory)))
 
 (use-package ansible
   :ensure t

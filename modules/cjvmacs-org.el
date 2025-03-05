@@ -51,10 +51,13 @@
          ("C-t" . #'org-agenda-todo-yesterday))
   :init
   ;; Create TODO faces
-  (custom-declare-face 'org-todo-someday '((t (:inherit org-todo))) "Face for SOME keywords.")
-  (custom-declare-face 'org-todo-done '((t (:inherit org-todo))) "Face for DONE keywords.")
+  (custom-declare-face 'org-todo-someday '((t (:inherit (font-lock-comment-face org-todo)))) "Face for SOME keywords.")
+  (custom-declare-face 'org-todo-done '((t (:inherit org-done))) "Face for DONE keywords.")
+  (custom-declare-face 'org-todo-onhold '((t (:inherit (font-lock-constant-face org-todo) :weight bold))) "Face for HOLD keywords.")
 
   :config
+  (add-to-list 'completion-preview-commands #'org-self-insert-command)
+
   (defvar cjv/org-inbox-file (expand-file-name "inbox.org" org-directory)
     "My org-mode inbox file.")
 
@@ -282,10 +285,10 @@
                         "CANC(c)")))
   (org-todo-keyword-faces
    '(("TODO" . org-todo)
-     ("DELE" . org-todo-someday)
+     ("DELE" . org-todo-onhold)
      ("SOME" . org-todo-someday)
-     ("HOLD" . org-todo-someday)
-     ("WAIT" . org-todo-someday)
+     ("HOLD" . org-todo-onhold)
+     ("WAIT" . org-todo-onhold)
      ("DONE" . org-todo-done)
      ("CANC" . org-todo-done)))
 

@@ -375,6 +375,11 @@
   :bind (:map help-map
               ("'" . #'describe-char)))
 
+(use-package imenu
+  :defer t
+  :custom
+  (imenu-flatten t))
+
 (provide 'cjvmacs-editor)
 
 ;;; cjvmacs-editor.el ends here

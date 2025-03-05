@@ -114,8 +114,7 @@
 (use-package hl-line
   :bind (:map cjv/toggle-map
               ("h" . #'hl-line-mode))
-  :custom
-  (global-hl-line-mode t))
+  :hook (prog-mode . hl-line-mode))
 
 (use-package visual-fill-column
   :ensure t

@@ -31,4 +31,6 @@
 		         ("melpa" . "https://melpa.org/packages/"))
       package-native-compile t)
 
+(setq load-prefer-newer t)
+
 ;; (setq use-package-compute-statistics t)

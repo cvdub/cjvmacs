@@ -86,19 +86,13 @@
   :config
   (with-eval-after-load 'org
     (ef-themes-with-colors
-      (set-face-attribute 'org-todo-done nil :foreground green-faint)
-      (set-face-attribute 'org-todo-someday nil :foreground border)
-      (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
+     (set-face-attribute 'org-todo-done nil :foreground green-faint)
+     (set-face-attribute 'org-todo-someday nil :foreground border)
+     (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
 
 (use-package gruvbox-theme
-  :ensure t
-  :config
-  (defun cjv/customize-gruvbox-light-medium (theme)
-    (when (eq theme 'gruvbox-light-medium)
-      (custom-theme-set-faces
-       'gruvbox-light-medium
-       '(highlight ((t (:background "#ebdbb2" :foreground "#282828")))))))
-  (add-to-list 'enable-theme-functions 'cjv/customize-gruvbox-light-medium))
+  :vc t
+  :load-path (lambda () (expand-file-name "gruvbox-theme" package-user-dir)))
 
 (use-package cjv-faces
   :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))

@@ -101,12 +101,7 @@
   (cjv-faces-variable-pitch-font-family "iA Writer Quattro V")
   (cjv-faces-emoji-fontset-properties '(:family "Apple Color Emoji" :size 11))
   :config
-  (load-theme 'cjv-faces)
-  ;; (add-hook 'enable-theme-functions (lambda (theme)
-  ;;                                     (unless (eq theme 'cjv-faces)
-  ;;                                       (message theme)
-  ;;                                       (enable-theme 'cjv-faces))))
-  )
+  (load-theme 'cjv-faces))
 
 (use-package frame
   :custom

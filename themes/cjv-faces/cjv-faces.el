@@ -63,15 +63,23 @@
     (font-lock-builtin-face :weight medium)
 
     ;; Org
-    (org-document-title :height 1.25)
+    (org-document-title :height 1.15)
     (org-level-1 :weight extra-bold
-                 :height 1.2)
+                 :height 1.3)
     (org-level-2 :weight bold
-                 :height 1.1)
+                 :height 1.15)
     (org-todo :inherit fixed-pitch :weight bold)
+    (org-done :inherit fixed-pitch :weight bold)
     (org-document-info-keyword :height 0.9)
     (org-meta-line :height 0.9)
-    (org-block-begin-line :height 0.8 :inherit fixed-pitch)
+    (org-block-begin-line :inherit fixed-pitch
+                          :height 0.8
+                          :background unspecified
+                          :underline t)
+    (org-block-end-line :inherit fixed-pitch
+                        :height 0.8
+                        :background unspecified
+                        :overline t)
     (org-tag :inherit fixed-pitch
              :height 0.8
              :weight bold)
@@ -87,7 +95,7 @@
     (org-property-value :inherit variable-pitch
                         :height 0.9
                         :weight bold)
-
+    (org-table :inherit fixed-pitch)
 
     ;; Message
     (message-header-name :height 0.8

@@ -128,7 +128,9 @@
   :defer t
   :diminish buffer-face-mode
   :bind (:map cjv/toggle-map
-              ("v" . #'variable-pitch-mode)))
+              ("v" . #'variable-pitch-mode))
+  :hook (buffer-face-mode . (lambda () (when buffer-face-mode
+                                         (setq cursor-type 'bar)))))
 
 (use-package mixed-pitch
   :ensure t

@@ -380,6 +380,18 @@
   :custom
   (imenu-flatten t))
 
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :hook ((prog-mode . yas-minor-mode)
+         (text-mode . yas-minor-mode))
+  :config
+  (yas-reload-all))
+
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
+
 (provide 'cjvmacs-editor)
 
 ;;; cjvmacs-editor.el ends here

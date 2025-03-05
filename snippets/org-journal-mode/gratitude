@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: gratitude
+# key: i
+# --
+I'm grateful for:
+- $0

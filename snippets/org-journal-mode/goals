@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: goals
+# key: g
+# --
+Goals for today:
+- [ ] $0

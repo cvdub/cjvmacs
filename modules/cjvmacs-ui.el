@@ -43,7 +43,11 @@
 (use-package simple
   :diminish visual-line-mode
   :custom
-  (column-number-mode t))
+  (column-number-mode t)
+  (visual-line-fringe-indicators '(nil right-curly-arrow))
+  :config
+  (set-fringe-bitmap-face 'right-curly-arrow 'font-lock-comment-face)
+  (set-fringe-bitmap-face 'left-curly-arrow 'font-lock-comment-face))
 
 (use-package custom
   :bind (:map cjv/toggle-map

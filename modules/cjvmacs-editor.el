@@ -392,6 +392,27 @@
   :ensure t
   :after yasnippet)
 
+(use-package ediff
+  :ensure nil
+  :defer t
+  :config
+  (defun cjv/ediff-copy-both-to-C ()
+    "Copies Ediff contents of A and B to C."
+    (interactive)
+    (ediff-copy-diff ediff-current-difference nil 'C nil
+                     (concat
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+
+  (defun cjv/ediff-add-d-to-mode-map ()
+    (define-key ediff-mode-map "d" 'cjv/ediff-copy-both-to-C))
+
+  (add-hook 'ediff-keymap-setup-hook 'cjv/ediff-add-d-to-mode-map)
+
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally))
+
 (provide 'cjvmacs-editor)
 
 ;;; cjvmacs-editor.el ends here

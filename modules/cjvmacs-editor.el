@@ -155,6 +155,8 @@
   :ensure t
   :diminish apheleia-mode
   :init (apheleia-global-mode +1)
+  :bind (:map cjv/toggle-map
+              ("f" . #'apheleia-mode))
   :config
   (dolist (formatter
            '((djlint . ("djlint"

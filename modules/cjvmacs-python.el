@@ -31,6 +31,7 @@
               ("C-c o r" . cjv/python-open-repl))
   :custom
   (python-shell-dedicated 'project)
+  (python-indent-guess-indent-offset-verbose nil)
   :config
   (defun cjv/python-open-repl (&optional prefix)
     (interactive "P")

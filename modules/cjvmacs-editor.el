@@ -167,6 +167,7 @@
                         "--quiet"
                         "--profile"
                         "django"))
+             (djade . ("uvx" "djade" filepath))
              (ruff-sort-imports . ("ruff" "check" "-" "--select" "I" "--fix" "--quiet"))
              (ruff . ("ruff" "format" "-" "--quiet"))))
     (push formatter apheleia-formatters))

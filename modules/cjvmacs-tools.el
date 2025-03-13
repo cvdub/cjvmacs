@@ -31,10 +31,12 @@
   :hook (eshell-mode-hook . (lambda ()
                               (remove-hook 'eshell-output-filter-functions 'eshell-postoutput-scroll-to-bottom)))
   :config
-  (defun cjv/open-eshell ()
+  (defun cjv/open-eshell (&optional prefix)
     "Opens eshell in a bottom side window."
-    (interactive)
-    (cjv/with-bottom-window (eshell)))
+    (interactive "P")
+    (if prefix
+        (eshell)
+      (cjv/with-bottom-window (eshell))))
 
   (add-to-list 'eshell-modules-list 'eshell-tramp)
   :custom

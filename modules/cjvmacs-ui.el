@@ -118,7 +118,8 @@
 (use-package hl-line
   :bind (:map cjv/toggle-map
               ("h" . #'hl-line-mode))
-  :hook (prog-mode . hl-line-mode))
+  :hook ((prog-mode . hl-line-mode)
+         (org-agenda-mode . hl-line-mode)))
 
 (use-package visual-fill-column
   :ensure t

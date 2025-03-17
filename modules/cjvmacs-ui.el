@@ -241,6 +241,9 @@
 
   (dashboard-setup-startup-hook))
 
+(use-package menu-bar
+  :bind ("s-t" . nil))
+
 (provide 'cjvmacs-ui)
 
 ;;; cjvmacs-ui.el ends here

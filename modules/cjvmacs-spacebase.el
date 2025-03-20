@@ -193,6 +193,14 @@
     (mapc (lambda (file) (spacebase/post-lyft-file file gpg-key-id destination))
           (dired-get-marked-files))))
 
+(defun spacebase/print-latest-commit ()
+  "Print latest Spacebase commit to echo area."
+  (interactive)
+  (let* ((server (spacebase/get-server))
+         (command (format "ssh %s 'cd webapps/spacebase && git log -1 --date=short --pretty=format:\"%%h %%ad (%%an) %%s\"'" server))
+         (result (shell-command-to-string command)))
+    (message "%s: %s" server result)))
+
 ;;;; Keybindings
 (defvar cjv/spacebase-map (make-sparse-keymap)
   "Keymap for Spacebase commands.")
@@ -207,6 +215,7 @@
 (bind-key (kbd "M") #'spacebase/make-migrations cjv/spacebase-map)
 (bind-key (kbd "m") #'spacebase/migrate cjv/spacebase-map)
 (bind-key (kbd "j") #'spacebase/server-django-shell cjv/spacebase-map)
+(bind-key (kbd "g") #'spacebase/print-latest-commit cjv/spacebase-map)
 (global-set-key (kbd "<f12>") #'spacebase/magit-status)
 
 (provide 'cjvmacs-spacebase)

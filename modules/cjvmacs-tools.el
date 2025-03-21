@@ -95,6 +95,11 @@
   :ensure t
   :defer t)
 
+(use-package jinja2-mode
+  :ensure t
+  :defer t
+  :mode ("\\.jinja\\'"))
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

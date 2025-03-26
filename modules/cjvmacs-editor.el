@@ -391,10 +391,6 @@
   :config
   (yas-reload-all))
 
-(use-package yasnippet-snippets
-  :ensure t
-  :after yasnippet)
-
 (use-package ediff
   :ensure nil
   :defer t

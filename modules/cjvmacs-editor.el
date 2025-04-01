@@ -231,7 +231,8 @@
   (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
 
 (use-package dired
-  :hook (dired-mode . turn-on-gnus-dired-mode)
+  :hook ((dired-mode . turn-on-gnus-dired-mode)
+         (dired-mode . (lambda () (setq truncate-lines t))))
   :defer t
   :custom
   (dired-auto-revert-buffer t)

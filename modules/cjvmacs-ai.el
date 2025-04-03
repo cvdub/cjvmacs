@@ -35,7 +35,8 @@
   :bind (:map cjv/ai-map
               ("g" . #'gptel)
               ("a" . #'gptel-add)
-              ("s" . #'gptel-send))
+              ("s" . #'gptel-send)
+              ("r" . #'gptel-rewrite))
   :custom
   (gptel-default-mode 'org-mode)
   :config

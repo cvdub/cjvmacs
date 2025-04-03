@@ -28,7 +28,8 @@
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   :bind (:map python-ts-mode-map
-              ("C-c o r" . cjv/python-open-repl))
+              ("C-c o r" . cjv/python-open-repl)
+              ("C-c c d" . #'cjv/decimalize-region))
   :custom
   (python-shell-dedicated 'project)
   (python-indent-guess-indent-offset-verbose nil)
@@ -38,7 +39,16 @@
     (if prefix
         (run-python nil 'project t)
       (cjv/with-bottom-window
-       (run-python nil 'project t)))))
+       (run-python nil 'project t))))
+
+  (defun cjv/decimalize-region (start end)
+    "Wrap region between START and END with Decimal(\"\") and remove commas."
+    (interactive "r")
+    (let* ((text (buffer-substring start end))
+           (text (replace-regexp-in-string "," "" text)))
+      (delete-region start end)
+      (goto-char start)
+      (insert "Decimal(\"" text "\")"))))
 
 (use-package pyvenv
   :ensure t

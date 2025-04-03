@@ -55,6 +55,20 @@
     :request-params '(:thinking (:type "enabled" :budget_tokens 2048)
                                 :max_tokens 4096)))
 
+(use-package copilot
+  :ensure t
+  :hook ((prog-mode . copilot-mode)
+         (copilot-mode . (lambda () (completion-preview-mode -1))))
+  :bind (:map copilot-mode-map
+              ("<tab>" . #'copilot-accept-completion)
+              ("C-g" . #'copilot-clear-overlay)
+              :map cjv/toggle-map
+              ("c" . #'copilot-mode))
+  :custom
+  (copilot-install-dir (expand-file-name "copilot" user-emacs-cache-directory))
+  (copilot-indent-offset-warning-disable t)
+  (copilot-max-char-warning-disable t))
+
 (provide 'cjvmacs-ai)
 
 ;;; cjvmacs-ai.el ends here

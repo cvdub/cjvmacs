@@ -37,7 +37,7 @@
   :group 'cjv-faces
   :type '(string))
 
-(defcustom cjv-faces-fixed-pitch-font-size 140
+(defcustom cjv-faces-fixed-pitch-font-size 120
   "Fixed pitch font size for cjv-faces."
   :group 'cjv-faces
   :type '(integer))

@@ -64,6 +64,7 @@
 (use-package simple
   :custom
   (completion-auto-select t)
+  (completion-auto-help 'always)
   (completion-show-help nil))
 
 (use-package completion-preview

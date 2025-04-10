@@ -36,7 +36,8 @@
               ("g" . #'gptel)
               ("a" . #'gptel-add)
               ("s" . #'gptel-send)
-              ("r" . #'gptel-rewrite))
+              ("r" . #'gptel-rewrite)
+              ("m" . #'cjv/gptel-set-model))
   :custom
   (gptel-default-mode 'org-mode)
   :config
@@ -142,8 +143,12 @@
                                          :output-cost 4.4
                                          :cutoff-date "2025-02"))))
   (setq gptel-backend cjv/gptel-backend
-        gptel-model 'anthropic/claude-3.5-sonnet)
-  (setq gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p)))
+        gptel-model 'openai/gpt-4o-mini)
+  (setq gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))
+
+  (defun cjv/gptel-set-model ()
+    (interactive)
+    (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models cjv/gptel-backend))))))
 
 (use-package copilot
   :ensure t

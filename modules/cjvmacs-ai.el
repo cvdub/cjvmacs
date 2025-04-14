@@ -165,6 +165,13 @@
   (copilot-indent-offset-warning-disable t)
   (copilot-max-char-warning-disable t))
 
+(use-package aider
+  :ensure t
+  :defer t
+  :bind (("s-a" . #'aider-transient-menu)
+         :map cjv/ai-map
+         ("d" . #'aider-transient-menu)))
+
 (provide 'cjvmacs-ai)
 
 ;;; cjvmacs-ai.el ends here

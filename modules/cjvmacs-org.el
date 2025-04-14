@@ -382,6 +382,8 @@
                               (tags . "%-12:c")
                               (search . "%-12:c")))
   (org-habit-graph-column 45)
+  (org-habit-preceding-days 7)
+  (org-habit-following-days 1)
 
   ;; Babel
   (org-babel-load-languages '((emacs-lisp . t)

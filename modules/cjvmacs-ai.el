@@ -152,6 +152,7 @@
 
 (use-package copilot
   :ensure t
+  :defer t
   :hook (;; (prog-mode . copilot-mode)
          (copilot-mode . (lambda () (completion-preview-mode -1))))
   :bind (:map copilot-mode-map

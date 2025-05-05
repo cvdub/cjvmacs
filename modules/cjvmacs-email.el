@@ -26,7 +26,8 @@
 (use-package notmuch
   :ensure t
   :commands notmuch-refresh-all-buffers
-  :hook ((notmuch-show-mode . variable-pitch-mode)
+  :hook ((notmuch-search-mode . hl-line-mode)
+         (notmuch-show-mode . variable-pitch-mode)
          (notmuch-message-mode . variable-pitch-mode))
   :init
   (setq mail-user-agent 'notmuch-user-agent)
@@ -60,13 +61,12 @@
     '((message-cite-function  'message-cite-original)
       (message-citation-line-function  'message-insert-formatted-citation-line)
       (message-cite-reply-position 'above)
-      (message-yank-prefix  "    ")
-      (message-yank-cited-prefix  "    ")
-      (message-yank-empty-prefix  "    ")
-      (message-citation-line-format "On %a, %b %e, %Y at %R %p %f wrote:\n"))
-    "Message citation style used by Gmail.  Use with `message-cite-style'.")
+      (message-yank-prefix  "> ")
+      (message-yank-cited-prefix  ">")
+      (message-yank-empty-prefix  ">")
 
-  ;; On Mon, Jul 1, 2024 at 8:10 AM Willms, Beverly <Beverly.Willms@united.com> wrote:
+      (message-citation-line-format "On %a, %b %e, %Y at %R %p %f wrote:\n"))
+    "Message citation style used by Gmail.  Use with `message-cite-style'.")
 
   (defun cjv/toggle-message-cite-style ()
     "Toggle message-cite-style between bottom posting and gmail."

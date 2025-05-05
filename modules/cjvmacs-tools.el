@@ -100,6 +100,13 @@
   :defer t
   :mode ("\\.jinja\\'"))
 
+(use-package dockerfile-mode
+  :ensure t
+  :defer t)
+
+(use-package applescript-mode
+  :ensure t)
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

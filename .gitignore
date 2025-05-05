@@ -1,2 +1,3 @@
 .local/
 custom.el
+.aider*

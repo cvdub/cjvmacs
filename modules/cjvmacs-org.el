@@ -44,6 +44,7 @@
          ("o" . #'org-clock-goto)
          ("p" . #'cjv/org-punch-in)
          ("P" . #'cjv/org-punch-out)
+         ("a" . #'cjv/org-capture-apple-reminders)
          :map org-mode-map
          ("M-p" . #'org-metaup)
          ("M-n" . #'org-metadown)
@@ -211,6 +212,14 @@
     "Open personal todo file."
     (interactive)
     (find-file "~/Documents/org/home.org"))
+
+  (defun cjv/org-capture-apple-reminders ()
+    (interactive)
+    (cjv/with-message
+     "Done!"
+     (start-process-shell-command "Org Capture Apple Reminders"
+                                  "*org capture apple reminders*"
+                                  "osascript /Users/cjv/code/scripts/capture-reminders.scpt")))
 
   :custom
   ;; Files

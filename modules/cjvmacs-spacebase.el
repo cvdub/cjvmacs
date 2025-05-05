@@ -162,8 +162,8 @@
   "Start a Django shell on a remote server."
   (interactive)
   (let ((default-directory (format "/ssh:%s:~/webapps/spacebase/" (spacebase/get-server)))
-        (venv (expand-file-name "venv"))
-        (python-shell-interpreter "venv/bin/python")
+        (venv (expand-file-name ".venv"))
+        (python-shell-interpreter ".venv/bin/python")
         (python-shell-interpreter-args "manage.py shell -i python"))
     (pyvenv-activate "venv")
     (run-python)

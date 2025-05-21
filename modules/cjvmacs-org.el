@@ -424,6 +424,7 @@
 
 (use-package org-roam
   :ensure t
+  :defer t
   :after org
   :bind (:map cjv/notes-map
               :prefix-map cjv/org-roam-map

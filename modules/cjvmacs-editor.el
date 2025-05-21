@@ -146,6 +146,7 @@
                                         (rust "https://github.com/tree-sitter/tree-sitter-rust")
                                         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
                                         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+                                        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
                                         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
                                         (json "https://github.com/tree-sitter/tree-sitter-json")))
   :custom

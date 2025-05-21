@@ -31,124 +31,89 @@
 
 (use-package gptel
   :ensure t
+  :vc (:url "git@github.com:cvdub/gptel.git"
+            :rev :newest)
   :defer t
   :bind (:map cjv/ai-map
               ("g" . #'gptel)
               ("a" . #'gptel-add)
               ("s" . #'gptel-send)
               ("r" . #'gptel-rewrite)
-              ("m" . #'cjv/gptel-set-model))
+              ("m" . #'cjv/gptel-set-model)
+              ("c" . #'gptel-context-remove-all))
   :custom
   (gptel-default-mode 'org-mode)
   :config
-  (defvar cjv/gptel-backend (gptel-make-openai "OpenRouter"
-                              :host "openrouter.ai"
-                              :endpoint "/api/v1/chat/completions"
-                              :stream t
-                              :key (auth-source-pick-first-password :host "openrouter.ai")
-                              :models '((anthropic/claude-3.5-sonnet
-                                         :description "New Claude 3.5 Sonnet delivers better-than-Opus capabilities, faster-than-Sonnet speeds, at the same Sonnet prices. Sonnet is particularly good at:"
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 200
-                                         :input-cost 3
-                                         :output-cost 15
-                                         :cutoff-date "2024-10")
-                                        (anthropic/claude-3.7-sonnet
-                                         :description "Claude 3.7 Sonnet is an advanced large language model with improved reasoning, coding, and problem-solving capabilities. It introduces a hybrid reasoning approach, allowing users to choose between rapid responses and extended, step-by-step processing for complex tasks. The model demonstrates notable improvements in coding, particularly in front-end development and full-stack updates, and excels in agentic workflows, where it can autonomously navigate multi-step processes. "
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 200
-                                         :input-cost 3
-                                         :output-cost 15
-                                         :cutoff-date "2025-02")
-                                        (anthropic/claude-3.7-sonnet:thinking
-                                         :description "Claude 3.7 Sonnet is an advanced large language model with improved reasoning, coding, and problem-solving capabilities. It introduces a hybrid reasoning approach, allowing users to choose between rapid responses and extended, step-by-step processing for complex tasks. The model demonstrates notable improvements in coding, particularly in front-end development and full-stack updates, and excels in agentic workflows, where it can autonomously navigate multi-step processes. "
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 200
-                                         :input-cost 3
-                                         :output-cost 15
-                                         :cutoff-date "2025-02")
-                                        (google/gemini-2.0-flash-001
-                                         :description "Gemini Flash 2.0 offers a significantly faster time to first token (TTFT) compared to [Gemini Flash 1.5](/google/gemini-flash-1.5), while maintaining quality on par with larger models like [Gemini Pro 1.5](/google/gemini-pro-1.5). It introduces notable enhancements in multimodal understanding, coding capabilities, complex instruction following, and function calling. These advancements come together to deliver more seamless and robust agentic experiences."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 1000
-                                         :input-cost 0.09999999999999999
-                                         :output-cost 0.39999999999999997
-                                         :cutoff-date "2025-02")
-                                        (google/gemini-2.5-pro-preview-03-25
-                                         :description "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs “thinking” capabilities, enabling it to reason through responses with enhanced accuracy and nuanced context handling. Gemini 2.5 Pro achieves top-tier performance on multiple benchmarks, including first-place positioning on the LMArena leaderboard, reflecting superior human-preference alignment and complex problem-solving abilities."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 1000
-                                         :input-cost 1.25
-                                         :output-cost 10
-                                         :cutoff-date "2025-04")
-                                        (openai/gpt-4o
-                                         :description "GPT-4o (o for omni) is OpenAI's latest AI model, supporting both text and image inputs with text outputs. It maintains the intelligence level of [GPT-4 Turbo](/models/openai/gpt-4-turbo) while being twice as fast and 50% more cost-effective. GPT-4o also offers improved performance in processing non-English languages and enhanced visual capabilities."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 128
-                                         :input-cost 2.5
-                                         :output-cost 10
-                                         :cutoff-date "2024-05")
-                                        (openai/gpt-4o-mini
-                                         :description "GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o), supporting both text and image inputs with text outputs."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 128
-                                         :input-cost 0.15
-                                         :output-cost 0.6
-                                         :cutoff-date "2024-07")
-                                        (openai/o1
-                                         :description "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding. The o1 model series is trained with large-scale reinforcement learning to reason using chain of thought."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 200
-                                         :input-cost 15
-                                         :output-cost 60
-                                         :cutoff-date "2024-12")
-                                        (openai/o1-mini
-                                         :description "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ()
-                                         :context-window 128
-                                         :input-cost 1.1
-                                         :output-cost 4.4
-                                         :cutoff-date "2024-09")
-                                        (openai/o1-pro
-                                         :description "The o1 series of models are trained with reinforcement learning to think before they answer and perform complex reasoning. The o1-pro model uses more compute to think harder and provide consistently better answers."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                                         :context-window 200
-                                         :input-cost 150
-                                         :output-cost 600
-                                         :cutoff-date "2025-03")
-                                        (openai/o3-mini
-                                         :description "OpenAI o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ()
-                                         :context-window 200
-                                         :input-cost 1.1
-                                         :output-cost 4.4
-                                         :cutoff-date "2025-01")
-                                        (openai/o3-mini-high
-                                         :description "OpenAI o3-mini-high is the same model as o3-mini with reasoning_effort set to high."
-                                         :capabilities (media tool-use json url)
-                                         :mime-types ()
-                                         :context-window 200
-                                         :input-cost 1.1
-                                         :output-cost 4.4
-                                         :cutoff-date "2025-02"))))
-  (setq gptel-backend cjv/gptel-backend
-        gptel-model 'openai/gpt-4o-mini)
+  (setq gptel-model 'openai/o4-mini
+        gptel-backend (gptel-make-openai "OpenRouter"
+                        :host "openrouter.ai"
+                        :endpoint "/api/v1/chat/completions"
+                        :stream t
+                        :key (auth-source-pick-first-password :host "openrouter.ai")
+                        :models '(openai/gpt-4o
+                                  openai/gpt-4o-mini
+                                  openai/o4-mini
+                                  openai/o4-mini-high
+                                  openai/o3-mini
+                                  google/gemini-2.5-pro-preview-03-25)))
   (setq gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))
 
   (defun cjv/gptel-set-model ()
     (interactive)
-    (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models cjv/gptel-backend))))))
+    (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models gptel-backend))))))
+
+;; ((openai/gpt-4o :capabilities (media tool-use json url)
+;;                                :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                :context-window 128
+;;                                :input-cost 2.5
+;;                                :output-cost 10
+;;                                :cutoff-date "2023-10")
+;;                 (openai/gpt-4o-mini :capabilities (media tool-use json url)
+;;                                     :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                     :context-window 128
+;;                                     :input-cost 0.15
+;;                                     :output-cost 0.6
+;;                                     :cutoff-date "2023-10")
+;;                 (openai/gpt-4.1 :capabilities (media tool-use json url)
+;;                                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                 :context-window 1024
+;;                                 :input-cost 2.0
+;;                                 :output-cost 8.0
+;;                                 :cutoff-date "2024-05")
+;;                 (openai/gpt-4.5-preview :capabilities (media tool-use url)
+;;                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                         :context-window 128
+;;                                         :input-cost 75
+;;                                         :output-cost 150
+;;                                         :cutoff-date "2023-10")
+;;                 (openai/gpt-4.1-mini :capabilities (media tool-use json url)
+;;                                      :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                      :context-window 1024
+;;                                      :input-cost 0.4
+;;                                      :output-cost 1.6)
+;;                 (openai/gpt-4.1-nano :capabilities (media tool-use json url)
+;;                                      :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                      :context-window 1024
+;;                                      :input-cost 0.1
+;;                                      :output-cost 0.4
+;;                                      :cutoff-date "2024-05")
+;;                 (openai/o3 :capabilities (reasoning media tool-use json url)
+;;                            :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                            :context-window 200
+;;                            :input-cost 10
+;;                            :output-cost 40
+;;                            :cutoff-date "2024-05")
+;;                 (openai/o3-mini :capabilities (reasoning tool-use json)
+;;                                 :context-window 200
+;;                                 :input-cost 1.1
+;;                                 :output-cost 4.4
+;;                                 :cutoff-date "2023-10")
+;;                 (openai/o4-mini :capabilities (reasoning media tool-use json url)
+;;                                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+;;                                 :context-window 200
+;;                                 :input-cost 1.1
+;;                                 :output-cost 4.4
+;;                                 :cutoff-date "2024-05"))
 
 (use-package copilot
   :ensure t
@@ -165,12 +130,30 @@
   (copilot-indent-offset-warning-disable t)
   (copilot-max-char-warning-disable t))
 
-(use-package aider
+(use-package aidermacs
   :ensure t
   :defer t
-  :bind (("s-a" . #'aider-transient-menu)
-         :map cjv/ai-map
-         ("d" . #'aider-transient-menu)))
+  :vc (:url "https://github.com/MatthewZMD/aidermacs.git"
+            :rev :newest)
+  :bind ("s-a" . #'aidermacs-transient-menu)
+  :custom
+  (aidermacs-extra-args `("--api-key" ,(format "openrouter=%s" (auth-source-pick-first-password :host "openrouter.ai"))))
+  (aidermacs-use-architect-mode t)
+  (aidermacs-default-model "openrouter/openai/gpt-4o-mini"))
+
+(use-package emigo
+  :ensure t
+  :defer t
+  :vc (:url "https://github.com/MatthewZMD/emigo.git"
+            :rev :newest)
+  :config
+  (emigo-enable) ;; Starts the background process automatically
+  :custom
+  ;; Encourage using OpenRouter with Deepseek
+  (emigo-python-command "/Users/cjv/.config/emacs/.local/packages/emigo/.venv/bin/python")
+  (emigo-model "openrouter/deepseek/deepseek-chat-v3-0324")
+  (emigo-base-url "https://openrouter.ai/api/v1")
+  (emigo-api-key (auth-source-pick-first-password :host "openrouter.ai")))
 
 (provide 'cjvmacs-ai)
 

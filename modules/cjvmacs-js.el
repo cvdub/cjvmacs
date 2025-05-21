@@ -37,6 +37,10 @@
   :custom
   (js-indent-level 2))
 
+(use-package js-ts-mode
+  :defer t
+  :mode "\\.js\\'")
+
 (provide 'cjvmacs-js)
 
 ;;; cjvmacs-js.el ends here

@@ -280,6 +280,7 @@
 
 (use-package ol-notmuch
   :ensure t
+  :defer t
   :after org)
 
 (provide 'cjvmacs-email)

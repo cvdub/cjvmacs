@@ -39,7 +39,23 @@
       (cjv/with-bottom-window (eshell))))
 
   (add-to-list 'eshell-modules-list 'eshell-tramp)
+
+  (defun cjv/eshell-prompt ()
+    (let ((cwd (abbreviate-file-name (eshell/pwd)))
+          (sym (if (= (user-uid) 0) "# " "$ ")))
+      (concat
+       ;; line 1: cwd
+       cwd
+       "\n"
+       ;; line 2: prompt symbol
+       sym)))
+
+  (setq eshell-prompt-function #'cjv/eshell-prompt
+        eshell-prompt-regexp "^[^#$\n]*\n[#$] ")
   :custom
+  (eshell-visual-commands '("vi" "vim" "nvim" "screen" "tmux" "top" "htop" "less" "more" "lynx" "links" "ncftp" "ncmpcpp"
+                            "mutt" "pine" "tin" "trn" "elm"))
+  (eshell-visual-subcommands '(("docker" "build")))
   (eshell-directory-name (expand-file-name "eshell/" user-emacs-cache-directory))
   (eshell-banner-message "")
   (eshell-banner-message "")

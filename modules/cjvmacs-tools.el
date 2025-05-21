@@ -107,6 +107,9 @@
 (use-package applescript-mode
   :ensure t)
 
+(use-package terraform-mode
+  :ensure t
+  :defer t)
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

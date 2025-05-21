@@ -110,6 +110,11 @@
 (use-package terraform-mode
   :ensure t
   :defer t)
+
+(use-package ledger-mode
+  :ensure t
+  :defer t)
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

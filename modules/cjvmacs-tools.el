@@ -63,6 +63,11 @@
   (eshell-hist-ignoredumps t)
   (eshell-destroy-buffer-when-process-dies t))
 
+(use-package eat
+  :ensure t
+  :init
+  (add-hook 'eshell-load-hook #'eat-eshell-mode))
+
 (use-package tramp
   :defer t
   :custom

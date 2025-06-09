@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pytest-fixture
+# key: @f
+# --
+@pytest.fixture

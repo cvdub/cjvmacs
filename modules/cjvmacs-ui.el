@@ -104,7 +104,7 @@
   (cjv-faces-fixed-pitch-font-family "Fira Code")
   (cjv-faces-variable-pitch-font-family "iA Writer Quattro V")
   (cjv-faces-emoji-fontset-properties '(:family "Apple Color Emoji" :size 11))
-  (cjv-faces-fixed-pitch-font-size 140)
+  (cjv-faces-fixed-pitch-font-size 130)
   :config
   (load-theme 'cjv-faces))
 

@@ -136,6 +136,10 @@
   :ensure t
   :defer t)
 
+(use-package csv-mode
+  :ensure t
+  :defer t)
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

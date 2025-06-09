@@ -43,77 +43,27 @@
               ("c" . #'gptel-context-remove-all))
   :custom
   (gptel-default-mode 'org-mode)
+  (gptel-include-reasoning nil)
   :config
-  (setq gptel-model 'openai/o4-mini
+  (setq gptel-api-key (auth-source-pick-first-password :host "openrouter.ai")
+        gptel-model 'openai/gpt-4o-mini
         gptel-backend (gptel-make-openai "OpenRouter"
                         :host "openrouter.ai"
                         :endpoint "/api/v1/chat/completions"
-                        :stream t
+                        :stream nil
                         :key (auth-source-pick-first-password :host "openrouter.ai")
-                        :models '(openai/gpt-4o
-                                  openai/gpt-4o-mini
+                        :models '(openai/gpt-4o-mini
                                   openai/o4-mini
-                                  openai/o4-mini-high
-                                  openai/o3-mini
-                                  google/gemini-2.5-pro-preview-03-25)))
-  (setq gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))
+                                  google/gemini-2.5-pro-preview-03-25
+                                  openai/gpt-4o-mini:online
+                                  openai/o4-mini:online
+                                  google/gemini-2.5-pro-preview-03-25:online))
+        ;; Delete default OpenAI backend
+        gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))
 
   (defun cjv/gptel-set-model ()
     (interactive)
     (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models gptel-backend))))))
-
-;; ((openai/gpt-4o :capabilities (media tool-use json url)
-;;                                :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                :context-window 128
-;;                                :input-cost 2.5
-;;                                :output-cost 10
-;;                                :cutoff-date "2023-10")
-;;                 (openai/gpt-4o-mini :capabilities (media tool-use json url)
-;;                                     :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                     :context-window 128
-;;                                     :input-cost 0.15
-;;                                     :output-cost 0.6
-;;                                     :cutoff-date "2023-10")
-;;                 (openai/gpt-4.1 :capabilities (media tool-use json url)
-;;                                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                 :context-window 1024
-;;                                 :input-cost 2.0
-;;                                 :output-cost 8.0
-;;                                 :cutoff-date "2024-05")
-;;                 (openai/gpt-4.5-preview :capabilities (media tool-use url)
-;;                                         :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                         :context-window 128
-;;                                         :input-cost 75
-;;                                         :output-cost 150
-;;                                         :cutoff-date "2023-10")
-;;                 (openai/gpt-4.1-mini :capabilities (media tool-use json url)
-;;                                      :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                      :context-window 1024
-;;                                      :input-cost 0.4
-;;                                      :output-cost 1.6)
-;;                 (openai/gpt-4.1-nano :capabilities (media tool-use json url)
-;;                                      :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                      :context-window 1024
-;;                                      :input-cost 0.1
-;;                                      :output-cost 0.4
-;;                                      :cutoff-date "2024-05")
-;;                 (openai/o3 :capabilities (reasoning media tool-use json url)
-;;                            :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                            :context-window 200
-;;                            :input-cost 10
-;;                            :output-cost 40
-;;                            :cutoff-date "2024-05")
-;;                 (openai/o3-mini :capabilities (reasoning tool-use json)
-;;                                 :context-window 200
-;;                                 :input-cost 1.1
-;;                                 :output-cost 4.4
-;;                                 :cutoff-date "2023-10")
-;;                 (openai/o4-mini :capabilities (reasoning media tool-use json url)
-;;                                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-;;                                 :context-window 200
-;;                                 :input-cost 1.1
-;;                                 :output-cost 4.4
-;;                                 :cutoff-date "2024-05"))
 
 (use-package copilot
   :ensure t

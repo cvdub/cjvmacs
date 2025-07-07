@@ -63,14 +63,15 @@
   (load-prefer-newer t)
   (initial-scratch-message nil)
   (tab-always-indent 'complete)
+  (disabled-command-function nil)
 
   ;; Autosave
   (auto-save-no-message t)
   (remote-file-name-inhibit-auto-save t)
   (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   (auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" user-emacs-cache-directory))
-  ;; Backups
 
+  ;; Backups
   (backup-directory-alist `((".*" . ,temporary-file-directory)))
   (backup-by-copying t)
   (version-control t)
@@ -180,7 +181,7 @@
           (list 'ruff-sort-imports 'ruff))))
 
 (use-package eglot
-  :defer t
+  :ensure t
   :hook (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1)))
   :custom
   (eglot-events-buffer-size 0)

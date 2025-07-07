@@ -53,10 +53,12 @@
                         :stream nil
                         :key (auth-source-pick-first-password :host "openrouter.ai")
                         :models '(openai/gpt-4o-mini
-                                  openai/o4-mini
-                                  google/gemini-2.5-pro-preview-03-25
                                   openai/gpt-4o-mini:online
+                                  openai/o3
+                                  openai/o3:online
+                                  openai/o4-mini
                                   openai/o4-mini:online
+                                  google/gemini-2.5-pro-preview-03-25
                                   google/gemini-2.5-pro-preview-03-25:online))
         ;; Delete default OpenAI backend
         gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))

@@ -53,7 +53,7 @@
                          (cons "skip_assets=true" extra-vars)
                        extra-vars))
          (extra-vars (string-join extra-vars " "))
-         (command (format "ansible-playbook %s -i hosts/%s --extra-vars \"%s\"" playbook host extra-vars))
+         (command (format "ansible-playbook --vault-password-file='/Users/cjv/.config/ansible/vault-password.sh' %s -i hosts/%s --extra-vars \"%s\"" playbook host extra-vars))
          (command (if prompt-for-task
                       (format "%s --start-at-task=\"%s\"" command (read-string "Start at task: "))
                     command)))

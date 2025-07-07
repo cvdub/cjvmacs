@@ -245,6 +245,13 @@
 (use-package menu-bar
   :bind ("s-t" . nil))
 
+(use-package pulsar
+  :ensure t
+  :init
+  (pulsar-global-mode 1)
+  :custom
+  (pulsar-pulse-on-window-change t))
+
 (provide 'cjvmacs-ui)
 
 ;;; cjvmacs-ui.el ends here

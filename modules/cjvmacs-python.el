@@ -24,12 +24,17 @@
 ;;; Code:
 
 (use-package python
-  :hook (python-ts-mode . eglot-ensure)
+  :hook ((python-ts-mode . eglot-ensure)
+         (python-ts-mode . (lambda ()
+                             (setq-default eglot-workspace-configuration
+                                           '(:basedpyright (:typeCheckingMode "off"))))))
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   :bind (:map python-ts-mode-map
               ("C-c o r" . cjv/python-open-repl)
               ("C-c c d" . #'cjv/decimalize-region))
+  :hook ((inferior-python-mode . (lambda () (toggle-truncate-lines 1)))
+         ((inferior-python-mode . (lambda () (hl-line-mode 1)))))
   :custom
   (python-shell-dedicated 'project)
   (python-indent-guess-indent-offset-verbose nil)

@@ -185,11 +185,7 @@
   :hook (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1)))
   :custom
   (eglot-events-buffer-size 0)
-  (eglot-autoshutdown t)
-  :config
-  (setcdr (assoc '(python-mode python-ts-mode) eglot-server-programs)
-          '("jedi-language-server" :initializationOptions
-            (:completion (:disableSnippets t)))))
+  (eglot-autoshutdown t))
 
 (use-package repeat
   :config

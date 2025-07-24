@@ -19,7 +19,7 @@
       savehist-file (expand-file-name "history" user-emacs-cache-directory))
 
 ;; Disable double buffering (makes cursor movement feel snappier on MacOS)
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+;; (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 ;; Add homebrew bin to path early so Emacs can find gcc for native comp
 (setenv "PATH" "/opt/homebrew/bin/")

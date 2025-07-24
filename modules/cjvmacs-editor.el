@@ -242,6 +242,10 @@
   (dired-listing-switches "-alh")
   (dired-mouse-drag-files t))
 
+(use-package dired-aux
+  :config
+  (add-to-list 'dired-compress-files-alist '("\\.tar\\'" . "tar -cf %o %i")))
+
 (use-package dired-x
   :hook (dired-mode . dired-omit-mode)
   :config

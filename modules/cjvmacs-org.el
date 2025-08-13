@@ -399,7 +399,8 @@
                               (lisp . t)
                               (python . t)
                               (shell . t)))
-  (org-babel-python-command-nonsession "python3"))
+  (org-babel-python-command-nonsession "python3")
+  (org-babel-min-lines-for-block-output 1))
 
 (use-package org-journal
   :ensure t
@@ -436,6 +437,12 @@
   (org-roam-directory (expand-file-name "roam/" org-directory))
   (org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
   (org-roam-completion-everywhere t))
+
+(use-package ox-gfm
+  :ensure t
+  :after org
+  :config
+  '(require 'ox-gfm nil t))
 
 (provide 'cjvmacs-org)
 

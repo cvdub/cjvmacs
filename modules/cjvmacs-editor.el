@@ -229,7 +229,8 @@
   :ensure t
   :bind ("C-'" . avy-goto-subword-1)
   :custom
-  (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
+  (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o))
+  (avy-all-windows nil))
 
 (use-package dired
   :hook ((dired-mode . turn-on-gnus-dired-mode)
@@ -243,6 +244,7 @@
   (dired-mouse-drag-files t))
 
 (use-package dired-aux
+  :after dired
   :config
   (add-to-list 'dired-compress-files-alist '("\\.tar\\'" . "tar -cf %o %i")))
 

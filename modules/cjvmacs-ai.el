@@ -46,26 +46,34 @@
   (gptel-include-reasoning nil)
   :config
   (setq gptel-api-key (auth-source-pick-first-password :host "openrouter.ai")
-        gptel-model 'openai/gpt-4o-mini
+        gptel-model 'openai/gpt-5
         gptel-backend (gptel-make-openai "OpenRouter"
                         :host "openrouter.ai"
                         :endpoint "/api/v1/chat/completions"
                         :stream nil
                         :key (auth-source-pick-first-password :host "openrouter.ai")
-                        :models '(openai/gpt-4o-mini
-                                  openai/gpt-4o-mini:online
-                                  openai/o3
-                                  openai/o3:online
-                                  openai/o4-mini
-                                  openai/o4-mini:online
+                        :models '(openai/gpt-5
+                                  openai/gpt-5:online
+                                  openai/gpt-5-mini
+                                  openai/gpt-5-mini:online
+                                  openai/gpt-5-nano
+                                  openai/gpt-5-chat
+                                  openai/gpt-5-chat:online
                                   google/gemini-2.5-pro-preview-03-25
-                                  google/gemini-2.5-pro-preview-03-25:online))
+                                  google/gemini-2.5-pro-preview-03-25:online
+                                  x-ai/grok-4))
         ;; Delete default OpenAI backend
         gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))
 
   (defun cjv/gptel-set-model ()
     (interactive)
     (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models gptel-backend))))))
+
+(use-package gptel-project
+  :load-path "~/code/projects/elisp/gptel-project"
+  :bind (:map project-prefix-map
+              ("a" . #'gptel-project-chat)
+              ("u" . #'gptel-project-update-summary)))
 
 (use-package copilot
   :ensure t
@@ -90,7 +98,7 @@
   :bind ("s-a" . #'aidermacs-transient-menu)
   :custom
   (aidermacs-extra-args `("--api-key" ,(format "openrouter=%s" (auth-source-pick-first-password :host "openrouter.ai"))))
-  (aidermacs-use-architect-mode t)
+  (aidermacs-default-chat-mode 'architect)
   (aidermacs-default-model "openrouter/openai/gpt-4o-mini"))
 
 (use-package emigo

@@ -90,13 +90,12 @@
   :config
   (with-eval-after-load 'org
     (ef-themes-with-colors
-     (set-face-attribute 'org-todo-done nil :foreground green-faint)
-     (set-face-attribute 'org-todo-someday nil :foreground border)
-     (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
+      (set-face-attribute 'org-todo-done nil :foreground green-faint)
+      (set-face-attribute 'org-todo-someday nil :foreground border)
+      (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
 
 (use-package gruvbox-theme
-  :vc t
-  :load-path (lambda () (expand-file-name "gruvbox-theme" package-user-dir)))
+  :vc (:url "git@github.com:cvdub/emacs-theme-gruvbox.git" :rev :newest))
 
 (use-package cjv-faces
   :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))
@@ -251,6 +250,14 @@
   (pulsar-global-mode 1)
   :custom
   (pulsar-pulse-on-window-change t))
+
+(use-package ultra-scroll
+  :vc (:url "https://github.com/jdtsmith/ultra-scroll") ; if desired (emacs>=v30)
+  :init
+  (setq scroll-conservatively 3 ; or whatever value you prefer, since v0.4
+        scroll-margin 0)        ; important: scroll-margin>0 not yet supported
+  :config
+  (ultra-scroll-mode 1))
 
 (provide 'cjvmacs-ui)
 

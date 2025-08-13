@@ -23,6 +23,11 @@
 
 ;;; Code:
 
+;; Fix keybindings on macos
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super))
+
 ;; Disable suspend-frame binding
 (global-unset-key (kbd "C-z"))
 

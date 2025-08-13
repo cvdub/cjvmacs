@@ -138,7 +138,8 @@
 
 (use-package csv-mode
   :ensure t
-  :defer t)
+  :defer t
+  :hook (csv-mode . (lambda () (visual-line-fill-column-mode -1))))
 
 (provide 'cjvmacs-tools)
 

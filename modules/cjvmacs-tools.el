@@ -65,6 +65,7 @@
 
 (use-package eat
   :ensure t
+  :defer t
   :init
   (add-hook 'eshell-load-hook #'eat-eshell-mode))
 

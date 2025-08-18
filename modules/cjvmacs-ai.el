@@ -70,6 +70,7 @@
     (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models gptel-backend))))))
 
 (use-package gptel-project
+  :defer t
   :load-path "~/code/projects/elisp/gptel-project"
   :bind (:map project-prefix-map
               ("a" . #'gptel-project-chat)

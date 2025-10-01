@@ -46,19 +46,17 @@
   (gptel-include-reasoning nil)
   :config
   (setq gptel-api-key (auth-source-pick-first-password :host "openrouter.ai")
-        gptel-model 'openai/gpt-5
+        gptel-model 'openai/gpt-5-mini
         gptel-backend (gptel-make-openai "OpenRouter"
                         :host "openrouter.ai"
                         :endpoint "/api/v1/chat/completions"
-                        :stream nil
-                        :key (auth-source-pick-first-password :host "openrouter.ai")
+                        :stream t
+                        :key gptel-api-key
                         :models '(openai/gpt-5
                                   openai/gpt-5:online
                                   openai/gpt-5-mini
                                   openai/gpt-5-mini:online
                                   openai/gpt-5-nano
-                                  openai/gpt-5-chat
-                                  openai/gpt-5-chat:online
                                   google/gemini-2.5-pro-preview-03-25
                                   google/gemini-2.5-pro-preview-03-25:online
                                   x-ai/grok-4))
@@ -98,9 +96,11 @@
             :rev :newest)
   :bind ("s-a" . #'aidermacs-transient-menu)
   :custom
-  (aidermacs-extra-args `("--api-key" ,(format "openrouter=%s" (auth-source-pick-first-password :host "openrouter.ai"))))
-  (aidermacs-default-chat-mode 'architect)
-  (aidermacs-default-model "openrouter/openai/gpt-4o-mini"))
+  ;; (aidermacs-extra-args `("--api-key" ,(format "openrouter=%s" (auth-source-pick-first-password :host "openrouter.ai"))))
+  (aidermacs-extra-args `("--api-key" ,(format "openai=%s" (auth-source-pick-first-password :host "api.openai.com"))))
+  (aidermacs-default-chat-mode 'code)
+  ;; (aidermacs-default-model "openrouter/openai/gpt-5")
+  (aidermacs-default-model "openai/gpt-5-mini"))
 
 (use-package emigo
   :ensure t
@@ -115,6 +115,24 @@
   (emigo-model "openrouter/deepseek/deepseek-chat-v3-0324")
   (emigo-base-url "https://openrouter.ai/api/v1")
   (emigo-api-key (auth-source-pick-first-password :host "openrouter.ai")))
+
+(use-package claude-code
+  :ensure t
+  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :config
+  ;; (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+  ;; (monet-mode 1)
+  (claude-code-mode)
+  :bind-keymap ("s-c" . claude-code-command-map)
+
+  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
+  ;; :bind
+  ;; (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode))
+  )
+
+;; (use-package monet
+;;   :ensure t
+;;   :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))
 
 (provide 'cjvmacs-ai)
 

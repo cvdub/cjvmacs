@@ -25,7 +25,7 @@
 
 (use-package typescript-ts-mode
   :defer t
-  :mode ("\\.ts\\'")
+  :mode ("\\.ts[x]?\\'")
   :hook (typescript-ts-mode . eglot-ensure)
   :custom
   (typescript-ts-mode-indent-offset 2))
@@ -39,7 +39,7 @@
 
 (use-package js-ts-mode
   :defer t
-  :mode "\\.js\\'")
+  :mode "\\.js[x]?\\'")
 
 (provide 'cjvmacs-js)
 

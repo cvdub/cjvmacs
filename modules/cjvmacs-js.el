@@ -41,6 +41,10 @@
   :defer t
   :mode "\\.js[x]?\\'")
 
+(use-package json-ts-mode
+  :defer t
+  :mode ("\\.json[c]?\\'"))
+
 (provide 'cjvmacs-js)
 
 ;;; cjvmacs-js.el ends here

@@ -24,8 +24,9 @@
 ;;; Code:
 
 (defvar cjv/themes '(gruvbox-dark-medium
-                     gruvbox-light-medium
-                     ef-cyprus))
+                     gruvbox-light-medium))
+(defvar cjv/theme-light 'gruvbox-light-medium)
+(defvar cjv/theme-dark 'gruvbox-dark-medium)
 
 (use-package emacs
   :bind ("C-+" . #'global-text-scale-adjust)
@@ -56,12 +57,19 @@
   (custom-safe-themes t)
   (custom-theme-directory (expand-file-name "themes" user-emacs-directory))
   :config
+  (defun cjv/macos-dark-mode? ()
+    "Return t if macOS Appearance is Dark (via AppleScript)."
+    (string= (string-trim
+              (shell-command-to-string
+               "osascript -e 'tell application \"System Events\" to tell appearance preferences to get dark mode'"))
+             "true"))
+
   (defun cjv/update-macos-titlebar (&optional _theme)
     "Make MacOS titlebar transparent on all frames."
     (when (eq system-type 'darwin)
       (dolist (frame (frame-list))
         (modify-frame-parameters
-         frame `((ns-transparent-titlebar . t)
+         frame `((mac-transparent-titlebar . t)
                  (ns-appearance . ,(frame-parameter frame 'background-mode)))))))
 
   (add-hook 'enable-theme-functions #'cjv/update-macos-titlebar)
@@ -77,7 +85,9 @@
       (load-theme next-theme)
       (load-theme 'cjv-faces)))
 
-  (load-theme (car cjv/themes)))
+  (if (cjv/macos-dark-mode?)
+      (load-theme cjv/theme-dark)
+    (load-theme cjv/theme-light)))
 
 (use-package ef-themes
   :ensure t
@@ -90,9 +100,9 @@
   :config
   (with-eval-after-load 'org
     (ef-themes-with-colors
-      (set-face-attribute 'org-todo-done nil :foreground green-faint)
-      (set-face-attribute 'org-todo-someday nil :foreground border)
-      (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
+     (set-face-attribute 'org-todo-done nil :foreground green-faint)
+     (set-face-attribute 'org-todo-someday nil :foreground border)
+     (set-face-attribute 'org-checkbox-statistics-todo nil :foreground fg-dim))))
 
 (use-package gruvbox-theme
   :vc (:url "git@github.com:cvdub/emacs-theme-gruvbox.git" :rev :newest))

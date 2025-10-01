@@ -185,8 +185,10 @@
   :defer t
   :hook (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1)))
   :custom
-  (eglot-events-buffer-size 0)
-  (eglot-autoshutdown t))
+  (eglot-events-buffer-config '(:size 0 :format full))
+  (eglot-autoshutdown t)
+  :config
+  (add-to-list 'eglot-ignored-server-capabilities :documentOnTypeFormatting))
 
 (use-package repeat
   :config

@@ -142,6 +142,9 @@
   :defer t
   :hook (csv-mode . (lambda () (visual-line-fill-column-mode -1))))
 
+(use-package htmlize
+  :ensure t)
+
 (provide 'cjvmacs-tools)
 
 ;;; cjvmacs-tools.el ends here

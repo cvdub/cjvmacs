@@ -98,9 +98,23 @@
   :defer t
   :bind (:map project-prefix-map
               ("r" . #'project-recompile)
-              ("R" . #'project-query-replace-regexp))
+              ("R" . #'project-query-replace-regexp)
+              ("s" . #'cjv/project-scratch-buffer))
   :custom
-  (project-list-file (expand-file-name "projects" user-emacs-local-directory)))
+  (project-list-file (expand-file-name "projects" user-emacs-local-directory))
+  :config
+  (defun cjv/project-scratch-buffer ()
+    (interactive)
+    (let* ((buffer-name (format "*scratch:%s*" (project-name (project-current))))
+           (scratch (get-buffer-create buffer-name))
+           (scratch-major-mode (if (boundp 'project-scratch-major-mode)
+                                   project-scratch-major-mode
+                                 major-mode)))
+      (with-current-buffer scratch
+        (setq-local default-directory (project-root (project-current)))
+        (funcall scratch-major-mode)
+        (hack-local-variables))
+      (pop-to-buffer-same-window scratch))))
 
 (use-package transient
   :defer t

@@ -48,7 +48,8 @@
          (output-buffer (format "*deploy: %s*" host))
          (branch (completing-read "Select branch: " (magit-list-local-branch-names)
                                   nil t nil nil "master"))
-         (extra-vars (list (format "git_branch=%s" branch)))
+         (extra-vars (list (format "git_branch=%s" branch)
+                           (format "env=%s" host)))
          (extra-vars (if skip-assets
                          (cons "skip_assets=true" extra-vars)
                        extra-vars))

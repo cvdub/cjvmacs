@@ -121,7 +121,7 @@
   "Set `default-directory' to Spacebase project root, then run BODY."
   `(let ((default-directory spacebase/directory))
      (hack-local-variables)
-     (pyvenv-workon "sb")
+     (pyvenv-activate "/Users/cjv/code/projects/spacebase/.venv")
      ,@body
      (pyvenv-deactivate)))
 

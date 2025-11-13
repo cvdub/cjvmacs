@@ -269,6 +269,11 @@
   :config
   (ultra-scroll-mode 1))
 
+(use-package rainbow-delimiters
+  :ensure t
+  :defer t
+  :hook (emacs-lisp-mode lisp-interaction-mode lisp-mode))
+
 (provide 'cjvmacs-ui)
 
 ;;; cjvmacs-ui.el ends here

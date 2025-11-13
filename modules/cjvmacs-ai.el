@@ -43,25 +43,10 @@
               ("c" . #'gptel-context-remove-all))
   :custom
   (gptel-default-mode 'org-mode)
-  (gptel-include-reasoning nil)
+  (gptel-include-reasoning t)
+  (gptel-model 'gpt-5-mini)
   :config
-  (setq gptel-api-key (auth-source-pick-first-password :host "openrouter.ai")
-        gptel-model 'openai/gpt-5-mini
-        gptel-backend (gptel-make-openai "OpenRouter"
-                        :host "openrouter.ai"
-                        :endpoint "/api/v1/chat/completions"
-                        :stream t
-                        :key gptel-api-key
-                        :models '(openai/gpt-5
-                                  openai/gpt-5:online
-                                  openai/gpt-5-mini
-                                  openai/gpt-5-mini:online
-                                  openai/gpt-5-nano
-                                  google/gemini-2.5-pro-preview-03-25
-                                  google/gemini-2.5-pro-preview-03-25:online
-                                  x-ai/grok-4))
-        ;; Delete default OpenAI backend
-        gptel--known-backends (assoc-delete-all "ChatGPT" gptel--known-backends #'string-prefix-p))
+  (setq gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
 
   (defun cjv/gptel-set-model ()
     (interactive)

@@ -214,6 +214,11 @@
   :config
   (recentf-mode 1))
 
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode))
+
 (provide 'cjvmacs-completion)
 
 ;;; cjvmacs-completion.el ends here

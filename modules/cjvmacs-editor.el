@@ -326,7 +326,9 @@
   :diminish flyspell-mode
   :defer t
   :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)))
+         (prog-mode . flyspell-prog-mode))
+  :custom
+  (flyspell-use-meta-tab nil))
 
 (defun cjv/toggle-parens ()
   "Toggle parens at cursor."

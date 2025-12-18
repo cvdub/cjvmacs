@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pytest.mark.django_db
+# key: @d
+# --
+@pytest.mark.django_db$0

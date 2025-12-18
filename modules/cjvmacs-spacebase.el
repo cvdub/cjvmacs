@@ -83,8 +83,9 @@
                      "test_spacebase_db_gw8"
                      "test_spacebase_db_gw9"))
          (sub-commands '("dropdb -U cjv --if-exists %s"
-                         "createdb -U cjv %s"
-                         "psql --quiet -U cjv -d %s -c \"create extension pg_trgm\""))
+                         "createdb -U spacebase %s"
+                         "psql --quiet -U cjv -d %s -c \"CREATE EXTENSION pg_trgm\""
+                         "psql --quiet -U cjv -d %s -c \"CREATE EXTENSION vector\""))
          (command (cl-loop for command-string in sub-commands
                            nconc (mapcar (lambda (db) (format command-string db)) test-dbs) into command
                            finally (return (string-join command " && ")))))

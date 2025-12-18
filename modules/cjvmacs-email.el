@@ -32,7 +32,7 @@
   :init
   (setq mail-user-agent 'notmuch-user-agent)
 
-  (defvar cjv/email-sync-command "mbsync -a && notmuch new")
+  (defvar cjv/email-sync-command "notmuch new && mbsync -a && notmuch new")
 
   (defun cjv/notmuch-inbox ()
     "Opens the notmuch inbox."

@@ -46,7 +46,25 @@
   (gptel-include-reasoning t)
   (gptel-model 'gpt-5-mini)
   :config
-  (setq gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
+  (setq gptel-model 'google/gemini-3-flash-preview
+        gptel-backend
+        (gptel-make-openai "OpenRouter"
+          :host "openrouter.ai"
+          :endpoint "/api/v1/chat/completions"
+          :stream t
+          :key (auth-source-pick-first-password :host "openrouter.ai")
+          :models '(anthropic/claude-opus-4.5
+                    anthropic/claude-sonnet-4.5
+                    google/gemini-3-flash-preview
+                    google/gemini-3-pro-preview
+                    openai/gpt-5-mini
+                    openai/gpt-5-nano
+                    openai/gpt-5.1-codex-max
+                    openai/gpt-5.2
+                    openai/gpt-5.2-chat
+                    openai/gpt-5.2-pro
+                    x-ai/grok-4.1-fast
+                    x-ai/grok-code-fast-1)))
 
   (defun cjv/gptel-set-model ()
     (interactive)
@@ -67,8 +85,9 @@
   :bind (:map copilot-mode-map
               ("<tab>" . #'copilot-accept-completion)
               ("C-g" . #'copilot-clear-overlay)
-              :map cjv/toggle-map
-              ("c" . #'copilot-mode))
+              ;; :map cjv/toggle-map
+              ;; ("c" . #'copilot-mode)
+              )
   :custom
   (copilot-install-dir (expand-file-name "copilot" user-emacs-cache-directory))
   (copilot-indent-offset-warning-disable t)

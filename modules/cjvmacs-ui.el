@@ -48,7 +48,9 @@
   (visual-line-fringe-indicators '(nil right-curly-arrow))
   :config
   (set-fringe-bitmap-face 'right-curly-arrow 'font-lock-comment-face)
-  (set-fringe-bitmap-face 'left-curly-arrow 'font-lock-comment-face))
+  (set-fringe-bitmap-face 'left-curly-arrow 'font-lock-comment-face)
+  :bind (:map cjv/toggle-map
+              ("c" . #'visual-line-mode)))
 
 (use-package custom
   :bind (:map cjv/toggle-map
@@ -134,7 +136,7 @@
 (use-package visual-fill-column
   :ensure t
   :defer t
-  :hook (text-mode . visual-line-fill-column-mode))
+  :hook (visual-line-mode-hook . visual-fill-column-for-vline))
 
 (use-package diminish
   :ensure t)

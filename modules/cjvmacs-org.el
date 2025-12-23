@@ -34,7 +34,8 @@
              org-with-point-at
              cjv/org-punch-in
              cjv/org-punch-out)
-  :hook (org-mode . variable-pitch-mode)
+  :hook ((org-mode . variable-pitch-mode)
+         (org-mode . visual-line-mode))
   :bind (("<f10>" . #'cjv/org-open-agenda)
          ("<C-f10>" . #'cjv/org-open-work-todo-file)
          ("<S-f10>" . #'cjv/org-open-personal-todo-file)

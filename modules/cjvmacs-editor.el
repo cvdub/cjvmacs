@@ -97,7 +97,7 @@
 (use-package project
   :defer t
   :bind (:map project-prefix-map
-              ("r" . #'project-recompile)
+              ("r" . #'cjv/project-run)
               ("R" . #'project-query-replace-regexp)
               ("s" . #'cjv/project-scratch-buffer))
   :custom
@@ -114,7 +114,45 @@
         (setq-local default-directory (project-root (project-current)))
         (funcall scratch-major-mode)
         (hack-local-variables))
-      (pop-to-buffer-same-window scratch))))
+      (pop-to-buffer-same-window scratch)))
+
+  (defun cjv/project-compilation-buffer-name (mode-name)
+    "Name compilation buffer after project if project is active."
+    (format "*%s compilation*" (project-name (project-current))))
+  (setq-default project-compilation-buffer-name-function #'cjv/project-compilation-buffer-name)
+
+  (defvar-local cjv/project-run-processes nil
+    "List of processes to start with cjv/project-run.
+
+Each element is a list: (BUFFER-NAME COMMAND ARGS)")
+
+  (defun cjv/project-make-or-restart-comint (buffer-name command args)
+    "Create or restart a comint process in BUFFER-NAME using COMMAND and ARGS."
+    (cl-labels ((start-comint ()
+                  (with-current-buffer (apply #'make-comint buffer-name command nil args)
+                    (compilation-shell-minor-mode 1))))
+      (if-let* ((buffer (get-buffer-create (format "*%s*" buffer-name)))
+                (process (get-buffer-process buffer))
+                (_ (process-live-p process)))
+          (progn (set-process-sentinel process
+                                       (lambda (process event)
+                                         (unless (process-live-p process)
+                                           (with-current-buffer buffer
+                                             (let ((inhibit-read-only t))
+                                               (goto-char (point-max))
+                                               (insert "\n--- RESTARTING ---\n\n")))
+                                           (start-comint))))
+                 (interrupt-process process))
+        (start-comint))))
+
+  (defun cjv/project-run ()
+    "Run project processes defined in `cjv/project-run-processes.'"
+    (interactive)
+    (let* ((project (project-current t))
+           (default-directory (project-root project)))
+      (message "Starting %s" (project-name project))
+      (dolist (spec cjv/project-run-processes)
+        (apply #'cjv/project-make-or-restart-comint spec)))))
 
 (use-package transient
   :defer t

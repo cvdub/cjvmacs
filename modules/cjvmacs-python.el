@@ -24,10 +24,7 @@
 ;;; Code:
 
 (use-package python
-  :hook ((python-ts-mode . eglot-ensure)
-         (python-ts-mode . (lambda ()
-                             (setq-default eglot-workspace-configuration
-                                           '(:basedpyright (:typeCheckingMode "off"))))))
+  :hook (python-ts-mode . eglot-ensure)
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   :bind (:map python-ts-mode-map
@@ -53,7 +50,11 @@
            (text (replace-regexp-in-string "," "" text)))
       (delete-region start end)
       (goto-char start)
-      (insert "Decimal(\"" text "\")"))))
+      (insert "Decimal(\"" text "\")")))
+
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((python-mode python-ts-mode) . ("ty" "server")))))
 
 (use-package pyvenv
   :ensure t

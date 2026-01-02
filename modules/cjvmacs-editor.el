@@ -443,6 +443,15 @@
   (ediff-window-setup-function 'ediff-setup-windows-plain)
   (ediff-split-window-function 'split-window-horizontally))
 
+(use-package compile
+  :hook (compilation-filter-hook . ansi-color-compilation-filter)
+  :custom
+  (compilation-read-command nil)
+  :config
+  (require 'ansi-color)
+  (add-to-list 'safe-local-variable-values
+               '(compile-command . "uv run honcho start")))
+
 (provide 'cjvmacs-editor)
 
 ;;; cjvmacs-editor.el ends here

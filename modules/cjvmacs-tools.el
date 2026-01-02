@@ -28,8 +28,10 @@
   :commands cjv/open-eshell
   :bind (:map cjv/open-map
               ("e" . #'cjv/open-eshell))
-  :hook (eshell-mode-hook . (lambda ()
-                              (remove-hook 'eshell-output-filter-functions 'eshell-postoutput-scroll-to-bottom)))
+  :hook ((eshell-mode . (lambda ()
+                          (remove-hook 'eshell-output-filter-functions 'eshell-postoutput-scroll-to-bottom)))
+         (eshell-mode . cjv/eshell-refresh-dir-local-variables)
+         (eshell-directory-change . cjv/eshell-refresh-dir-local-variables))
   :config
   (defun cjv/open-eshell (&optional prefix)
     "Opens eshell in a bottom side window."
@@ -52,6 +54,15 @@
 
   (setq eshell-prompt-function #'cjv/eshell-prompt
         eshell-prompt-regexp "^[^#$\n]*\n[#$] ")
+
+  (defun cjv/eshell-refresh-dir-local-variables ()
+    "Clear and reload dir-local variables."
+    (dolist (entry dir-local-variables-alist)
+      (kill-local-variable (car entry)))
+    (setq file-local-variables-alist nil
+          dir-local-variables-alist nil)
+    (hack-dir-local-variables-non-file-buffer))
+
   :custom
   (eshell-visual-commands '("vi" "vim" "nvim" "screen" "tmux" "top" "htop" "less" "more" "lynx" "links" "ncftp" "ncmpcpp"
                             "mutt" "pine" "tin" "trn" "elm"))

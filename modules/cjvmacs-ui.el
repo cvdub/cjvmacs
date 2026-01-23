@@ -276,6 +276,14 @@
   :defer t
   :hook (emacs-lisp-mode lisp-interaction-mode lisp-mode))
 
+(use-package indent-bars
+  :ensure t
+  :hook (yaml-ts-mode . indent-bars-mode)
+  :bind (:map cjv/toggle-map
+              ("i" . #'indent-bars-mode))
+  :custom
+  (indent-bars-treesit-support t))
+
 (provide 'cjvmacs-ui)
 
 ;;; cjvmacs-ui.el ends here

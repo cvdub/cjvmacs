@@ -43,7 +43,7 @@
               ("c" . #'gptel-context-remove-all))
   :custom
   (gptel-default-mode 'org-mode)
-  (gptel-include-reasoning t)
+  (gptel-include-reasoning nil)
   (gptel-model 'gpt-5-mini)
   :config
   (setq gptel-model 'google/gemini-3-flash-preview

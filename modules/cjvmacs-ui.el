@@ -278,6 +278,7 @@
 
 (use-package indent-bars
   :ensure t
+  :defer t
   :hook (yaml-ts-mode . indent-bars-mode)
   :bind (:map cjv/toggle-map
               ("i" . #'indent-bars-mode))

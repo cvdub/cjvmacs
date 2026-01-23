@@ -41,7 +41,9 @@
    '(lambda ()
       (setq-local electric-pair-inhibit-predicate
                   (lambda (c)
-                    (if (char-equal c ?{) t (electric-pair-default-inhibit c)))))))
+                    (if (char-equal c ?{) t (electric-pair-default-inhibit c))))))
+  :custom
+  (web-mode-extra-control-blocks '(("django" . ("partialdef" "endpartialdef" "partial")))))
 
 
 (provide 'cjvmacs-html)

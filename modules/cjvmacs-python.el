@@ -67,7 +67,7 @@
   :hook (eglot-managed-mode . flymake-ruff-load))
 
 (use-package python-pytest
-  :ensure t
+  :vc (:url "git@github.com:cvdub/emacs-python-pytest.git" :rev :newest)
   :defer t
   :bind (:map cjv/code-map
               ("t" . #'python-pytest-dispatch)))

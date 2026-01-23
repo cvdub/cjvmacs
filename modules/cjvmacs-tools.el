@@ -111,7 +111,9 @@
 
 (use-package yaml-ts-mode
   :defer t
-  :mode ("\\.ya?ml\\'"))
+  :mode ("\\.ya?ml\\'")
+  :config
+  (setq yaml-indent-offset 2))
 
 (use-package pdf-tools
   :ensure t

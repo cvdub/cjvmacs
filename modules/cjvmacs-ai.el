@@ -56,11 +56,15 @@
           :models '(anthropic/claude-opus-4.5
                     anthropic/claude-sonnet-4.5
                     google/gemini-3-flash-preview
+                    google/gemini-3-flash-preview:online
                     google/gemini-3-pro-preview
+                    google/gemini-3-pro-preview:online
                     openai/gpt-5-mini
+                    openai/gpt-5-mini:online
                     openai/gpt-5-nano
                     openai/gpt-5.1-codex-max
                     openai/gpt-5.2
+                    openai/gpt-5.2:online
                     openai/gpt-5.2-chat
                     openai/gpt-5.2-pro
                     x-ai/grok-4.1-fast

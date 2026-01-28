@@ -23,4 +23,7 @@
 ;; Load the the newest version of files
 (setq load-prefer-newer t)
 
-;; (setq use-package-compute-statistics t)
+;; Enable transparent title bar
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+
+(setq use-package-compute-statistics nil)

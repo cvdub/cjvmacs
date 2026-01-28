@@ -61,22 +61,16 @@
   (custom-safe-themes t)
   (custom-theme-directory (expand-file-name "themes" no-littering-etc-directory))
   :config
-  (defun cjv/macos-dark-mode? ()
-    "Return t if macOS Appearance is Dark (via AppleScript)."
-    (string= (string-trim
-              (shell-command-to-string
-               "osascript -e 'tell application \"System Events\" to tell appearance preferences to get dark mode'"))
-             "true"))
 
-  (defun cjv/update-macos-titlebar (&optional _theme)
-    "Make MacOS titlebar transparent on all frames."
-    (when (eq system-type 'darwin)
-      (dolist (frame (frame-list))
-        (modify-frame-parameters
-         frame `((mac-transparent-titlebar . t)
-                 (ns-appearance . ,(frame-parameter frame 'background-mode)))))))
+  (defun cjv/apply-theme (appearance)
+    "Load theme, taking current system APPEARANCE into consideration."
+    (mapc #'disable-theme custom-enabled-themes)
+    (pcase appearance
+      ('light (load-theme cjv/theme-light t))
+      ('dark (load-theme cjv/theme-dark t)))
+    (load-theme 'cjv-faces))
 
-  (add-hook 'enable-theme-functions #'cjv/update-macos-titlebar)
+  (add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)
 
   (defun cjv/rotate-theme ()
     "Rotate between themes in `cjv/themes'."
@@ -87,11 +81,7 @@
                            (car cjv/themes))))
       (disable-theme current-theme)
       (load-theme next-theme)
-      (load-theme 'cjv-faces)))
-
-  (if (cjv/macos-dark-mode?)
-      (load-theme cjv/theme-dark)
-    (load-theme cjv/theme-light)))
+      (load-theme 'cjv-faces))))
 
 (use-package ef-themes
   :defer t

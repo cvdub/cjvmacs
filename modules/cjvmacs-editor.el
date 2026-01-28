@@ -28,7 +28,7 @@
   :config
   (add-hook 'after-init-hook (lambda () (load custom-file t)))
   :custom
-  (custom-file (no-littering-expand-etc-file-name "custom.el"))
+  (custom-file (no-littering-expand-var-file-name "custom.el"))
   (user-mail-address "christian@cvdub.net"))
 
 (use-package emacs

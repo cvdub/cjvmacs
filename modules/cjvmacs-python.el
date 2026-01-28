@@ -57,6 +57,7 @@
                  '((python-mode python-ts-mode) . ("ty" "server")))))
 
 (use-package pyvenv
+  :defer t
   :custom
   (pyvenv-tracking-mode t))
 

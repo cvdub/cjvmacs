@@ -42,6 +42,7 @@
                                    (internal-border-width . 0))))
 
 (use-package simple
+  :ensure nil
   :diminish visual-line-mode
   :custom
   (column-number-mode t)
@@ -53,11 +54,12 @@
               ("c" . #'visual-line-mode)))
 
 (use-package custom
+  :ensure nil
   :bind (:map cjv/toggle-map
               ("t" . #'cjv/rotate-theme))
   :custom
   (custom-safe-themes t)
-  (custom-theme-directory (expand-file-name "themes" user-emacs-directory))
+  (custom-theme-directory (expand-file-name "themes" no-littering-etc-directory))
   :config
   (defun cjv/macos-dark-mode? ()
     "Return t if macOS Appearance is Dark (via AppleScript)."
@@ -92,7 +94,6 @@
     (load-theme cjv/theme-light)))
 
 (use-package ef-themes
-  :ensure t
   :defer t
   :custom
   (ef-cyprus-palette-overrides '((bg-mode-line bg-active)
@@ -110,7 +111,8 @@
   :vc (:url "git@github.com:cvdub/emacs-theme-gruvbox.git" :rev :newest))
 
 (use-package cjv-faces
-  :init (add-to-list 'load-path (expand-file-name "themes/cjv-faces" user-emacs-directory))
+  :ensure nil
+  :init (add-to-list 'load-path (expand-file-name "cjv-faces" custom-theme-directory))
   :custom
   (cjv-faces-fixed-pitch-font-family "Fira Code")
   (cjv-faces-variable-pitch-font-family "iA Writer Quattro V")
@@ -120,6 +122,7 @@
   (load-theme 'cjv-faces))
 
 (use-package frame
+  :ensure nil
   :custom
   (blink-cursor-mode nil))
 
@@ -134,12 +137,10 @@
          (org-agenda-mode . hl-line-mode)))
 
 (use-package visual-fill-column
-  :ensure t
   :defer t
   :hook (visual-line-mode-hook . visual-fill-column-for-vline))
 
-(use-package diminish
-  :ensure t)
+(use-package diminish)
 
 (use-package face-remap
   :defer t
@@ -150,7 +151,6 @@
                                          (setq cursor-type 'bar)))))
 
 (use-package mixed-pitch
-  :ensure t
   :defer t
   ;; :hook (Info-mode . mixed-pitch-mode)
   :config
@@ -164,7 +164,6 @@
     (setq mixed-pitch-fixed-pitch-faces (remove face mixed-pitch-fixed-pitch-faces))))
 
 (use-package writeroom-mode
-  :ensure t
   :defer t
   :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
   :bind (:map cjv/toggle-map
@@ -191,7 +190,6 @@
   (tab-bar-show nil))
 
 (use-package diff-hl
-  :ensure t
   :defer 5
   :hook (dired-mode . diff-hl-dired-mode-unless-remote)
   :config
@@ -200,14 +198,12 @@
   (diff-hl-disable-on-remote))
 
 (use-package rainbow-mode
-  :ensure t
   :defer t
   :custom
   (rainbow-html-colors nil)
   (rainbow-x-colors nil))
 
 (use-package kurecolor
-  :ensure t
   :defer t)
 
 (use-package fontify-face
@@ -215,18 +211,16 @@
             :rev :newest))
 
 (use-package doom-modeline
-  :ensure t
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-enable-word-count t)
   (doom-modeline-continuous-word-count-modes '(org-journal-mode)))
 
 (use-package dashboard
-  :ensure t
   :hook (dashboard-mode . (lambda ()
                             (setq-local global-hl-line-mode nil)))
   :custom
-  (dashboard-startup-banner (expand-file-name "emacs-logo-gruvbox-dark.svg" user-emacs-local-directory))
+  (dashboard-startup-banner (expand-file-name "emacs-logo-gruvbox-dark.svg" no-littering-etc-directory))
   (dashboard-banner-logo-title nil)
   (dashboard-center-content t)
   (dashboard-vertically-center-content t)
@@ -254,10 +248,10 @@
   (dashboard-setup-startup-hook))
 
 (use-package menu-bar
+  :ensure nil
   :bind ("s-t" . nil))
 
 (use-package pulsar
-  :ensure t
   :init
   (pulsar-global-mode 1)
   :custom
@@ -272,12 +266,10 @@
   (ultra-scroll-mode 1))
 
 (use-package rainbow-delimiters
-  :ensure t
   :defer t
   :hook (emacs-lisp-mode lisp-interaction-mode lisp-mode))
 
 (use-package indent-bars
-  :ensure t
   :defer t
   :hook (yaml-ts-mode . indent-bars-mode)
   :bind (:map cjv/toggle-map

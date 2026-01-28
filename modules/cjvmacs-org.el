@@ -25,7 +25,6 @@
 ;;; Code:
 
 (use-package org
-  :ensure t
   :defer t
   :diminish org-indent-mode
   :commands (cjv/org-open-agenda
@@ -404,7 +403,6 @@
   (org-babel-min-lines-for-block-output 1))
 
 (use-package org-journal
-  :ensure t
   :defer t
   :bind (:map cjv/notes-map
               ("j" . #'org-journal-new-entry)
@@ -425,7 +423,6 @@
   (advice-add 'org-capture-place-template :around 'cjv/org-capture-place-template-dont-delete-windows))
 
 (use-package org-roam
-  :ensure t
   :defer t
   :after org
   :bind (:map cjv/notes-map
@@ -440,7 +437,6 @@
   (org-roam-completion-everywhere t))
 
 (use-package ox-gfm
-  :ensure t
   :after org
   :config
   '(require 'ox-gfm nil t))

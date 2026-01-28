@@ -30,7 +30,6 @@
 (global-set-key (kbd "C-c a") cjv/ai-map)
 
 (use-package gptel
-  :ensure t
   :vc (:url "git@github.com:cvdub/gptel.git"
             :rev :newest)
   :defer t
@@ -81,24 +80,7 @@
               ("a" . #'gptel-project-chat)
               ("u" . #'gptel-project-update-summary)))
 
-(use-package copilot
-  :ensure t
-  :defer t
-  :hook (;; (prog-mode . copilot-mode)
-         (copilot-mode . (lambda () (completion-preview-mode -1))))
-  :bind (:map copilot-mode-map
-              ("<tab>" . #'copilot-accept-completion)
-              ("C-g" . #'copilot-clear-overlay)
-              ;; :map cjv/toggle-map
-              ;; ("c" . #'copilot-mode)
-              )
-  :custom
-  (copilot-install-dir (expand-file-name "copilot" user-emacs-cache-directory))
-  (copilot-indent-offset-warning-disable t)
-  (copilot-max-char-warning-disable t))
-
 (use-package aidermacs
-  :ensure t
   :defer t
   :vc (:url "https://github.com/MatthewZMD/aidermacs.git"
             :rev :newest)
@@ -111,7 +93,6 @@
   (aidermacs-default-model "openai/gpt-5-mini"))
 
 (use-package emigo
-  :ensure t
   :defer t
   :vc (:url "https://github.com/MatthewZMD/emigo.git"
             :rev :newest)
@@ -125,7 +106,6 @@
   (emigo-api-key (auth-source-pick-first-password :host "openrouter.ai")))
 
 (use-package claude-code
-  :ensure t
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
   :config
   ;; (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
@@ -139,7 +119,6 @@
   )
 
 ;; (use-package monet
-;;   :ensure t
 ;;   :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))
 
 (provide 'cjvmacs-ai)

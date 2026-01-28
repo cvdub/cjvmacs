@@ -24,7 +24,6 @@
 ;;; Code:
 
 (use-package rust-mode
-  :ensure t
   :defer t
   :init
   (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))

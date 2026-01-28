@@ -66,8 +66,7 @@
   :custom
   (eshell-visual-commands '("vi" "vim" "nvim" "screen" "tmux" "top" "htop" "less" "more" "lynx" "links" "ncftp" "ncmpcpp"
                             "mutt" "pine" "tin" "trn" "elm"))
-  (eshell-visual-subcommands '(("docker" "build")))
-  (eshell-directory-name (expand-file-name "eshell/" user-emacs-cache-directory))
+  ;; (eshell-visual-subcommands '(("docker" "build")))
   (eshell-banner-message "")
   (eshell-banner-message "")
   (eshell-history-size 100000)
@@ -75,18 +74,14 @@
   (eshell-destroy-buffer-when-process-dies t))
 
 (use-package eat
-  :ensure t
   :defer t
   :init
   (add-hook 'eshell-load-hook #'eat-eshell-mode))
 
 (use-package tramp
-  :defer t
-  :custom
-  (tramp-persistency-file-name (expand-file-name "tramp" user-emacs-local-directory)))
+  :defer t)
 
 (use-package magit
-  :ensure t
   :defer t
   :bind (:map magit-section-mode-map
               ("C-<tab>" . nil))
@@ -94,19 +89,14 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package forge
-  :ensure t
-  :after magit
-  :custom
-  (forge-database-file (expand-file-name "forge-database.sqlite" user-emacs-local-directory)))
+  :after magit)
 
 (use-package ansible
-  :ensure t
   :defer t
   :custom
   (ansible-vault-password-file "/Users/cjv/.config/ansible/vault-password.sh"))
 
 (use-package autothemer
-  :ensure t
   :defer t)
 
 (use-package yaml-ts-mode
@@ -116,47 +106,37 @@
   (setq yaml-indent-offset 2))
 
 (use-package pdf-tools
-  :ensure t
   :defer t
   :init
   (pdf-loader-install))
 
 
 (use-package systemd
-  :ensure t
   :defer t)
 
 (use-package sudo-edit
-  :ensure t
   :defer t)
 
 (use-package jinja2-mode
-  :ensure t
   :defer t
   :mode ("\\.jinja\\'"))
 
 (use-package dockerfile-mode
-  :ensure t
   :defer t)
 
-(use-package applescript-mode
-  :ensure t)
+(use-package applescript-mode)
 
 (use-package terraform-mode
-  :ensure t
   :defer t)
 
 (use-package ledger-mode
-  :ensure t
   :defer t)
 
 (use-package csv-mode
-  :ensure t
   :defer t
   :hook (csv-mode . (lambda () (visual-line-fill-column-mode -1))))
 
-(use-package htmlize
-  :ensure t)
+(use-package htmlize)
 
 (provide 'cjvmacs-tools)
 

@@ -31,6 +31,7 @@
   (typescript-ts-mode-indent-offset 2))
 
 (use-package js-mode
+  :ensure nil
   :defer t
   :init
   (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))
@@ -38,6 +39,7 @@
   (js-indent-level 2))
 
 (use-package js-ts-mode
+  :ensure nil
   :defer t
   :mode "\\.js[x]?\\'")
 

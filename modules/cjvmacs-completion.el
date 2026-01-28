@@ -31,7 +31,6 @@
   (which-key-lighter nil))
 
 (use-package vertico
-  :ensure t
   :init
   (vertico-mode)
   :custom
@@ -40,10 +39,12 @@
   (vertico-count 12))
 
 (use-package scroll-bar
+  :ensure nil
   :custom
   (scroll-bar-mode nil))
 
 (use-package minibuffer
+  :ensure nil
   :custom
   (completions-detailed nil)
   (completions-format 'one-column)
@@ -51,19 +52,16 @@
   (completions-sort 'historical))
 
 (use-package orderless
-  :ensure t
   :custom
   (completion-styles '(orderless))
   (completion-category-overrides '((file (styles basic orderless)))))
 
 (use-package marginalia
-  :ensure t
   :init
   (marginalia-mode))
 
 ;; Example configuration for Consult
 (use-package consult
-  :ensure t
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
          ;; ("C-c M-x" . consult-mode-command)
@@ -166,12 +164,14 @@
   )
 
 (use-package simple
+  :ensure nil
   :custom
   (completion-auto-select t)
   (completion-auto-help 'always)
   (completion-show-help nil))
 
 (use-package completion-preview
+  :ensure nil
   :diminish completion-preview-mode
   :bind (:map completion-preview-active-mode-map
 	      ("M-n" . #'completion-preview-next-candidate)
@@ -196,16 +196,15 @@
                                      t)))
 
 (use-package savehist
+  :ensure nil
   :init
-  (setq savehist-file (expand-file-name "history" user-emacs-cache-directory))
   (savehist-mode 1)
   :custom
   (savehist-autosave-interval 60)
   (savehist-additional-variables '(search-ring regexp-search-ring)))
 
 (use-package recentf
-  :init
-  (setq recentf-save-file (expand-file-name "recentf" user-emacs-cache-directory))
+  :ensure nil
   :bind (:map ctl-x-map
               ("C-r" . #'recentf))
   :custom
@@ -215,7 +214,6 @@
   (recentf-mode 1))
 
 (use-package corfu
-  :ensure t
   :init
   (global-corfu-mode))
 

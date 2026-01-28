@@ -24,7 +24,6 @@
 ;;; Code:
 
 (use-package paredit
-  :ensure t
   :defer t
   :diminish paredit-mode
   :hook ((emacs-lisp-mode . enable-paredit-mode)
@@ -37,7 +36,6 @@
   :custom (inferior-lisp-program "sbcl"))
 
 (use-package sly
-  :ensure t
   :defer t
   :bind (:map sly-mode-map
               ("C-c o r" . cjv/lisp-open-repl))
@@ -55,7 +53,6 @@
   (sly-command-switch-to-existing-lisp 'always))
 
 (use-package sly-asdf
-  :ensure t
   :after sly
   :init (add-to-list 'sly-contribs 'sly-asdf 'append)
   :bind (:map sly-mode-map

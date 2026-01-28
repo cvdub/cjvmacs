@@ -1,3 +1,5 @@
 .local/
 custom.el
 .aider*
+elpa
+/var/

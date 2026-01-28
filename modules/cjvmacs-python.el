@@ -57,12 +57,10 @@
                  '((python-mode python-ts-mode) . ("ty" "server")))))
 
 (use-package pyvenv
-  :ensure t
   :custom
   (pyvenv-tracking-mode t))
 
 (use-package flymake-ruff
-  :ensure t
   :defer t
   :hook (eglot-managed-mode . flymake-ruff-load))
 

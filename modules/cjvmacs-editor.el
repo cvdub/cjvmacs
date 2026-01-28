@@ -24,10 +24,11 @@
 ;;; Code:
 
 (use-package cus-edit
+  :ensure nil
   :config
   (add-hook 'after-init-hook (lambda () (load custom-file t)))
   :custom
-  (custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (custom-file (no-littering-expand-etc-file-name "custom.el"))
   (user-mail-address "christian@cvdub.net"))
 
 (use-package emacs
@@ -69,7 +70,6 @@
   (auto-save-no-message t)
   (remote-file-name-inhibit-auto-save t)
   (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-  (auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" user-emacs-cache-directory))
 
   ;; Backups
   (backup-directory-alist `((".*" . ,temporary-file-directory)))
@@ -81,6 +81,7 @@
   (create-lockfiles nil))
 
 (use-package simple
+  :ensure nil
   :custom
   (indent-tabs-mode nil)
   (save-interprogram-paste-before-kill t)
@@ -88,11 +89,7 @@
 
 (use-package auth-source
   :defer t
-  :custom (auth-sources (list (expand-file-name "authinfo.gpg" user-emacs-local-directory))))
-
-(use-package bookmark
-  :custom
-  (bookmark-file (expand-file-name "bookmarks" user-emacs-local-directory)))
+  :custom (auth-sources (list (expand-file-name "authinfo.gpg" no-littering-var-directory))))
 
 (use-package project
   :defer t
@@ -100,8 +97,6 @@
               ("r" . #'cjv/project-run)
               ("R" . #'project-query-replace-regexp)
               ("s" . #'cjv/project-scratch-buffer))
-  :custom
-  (project-list-file (expand-file-name "projects" user-emacs-local-directory))
   :config
   (defun cjv/project-scratch-buffer ()
     (interactive)
@@ -134,16 +129,19 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
       (if-let* ((buffer (get-buffer-create (format "*%s*" buffer-name)))
                 (process (get-buffer-process buffer))
                 (_ (process-live-p process)))
-          (progn (set-process-sentinel process
-                                       (lambda (process event)
-                                         (unless (process-live-p process)
-                                           (with-current-buffer buffer
-                                             (let ((inhibit-read-only t))
-                                               (goto-char (point-max))
-                                               (insert "\n--- RESTARTING ---\n\n")))
-                                           (start-comint))))
-                 (interrupt-process process))
-        (start-comint))))
+          (progn
+            (message "%s Live! Restarting" process)
+            (set-process-sentinel process
+                                  (lambda (process event)
+                                    (unless (process-live-p process)
+                                      (with-current-buffer buffer
+                                        (let ((inhibit-read-only t))
+                                          (goto-char (point-max))
+                                          (insert "\n--- RESTARTING ---\n\n")))
+                                      (start-comint))))
+            (interrupt-process process))
+        (progn (message "%s dead. Starting" process)
+               (start-comint)))))
 
   (defun cjv/project-run ()
     "Run project processes defined in `cjv/project-run-processes.'"
@@ -155,17 +153,14 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
         (apply #'cjv/project-make-or-restart-comint spec)))))
 
 (use-package transient
-  :defer t
-  :custom
-  (transient-history-file (expand-file-name "transient/history.el" user-emacs-local-directory))
-  (transient-levels-file (expand-file-name "transient/levels.el" user-emacs-local-directory))
-  (transient-values-file (expand-file-name "transient/values.el" user-emacs-local-directory)))
+  :defer t)
 
 (use-package delsel
   :custom
   (delete-selection-mode t))
 
 (use-package files
+  :ensure nil
   :custom
   (require-final-newline t)
   (view-read-only t))
@@ -187,13 +182,13 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (electric-pair-mode t))
 
 (use-package hideshow
-  :ensure nil
   :diminish hs-minor-mode
   :hook (prog-mode . hs-minor-mode)
   :custom
   (hs-isearch-open nil))
 
 (use-package treesit
+  :ensure nil
   :init
   (setq treesit-language-source-alist '((python "https://github.com/tree-sitter/tree-sitter-python")
                                         (rust "https://github.com/tree-sitter/tree-sitter-rust")
@@ -201,13 +196,9 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
                                         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
                                         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
                                         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-                                        (json "https://github.com/tree-sitter/tree-sitter-json")))
-  :custom
-  (treesit-extra-load-path (list (expand-file-name "tree-sitter"
-                                                   user-emacs-local-directory))))
+                                        (json "https://github.com/tree-sitter/tree-sitter-json"))))
 
 (use-package apheleia
-  :ensure t
   :diminish apheleia-mode
   :init (apheleia-global-mode +1)
   :bind (:map cjv/toggle-map
@@ -224,6 +215,7 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
                         "--quiet"
                         "--profile"
                         "django"))
+             (djhtml . ("djhtml" filepath))
              (djade . ("uvx" "djade" filepath))
              (ruff-sort-imports . ("ruff" "check" "-" "--select" "I" "--fix" "--quiet"))
              (ruff . ("ruff" "format" "-" "--quiet"))))
@@ -233,7 +225,6 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
           (list 'ruff-sort-imports 'ruff))))
 
 (use-package eglot
-  :ensure t
   :defer t
   :hook (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1)))
   :custom
@@ -249,6 +240,7 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (repeat-mode t))
 
 (use-package window
+  :ensure nil
   :bind (:map window-prefix-map
               ("w" . #'window-swap-states))
   :custom
@@ -260,7 +252,6 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (global-subword-mode t))
 
 (use-package multiple-cursors
-  :ensure t
   :defer t
   :init
   (defvar cjv/multiple-cursors-map (make-sparse-keymap)
@@ -276,18 +267,16 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
          ("e" . #'mc/edit-lines)
          ("i" . #'mc/insert-numbers)
          ("C-a" . #'mc/edit-beginnings-of-lines)
-         ("C-e" . #'mc/edit-ends-of-lines))
-  :custom
-  (mc/list-file (expand-file-name "mc-lists.el" user-emacs-local-directory)))
+         ("C-e" . #'mc/edit-ends-of-lines)))
 
 (use-package avy
-  :ensure t
   :bind ("C-'" . avy-goto-subword-1)
   :custom
   (avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o))
   (avy-all-windows nil))
 
 (use-package dired
+  :ensure nil
   :hook ((dired-mode . turn-on-gnus-dired-mode)
          (dired-mode . (lambda () (setq truncate-lines t))))
   :defer t
@@ -299,11 +288,13 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (dired-mouse-drag-files t))
 
 (use-package dired-aux
+  :ensure nil
   :after dired
   :config
   (add-to-list 'dired-compress-files-alist '("\\.tar\\'" . "tar -cf %o %i")))
 
 (use-package dired-x
+  :ensure nil
   :hook (dired-mode . dired-omit-mode)
   :config
   (setq dired-omit-files (concat dired-omit-files
@@ -316,17 +307,14 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
                                  "\\|~\\$.*\\.\\(xls\\|xlsx\\|csv\\)\\'")))
 
 (use-package diredfl
-  :ensure t
   :hook (dired-mode . diredfl-mode))
 
 (use-package dired-rsync
-  :ensure t
   :after dired
   :bind (:map dired-mode-map
               ("C-c C-r" . dired-rsync)))
 
 (use-package rg
-  :ensure t
   :defer t
   :commands rg-menu
   :bind (("C-c s" . #'rg-menu)
@@ -343,19 +331,16 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (rg-define-toggle "--context 3" (kbd "C")))
 
 (use-package goto-last-change
-  :ensure t
   :defer t
   :bind ("M-g l" . #'goto-last-change)
   (:repeat-map goto-last-change-repeat-map
                ("l" . goto-last-change)))
 
 (use-package expand-region
-  :ensure t
   :defer t
   :bind ("M-2" . 'er/expand-region))
 
 (use-package envrc
-  :ensure t
   :diminish envrc-mode
   :init
   (envrc-global-mode))
@@ -435,15 +420,10 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (ispell-dictionary "en")
   (ispell-personal-dictionary "~/.config/aspell/personal-dictionary.pws"))
 
-(use-package url-cache
-  :defer t
-  :custom
-  (url-cache-directory (expand-file-name "url/cache" user-emacs-cache-directory)))
-
-(use-package markdown-mode
-  :ensure t)
+(use-package markdown-mode)
 
 (use-package help
+  :ensure nil
   :bind (:map help-map
               ("'" . #'describe-char)))
 
@@ -453,7 +433,6 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (imenu-flatten t))
 
 (use-package yasnippet
-  :ensure t
   :defer t
   :hook ((prog-mode . yas-minor-mode)
          (text-mode . yas-minor-mode))
@@ -461,7 +440,6 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (yas-reload-all))
 
 (use-package ediff
-  :ensure nil
   :defer t
   :config
   (defun cjv/ediff-copy-both-to-C ()

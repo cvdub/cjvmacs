@@ -23,10 +23,19 @@
 
 ;;; Code:
 
+(require 'package)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+		         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+		         ("melpa" . "https://melpa.org/packages/"))
+      package-native-compile t
+      package-install-upgrade-built-in t)
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+(use-package no-littering)
+
 (use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize)
   :custom
   (exec-path-from-shell-variables '("ANSIBLE_CONFIG"
                                     "INFOPATH"
@@ -35,7 +44,9 @@
                                     "PATH"
                                     "PYTHONPATH"
                                     "PYTHONSTARTUP"))
-  (exec-path-from-shell-arguments '("-l")))
+  (exec-path-from-shell-arguments '("-l"))
+  :config
+  (exec-path-from-shell-initialize))
 
 ;; Load modules
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
@@ -54,5 +65,3 @@
 (require 'cjvmacs-lisp)
 (require 'cjvmacs-spacebase)
 (require 'cjvmacs-rust)
-
-;;; init.el ends here

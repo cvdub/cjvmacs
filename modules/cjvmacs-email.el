@@ -24,7 +24,6 @@
 ;;; Code:
 
 (use-package notmuch
-  :ensure t
   :commands notmuch-refresh-all-buffers
   :hook ((notmuch-search-mode . hl-line-mode)
          (notmuch-show-mode . variable-pitch-mode)
@@ -217,13 +216,11 @@
   )
 
 (use-package org-mime
-  :ensure t
   :after notmuch
   :bind (:map notmuch-message-mode-map
               ("C-c M-o" . #'org-mime-htmlize)))
 
 (use-package gnus-alias
-  :ensure t
   :init (add-hook 'message-setup-hook #'gnus-alias-determine-identity)
   :bind (:map notmuch-message-mode-map
               ("C-c C-f o" . gnus-alias-select-identity))
@@ -265,7 +262,6 @@
           ("christian@vanderwall.org" ("any" "christian@vanderwall.org" both) "christian@vanderwall.org"))))
 
 (use-package shr
-  :ensure nil
   :defer t
   :custom
   (shr-use-colors nil)
@@ -279,7 +275,6 @@
   (shr-text ((t (:inherit variable-pitch)))))
 
 (use-package ol-notmuch
-  :ensure t
   :defer t
   :after org)
 

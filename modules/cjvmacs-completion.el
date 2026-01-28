@@ -53,8 +53,9 @@
 
 (use-package orderless
   :custom
-  (completion-styles '(orderless))
-  (completion-category-overrides '((file (styles basic orderless)))))
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil))
 
 (use-package marginalia
   :init
@@ -178,7 +179,7 @@
 	      ("M-p". #'completion-preview-prev-candidate))
   :custom
   (completion-preview-message-format "%i/%n possible completions")
-  (global-completion-preview-mode t)
+  (global-completion-preview-mode nil)
   (completion-preview-idle-delay nil)
   (global-completion-preview-modes '((not archive-mode
                                           calc-mode
@@ -215,7 +216,37 @@
 
 (use-package corfu
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  (corfu-history-mode)
+  (corfu-popupinfo-mode)
+  :custom
+  (corfu-auto t)
+  :config
+  (add-hook 'eshell-mode-hook (lambda ()
+                                (setq-local corfu-auto nil)
+                                (corfu-mode)))
+  (keymap-set corfu-map "RET" #'corfu-send))
+
+(use-package cape
+  :init
+  (dolist (func (list #'cape-dabbrev
+                      #'cape-file
+                      #'cape-elisp-block))
+    (add-hook 'completion-at-point-functions func)))
+
+(use-package fish-completion
+  :after eshell
+  :init
+  (when (and (executable-find "fish")
+             (require 'fish-completion nil t))
+    (global-fish-completion-mode))
+  :custom
+  (fish-completion-fallback-on-bash-p nil))
+
+(use-package text-mode
+  :ensure nil
+  :custom
+  (text-mode-ispell-word-completion nil))
 
 (provide 'cjvmacs-completion)
 

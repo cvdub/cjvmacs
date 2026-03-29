@@ -420,7 +420,8 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (ispell-dictionary "en")
   (ispell-personal-dictionary "~/.config/aspell/personal-dictionary.pws"))
 
-(use-package markdown-mode)
+(use-package markdown-mode
+  :hook (markdown-mode . visual-line-mode))
 
 (use-package help
   :ensure nil

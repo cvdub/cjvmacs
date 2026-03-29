@@ -43,35 +43,58 @@
   :custom
   (gptel-default-mode 'org-mode)
   (gptel-include-reasoning nil)
-  (gptel-model 'gpt-5-mini)
+  (gptel-include-tool-results t)
   :config
-  (setq gptel-model 'google/gemini-3-flash-preview
-        gptel-backend
-        (gptel-make-openai "OpenRouter"
-          :host "openrouter.ai"
-          :endpoint "/api/v1/chat/completions"
-          :stream t
-          :key (auth-source-pick-first-password :host "openrouter.ai")
-          :models '(anthropic/claude-opus-4.5
-                    anthropic/claude-sonnet-4.5
-                    google/gemini-3-flash-preview
-                    google/gemini-3-flash-preview:online
-                    google/gemini-3-pro-preview
-                    google/gemini-3-pro-preview:online
-                    openai/gpt-5-mini
-                    openai/gpt-5-mini:online
-                    openai/gpt-5-nano
-                    openai/gpt-5.1-codex-max
-                    openai/gpt-5.2
-                    openai/gpt-5.2:online
-                    openai/gpt-5.2-chat
-                    openai/gpt-5.2-pro
-                    x-ai/grok-4.1-fast
-                    x-ai/grok-code-fast-1)))
+  (defvar cjv/gptel-openrouter
+    (gptel-make-openai "OpenRouter"
+      :host "openrouter.ai"
+      :endpoint "/api/v1/chat/completions"
+      :stream t
+      :key (auth-source-pick-first-password :host "openrouter.ai")
+      :models '(anthropic/claude-opus-4.5
+                anthropic/claude-sonnet-4.5
+                google/gemini-3.1-flash-lite-preview
+                google/gemini-3.1-flash-lite-preview:online
+                google/gemini-3-flash-preview
+                google/gemini-3-flash-preview:online
+                google/gemini-3.1-pro-preview
+                google/gemini-3.1-pro-preview:online
+                openai/gpt-5-mini
+                openai/gpt-5-mini:online
+                openai/gpt-5-nano
+                openai/gpt-5.1-codex-max
+                openai/gpt-5.2
+                openai/gpt-5.2:online
+                openai/gpt-5.2-chat
+                openai/gpt-5.2-pro
+                x-ai/grok-4.1-fast
+                x-ai/grok-code-fast-1)))
+
+  (defvar cjv/gptel-ollama
+    (gptel-make-ollama "Ollama"
+      :host "localhost:11434"
+      :stream t
+      :models '(llama3.2:3b
+                qwen2.5:7b)))
+
+  (defvar cjv/gptel-backends (list cjv/gptel-openrouter
+                                   cjv/gptel-ollama))
+
+  (setq gptel-model 'google/gemini-3.1-flash-lite-preview
+        gptel-backend cjv/gptel-openrouter)
 
   (defun cjv/gptel-set-model ()
     (interactive)
-    (setq gptel-model (intern (completing-read "Model:" (gptel-backend-models gptel-backend))))))
+    (let* ((all-models (cl-loop for b in cjv/gptel-backends
+                                append (gptel-backend-models b)))
+           (selected (completing-read "Model: " all-models)))
+      (setq gptel-model (intern selected))
+      (message "gptel-model set to %s" selected)))
+
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** @user\n")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "** @assistant\n")
+
+  )
 
 (use-package gptel-project
   :defer t
@@ -107,16 +130,37 @@
 
 (use-package claude-code
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :custom
+  (claude-code-display-window-fn
+   (lambda (buffer)
+     (display-buffer buffer '(display-buffer-same-window))))
   :config
-  ;; (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
-  ;; (monet-mode 1)
   (claude-code-mode)
-  :bind-keymap ("s-c" . claude-code-command-map)
 
-  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
-  ;; :bind
-  ;; (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode))
-  )
+  (defun cjv/claude-notify (title message)
+    "Display a macOS notification with sound."
+    (message "CC!! %s" title)
+    (call-process "osascript" nil nil nil
+                  "-e" (format "display notification \"%s\" with title \"%s\" sound name \"Glass\""
+                               message title)))
+
+  (setq claude-code-notification-function #'cjv/claude-notify)
+
+  ;; Workaround: claude-code.el fails to set the eat bell handler.
+  ;; Detect BEL in process output directly, stripping OSC sequences first.
+  (advice-remove 'eat--filter 'cjv/eat-bell-detect)
+  (with-eval-after-load 'eat
+    (advice-add 'eat--filter :after
+                (defun cjv/eat-bell-detect (process output)
+                  (when (and (buffer-live-p (process-buffer process))
+                             (claude-code--buffer-p (process-buffer process))
+                             (string-match-p "\007"
+                                             (replace-regexp-in-string "\033]0;[^\007]*\007" "" output)))
+                    (with-current-buffer (process-buffer process)
+                      (claude-code--notify nil))))))
+
+  :bind (("s-c" . claude-code-transient)
+         (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode))))
 
 ;; (use-package monet
 ;;   :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))

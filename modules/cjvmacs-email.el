@@ -87,7 +87,9 @@
               ;; ("<RET>" . #'cjv/notmuch-browse-url-or-notmuch-show-toggle-message)
               ;; ("q" . #'cjv/notmuch-bury-or-kill-this-buffer-maybe-delete-window)
               :map cjv/toggle-map
-              ("m" . #'cjv/toggle-message-cite-style))
+              ("m" . #'cjv/toggle-message-cite-style)
+              :map notmuch-show-part-map
+              ("x" . #'cjv/notmuch-display-email-in-xwidget))
   :config
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
   (add-hook 'message-send-hook #'notmuch-mua-attachment-check)
@@ -158,9 +160,9 @@
   ;; (advice-add 'notmuch-show-archive-message-then-next-or-next-thread
   ;;             :after #'cjv/notmuch-show-archive-message-refresh-notmuch-search)
 
-  (add-to-list 'display-buffer-alist
-               '((major-mode . notmuch-show-mode)
-                 (inhibit-same-window . t)))
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '((major-mode . notmuch-show-mode)
+  ;;                (inhibit-same-window . t)))
 
   ;; Inline images
   (defun cjv/notmuch--create-responsive-image (image-data &optional max-width)
@@ -185,6 +187,23 @@
             (insert-image (cjv/notmuch--create-responsive-image (car image-data))))))))
 
   (add-hook 'notmuch-show-hook #'cjv/notmuch-show-inline-cid-images)
+
+  (defun cjv/notmuch-display-email-in-xwidget ()
+    "Display the HTML email content in xwidget-webkit. This function requires
+the current MIME part to be of type text/html. If the content is not
+HTML, it falls back to calling notmuch-show-view-part'. Similarly, if
+xwidget support is unavailable in the current Emacs build, it fallbacks
+to `notmuch-show-view-part'."
+    (interactive)
+    (if-let* ((mime-part (ignore-errors (notmuch-show-current-part-handle)))
+              (is-html-mime (equal (caadr mime-part) "text/html"))
+              (has-xwidget (featurep 'xwidget-internal)))
+        (notmuch-show-apply-to-current-part-handle
+         (lambda (handle)
+           (let ((tempf (make-temp-file "notmuch" nil ".html" (with-current-buffer (car handle) (buffer-string)))))
+             (xwidget-webkit-browse-url (concat "file://" tempf))
+             (run-with-idle-timer 3 nil #'delete-file tempf))))
+      (notmuch-show-view-part)))
 
   :custom
   (message-directory "~/.mail/")

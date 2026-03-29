@@ -23,6 +23,12 @@
 
 ;;; Code:
 
+;; Disable native comp warnings
+(use-package comp-run
+  :ensure nil
+  :custom
+  (native-comp-async-report-warnings-errors 'silent))
+
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 		         ("nongnu" . "https://elpa.nongnu.org/nongnu/")

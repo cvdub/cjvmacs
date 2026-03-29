@@ -49,9 +49,7 @@
   (visual-line-fringe-indicators '(nil right-curly-arrow))
   :config
   (set-fringe-bitmap-face 'right-curly-arrow 'font-lock-comment-face)
-  (set-fringe-bitmap-face 'left-curly-arrow 'font-lock-comment-face)
-  :bind (:map cjv/toggle-map
-              ("c" . #'visual-line-mode)))
+  (set-fringe-bitmap-face 'left-curly-arrow 'font-lock-comment-face))
 
 (use-package custom
   :ensure nil
@@ -68,7 +66,21 @@
     (pcase appearance
       ('light (load-theme cjv/theme-light t))
       ('dark (load-theme cjv/theme-dark t)))
-    (load-theme 'cjv-faces))
+    (load-theme 'cjv-faces)
+    (cjv/sync-claude-code-theme appearance))
+
+  (defun cjv/sync-claude-code-theme (appearance)
+    "Update Claude Code theme in ~/.claude.json to match APPEARANCE."
+    (let ((config-file (expand-file-name "~/.claude.json"))
+          (theme (pcase appearance
+                   ('light "light-daltonized")
+                   ('dark "dark-daltonized"))))
+      (when (and theme (file-exists-p config-file))
+        (with-temp-buffer
+          (insert-file-contents config-file)
+          (when (re-search-forward "\"theme\"\\s-*:\\s-*\"[^\"]*\"" nil t)
+            (replace-match (format "\"theme\": \"%s\"" theme)))
+          (write-region (point-min) (point-max) config-file nil 'silent)))))
 
   (add-hook 'ns-system-appearance-change-functions #'cjv/apply-theme)
 
@@ -155,7 +167,7 @@
 
 (use-package writeroom-mode
   :defer t
-  :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
+  ;; :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
   :bind (:map cjv/toggle-map
               ("w" . #'writeroom-mode))
   :config
@@ -164,20 +176,38 @@
         (text-scale-adjust 1)
       (text-scale-adjust 0))
     (visual-fill-column-adjust))
+
   :custom
   (writeroom-mode-line t)
   (writeroom-maximize-window nil)
-  (writeroom-fullscreen-effect 'maximized))
+  (writeroom-fullscreen-effect 'maximized)
+  (writeroom-width 160))
 
 (use-package tab-bar
   :init (tab-bar-mode 1)
   :bind (:map tab-bar-map
-              ("C-<tab>" . #'tab-next))
+              ("C-<tab>" . #'tab-next)
+              :map cjv/toggle-map
+              ("b" . #'cjv/toggle-tab-bar))
   :custom
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
-  (tab-bar-show nil))
+  (tab-bar-show 1)
+  (tab-bar-auto-width t)
+  (tab-bar-auto-width-max '((440) 40))
+  ;; (tab-bar-auto-width-max nil)
+  :config
+  (defun cjv/toggle-tab-bar ()
+    (interactive)
+    (if tab-bar-show
+        (setq tab-bar-show nil)
+      (setq tab-bar-show 1))
+    (tab-bar-mode 1))
+
+  (defun cjv/tab-bar-name-add-space (name tab _i)
+    (format " %s " name))
+  (add-to-list 'tab-bar-tab-name-format-functions #'cjv/tab-bar-name-add-space))
 
 (use-package diff-hl
   :defer 5
@@ -265,7 +295,8 @@
   :bind (:map cjv/toggle-map
               ("i" . #'indent-bars-mode))
   :custom
-  (indent-bars-treesit-support t))
+  (indent-bars-treesit-support t)
+  (indent-bars-prefer-character t))
 
 (provide 'cjvmacs-ui)
 

@@ -140,7 +140,7 @@
 
 (use-package whisper
   :vc (:url "https://github.com/natrys/whisper.el" :branch "master")
-  :bind ("s-§" . #'whisper-run)
+  :bind ("s-`" . #'whisper-run)
   :custom
   (whisper-install-directory no-littering-var-directory)
   (whisper-return-cursor 'end)

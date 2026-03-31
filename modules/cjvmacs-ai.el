@@ -142,7 +142,14 @@
     (message "CC!! %s" title)
     (call-process "osascript" nil nil nil
                   "-e" (format "display notification \"%s\" with title \"%s\" sound name \"Glass\""
-                               message title)))
+                               message title))
+    (cjv/tab-attention-start (current-buffer)))
+
+  (defun cjv/claude-tab-attention-stop ()
+    "Clear attention indicator when the user visits a Claude buffer."
+    (when (claude-code--buffer-p (current-buffer))
+      (cjv/tab-attention-clear-current)))
+  (add-hook 'buffer-list-update-hook #'cjv/claude-tab-attention-stop)
 
   (setq claude-code-notification-function #'cjv/claude-notify)
 

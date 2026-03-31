@@ -125,6 +125,48 @@ Optionally, displays a MESSAGE or ALERT on completion."
          (ext (if ext (concat "." ext) "")))
     (format "%s-%s%s" base current-date ext)))
 
+;;;; Tab Bar Attention Indicator
+
+(defvar cjv/tab-attention-indicator "⚑ "
+  "Prefix added to tab names to indicate attention needed.")
+
+(defun cjv/tab-attention-find-tab (buffer)
+  "Return (TAB-NAME . TAB-NUMBER) for the tab containing BUFFER, or nil."
+  (let ((buf-name (buffer-name buffer)))
+    (cl-loop for tab in (funcall tab-bar-tabs-function)
+             for i from 1
+             for tab-name = (alist-get 'name tab)
+             when (if (eq 'current-tab (car tab))
+                      (get-buffer-window buffer)
+                    (let ((ws (alist-get 'ws tab)))
+                      (when ws
+                        (string-match-p
+                         (regexp-quote (format "(buffer %S" buf-name))
+                         (prin1-to-string ws)))))
+             return (cons tab-name i))))
+
+(defun cjv/tab-attention-start (buffer)
+  "Add attention indicator to the tab containing BUFFER."
+  (when-let* ((found (cjv/tab-attention-find-tab buffer))
+              (tab-name (car found))
+              (tab-number (cdr found)))
+    (unless (string-prefix-p cjv/tab-attention-indicator tab-name)
+      (tab-bar-rename-tab (concat cjv/tab-attention-indicator tab-name) tab-number))))
+
+(defun cjv/tab-attention-clear-current ()
+  "Remove attention indicator from the current tab if present."
+  (let* ((tab (assq 'current-tab (funcall tab-bar-tabs-function)))
+         (name (alist-get 'name tab)))
+    (when (string-prefix-p cjv/tab-attention-indicator name)
+      (tab-bar-rename-tab nil))))
+
+(defun cjv/tab-attention--on-tab-select (_prev _new)
+  "Remove indicator when a tab is selected."
+  (cjv/tab-attention-clear-current))
+
+(with-eval-after-load 'tab-bar
+  (add-hook 'tab-bar-tab-post-select-functions #'cjv/tab-attention--on-tab-select))
+
 (provide 'cjvmacs-utils)
 
 ;;; cjvmacs-utils.el ends here

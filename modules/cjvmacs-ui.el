@@ -62,12 +62,17 @@
 
   (defun cjv/apply-theme (appearance)
     "Load theme, taking current system APPEARANCE into consideration."
+    (let ((theme (pcase appearance
+                   ('light cjv/theme-light)
+                   ('dark cjv/theme-dark))))
+      (cjv/load-theme theme)
+      (cjv/sync-claude-code-theme appearance)))
+
+  (defun cjv/load-theme (theme)
     (mapc #'disable-theme custom-enabled-themes)
-    (pcase appearance
-      ('light (load-theme cjv/theme-light t))
-      ('dark (load-theme cjv/theme-dark t)))
+    (load-theme theme t)
     (load-theme 'cjv-faces)
-    (cjv/sync-claude-code-theme appearance))
+    (cjv/set-theme-color-vars))
 
   (defun cjv/sync-claude-code-theme (appearance)
     "Update Claude Code theme in ~/.claude.json to match APPEARANCE."
@@ -91,9 +96,7 @@
            (index (cl-position current-theme cjv/themes))
            (next-theme (or (nth (1+ index) cjv/themes)
                            (car cjv/themes))))
-      (disable-theme current-theme)
-      (load-theme next-theme)
-      (load-theme 'cjv-faces))))
+      (cjv/load-theme next-theme))))
 
 (use-package ef-themes
   :defer t
@@ -194,9 +197,8 @@
   (tab-bar-close-button-show nil)
   (tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
   (tab-bar-show 1)
-  (tab-bar-auto-width t)
-  (tab-bar-auto-width-max '((440) 40))
-  ;; (tab-bar-auto-width-max nil)
+  (tab-bar-auto-width nil)
+  (tab-bar-auto-width-max '((220) 20))
   :config
   (defun cjv/toggle-tab-bar ()
     (interactive)
@@ -297,6 +299,19 @@
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-prefer-character t))
+
+(use-package knockknock
+  :vc (:url "https://github.com/konrad1977/knockknock" :rev :newest)
+  :custom
+  (knockknock-poshandler #'posframe-poshandler-frame-top-center)
+  :config
+  (defun cjv/knocknock-update-colors (&optional theme)
+    (setq knockknock-border-color (face-attribute 'vertical-border :foreground)
+          knockknock-background-color (face-background 'default nil t)
+          knockknock-foreground-color (face-foreground 'default nil t))
+    (clrhash knockknock--svg-cache))
+  (cjv/knocknock-update-colors)
+  (add-hook 'enable-theme-functions #'cjv/knocknock-update-colors))
 
 (provide 'cjvmacs-ui)
 

@@ -92,9 +92,7 @@
       (message "gptel-model set to %s" selected)))
 
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** @user\n")
-  (setf (alist-get 'org-mode gptel-response-prefix-alist) "** @assistant\n")
-
-  )
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "** @assistant\n"))
 
 (use-package gptel-project
   :defer t
@@ -102,31 +100,6 @@
   :bind (:map project-prefix-map
               ("a" . #'gptel-project-chat)
               ("u" . #'gptel-project-update-summary)))
-
-(use-package aidermacs
-  :defer t
-  :vc (:url "https://github.com/MatthewZMD/aidermacs.git"
-            :rev :newest)
-  :bind ("s-a" . #'aidermacs-transient-menu)
-  :custom
-  ;; (aidermacs-extra-args `("--api-key" ,(format "openrouter=%s" (auth-source-pick-first-password :host "openrouter.ai"))))
-  (aidermacs-extra-args `("--api-key" ,(format "openai=%s" (auth-source-pick-first-password :host "api.openai.com"))))
-  (aidermacs-default-chat-mode 'code)
-  ;; (aidermacs-default-model "openrouter/openai/gpt-5")
-  (aidermacs-default-model "openai/gpt-5-mini"))
-
-(use-package emigo
-  :defer t
-  :vc (:url "https://github.com/MatthewZMD/emigo.git"
-            :rev :newest)
-  :config
-  (emigo-enable) ;; Starts the background process automatically
-  :custom
-  ;; Encourage using OpenRouter with Deepseek
-  (emigo-python-command "/Users/cjv/.config/emacs/.local/packages/emigo/.venv/bin/python")
-  (emigo-model "openrouter/deepseek/deepseek-chat-v3-0324")
-  (emigo-base-url "https://openrouter.ai/api/v1")
-  (emigo-api-key (auth-source-pick-first-password :host "openrouter.ai")))
 
 (use-package claude-code
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
@@ -139,38 +112,87 @@
 
   (defun cjv/claude-notify (title message)
     "Display a macOS notification with sound."
-    (message "CC!! %s" title)
-    (call-process "osascript" nil nil nil
-                  "-e" (format "display notification \"%s\" with title \"%s\" sound name \"Glass\""
-                               message title))
+    ;; (cjv/alert title message)
     (cjv/tab-attention-start (current-buffer)))
 
-  (defun cjv/claude-tab-attention-stop ()
-    "Clear attention indicator when the user visits a Claude buffer."
-    (when (claude-code--buffer-p (current-buffer))
-      (cjv/tab-attention-clear-current)))
-  (add-hook 'buffer-list-update-hook #'cjv/claude-tab-attention-stop)
+  (defun cjv/claude-tab-attention-cleanup ()
+    "Clear indicator if current tab has it but no Claude buffer is visible."
+    (let* ((tab (assq 'current-tab (funcall tab-bar-tabs-function)))
+           (name (alist-get 'name tab)))
+      (when (and (string-prefix-p cjv/tab-attention-indicator name)
+                 (not (cl-some (lambda (w)
+                                 (claude-code--buffer-p (window-buffer w)))
+                               (window-list))))
+        (tab-bar-rename-tab (substring name (length cjv/tab-attention-indicator))))))
+  (add-hook 'buffer-list-update-hook #'cjv/claude-tab-attention-cleanup)
 
   (setq claude-code-notification-function #'cjv/claude-notify)
 
   ;; Workaround: claude-code.el fails to set the eat bell handler.
   ;; Detect BEL in process output directly, stripping OSC sequences first.
+  ;; Also clear the tab attention indicator on non-bell output (meaning
+  ;; Claude is processing, so the user already responded).
   (advice-remove 'eat--filter 'cjv/eat-bell-detect)
   (with-eval-after-load 'eat
     (advice-add 'eat--filter :after
                 (defun cjv/eat-bell-detect (process output)
                   (when (and (buffer-live-p (process-buffer process))
-                             (claude-code--buffer-p (process-buffer process))
-                             (string-match-p "\007"
-                                             (replace-regexp-in-string "\033]0;[^\007]*\007" "" output)))
-                    (with-current-buffer (process-buffer process)
-                      (claude-code--notify nil))))))
+                             (claude-code--buffer-p (process-buffer process)))
+                    (let ((cleaned (replace-regexp-in-string "\033]0;[^\007]*\007" "" output)))
+                      (if (string-match-p "\007" cleaned)
+                          (with-current-buffer (process-buffer process)
+                            (claude-code--notify nil))
+                        (cjv/tab-attention-clear-for-buffer (process-buffer process))))))))
 
-  :bind (("s-c" . claude-code-transient)
-         (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode))))
+  ;; :bind (("s-c" . claude-code-transient)
+  ;;        (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode)))
+  )
 
-;; (use-package monet
-;;   :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))
+(use-package shell-maker
+  :vc (:url "https://github.com/xenodium/shell-maker.git" :rev :newest))
+
+
+(defvar cjv/ai-map2 (make-sparse-keymap)
+  "Keymap for my AI commands.")
+
+(global-set-key (kbd "s-c") cjv/ai-map2)
+
+
+(use-package agent-shell
+  :vc (:url "https://github.com/xenodium/agent-shell.git" :rev :newest)
+  ;; :ensure-system-package
+  ;; ((claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")
+  ;;  (codex-agent-acp . "npm install -g @zed-industries/codex-acp"))
+  :bind (:map cjv/ai-map2
+              ("c" . #'agent-shell)
+              :map agent-shell-mode-map
+              ("RET" . newline)
+              ("C-c C-c" . shell-maker-submit)
+              ("C-c C-k" . agent-shell-interrupt))
+  :custom
+  (agent-shell-show-welcome-message nil)
+  (agent-shell-show-usage-at-turn-end t))
+
+(use-package agent-shell-knockknock
+  :vc (:url "https://github.com/xenodium/agent-shell-knockknock" :rev :newest)
+  :after (agent-shell knockknock)
+  :hook (agent-shell-mode . agent-shell-knockknock-mode))
+
+(use-package agent-shell-workspace
+  :vc (:url "https://github.com/gveres/agent-shell-workspace")
+  :ensure t
+  :after agent-shell
+  :bind (:map cjv/ai-map2
+              ("t" . agent-shell-workspace-toggle)))
+
+;; (use-package agent-shell-sidebar
+;;   :after agent-shell
+;;   :vc (:url "https://github.com/cmacrae/agent-shell-sidebar")
+;;   :bind (:map cjv/ai-map2
+;;               ("t" . #'agent-shell-sidebar-toggle))
+;;   :custom
+;;   (agent-shell-sidebar-default-config
+;;    (agent-shell-anthropic-make-claude-code-config)))
 
 (provide 'cjvmacs-ai)
 

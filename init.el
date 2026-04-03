@@ -54,6 +54,8 @@
   :config
   (exec-path-from-shell-initialize))
 
+(server-start)
+
 ;; Load modules
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
 (require 'cjvmacs-utils)

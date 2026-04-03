@@ -153,19 +153,13 @@ Optionally, displays a MESSAGE or ALERT on completion."
     (unless (string-prefix-p cjv/tab-attention-indicator tab-name)
       (tab-bar-rename-tab (concat cjv/tab-attention-indicator tab-name) tab-number))))
 
-(defun cjv/tab-attention-clear-current ()
-  "Remove attention indicator from the current tab if present."
-  (let* ((tab (assq 'current-tab (funcall tab-bar-tabs-function)))
-         (name (alist-get 'name tab)))
-    (when (string-prefix-p cjv/tab-attention-indicator name)
-      (tab-bar-rename-tab nil))))
-
-(defun cjv/tab-attention--on-tab-select (_prev _new)
-  "Remove indicator when a tab is selected."
-  (cjv/tab-attention-clear-current))
-
-(with-eval-after-load 'tab-bar
-  (add-hook 'tab-bar-tab-post-select-functions #'cjv/tab-attention--on-tab-select))
+(defun cjv/tab-attention-clear-for-buffer (buffer)
+  "Remove attention indicator from the tab containing BUFFER."
+  (when-let* ((found (cjv/tab-attention-find-tab buffer))
+              (tab-name (car found))
+              (tab-number (cdr found)))
+    (when (string-prefix-p cjv/tab-attention-indicator tab-name)
+      (tab-bar-rename-tab (substring tab-name (length cjv/tab-attention-indicator)) tab-number))))
 
 (provide 'cjvmacs-utils)
 

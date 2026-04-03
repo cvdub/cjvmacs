@@ -3,3 +3,6 @@ custom.el
 .aider*
 elpa
 /var/
+/.agent-shell/
+.claude/settings.local.json
+/agent/

@@ -71,8 +71,7 @@
   (defun cjv/load-theme (theme)
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)
-    (load-theme 'cjv-faces)
-    (cjv/set-theme-color-vars))
+    (load-theme 'cjv-faces))
 
   (defun cjv/sync-claude-code-theme (appearance)
     "Update Claude Code theme in ~/.claude.json to match APPEARANCE."
@@ -184,7 +183,7 @@
   (writeroom-mode-line t)
   (writeroom-maximize-window nil)
   (writeroom-fullscreen-effect 'maximized)
-  (writeroom-width 160))
+  (writeroom-width 100))
 
 (use-package tab-bar
   :init (tab-bar-mode 1)

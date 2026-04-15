@@ -6,3 +6,4 @@ elpa
 /.agent-shell/
 .claude/settings.local.json
 /agent/
+/tree-sitter/

@@ -1,3 +1,4 @@
+;;  -*- lexical-binding: t; -*-
 ;; Increase garbage control threshold during startup
 (setq gc-cons-threshold most-positive-fixnum)
 (setq large-file-warning-threshold (* 1024 1024 1000))

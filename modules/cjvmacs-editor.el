@@ -96,7 +96,8 @@
   :bind (:map project-prefix-map
               ("r" . #'cjv/project-run)
               ("R" . #'project-query-replace-regexp)
-              ("s" . #'cjv/project-scratch-buffer))
+              ("s" . #'cjv/project-scratch-buffer)
+              ("t" . #'cjv/project-open-todo))
   :config
   (defun cjv/project-scratch-buffer ()
     (interactive)
@@ -150,7 +151,12 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
            (default-directory (project-root project)))
       (message "Starting %s" (project-name project))
       (dolist (spec cjv/project-run-processes)
-        (apply #'cjv/project-make-or-restart-comint spec)))))
+        (apply #'cjv/project-make-or-restart-comint spec))))
+
+  (defun cjv/project-open-todo ()
+    "Open TODO.org in the project-root."
+    (interactive)
+    (project-root-find-file "TODO.org")))
 
 (use-package transient
   :defer t)
@@ -215,7 +221,7 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
                         "--quiet"
                         "--profile"
                         "django"))
-             (djhtml . ("djhtml" filepath))
+             (djhtml . ("uv" "run" "djhtml" filepath))
              (djade . ("uvx" "djade" filepath))
              (ruff-sort-imports . ("ruff" "check" "-" "--select" "I" "--fix" "--quiet"))
              (ruff . ("ruff" "format" "-" "--quiet"))))
@@ -417,8 +423,29 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
 (use-package ispell
   :defer t
   :custom
-  (ispell-dictionary "en")
-  (ispell-personal-dictionary "~/.config/aspell/personal-dictionary.pws"))
+  (ispell-dictionary "en_US")
+  (ispell-program-name "hunspell")
+  :config
+  (defun cjv/ispell-install-hunspell-dictionary ()
+    "Ensure en_US hunspell dictionary exists in ~/Library/Spelling."
+    (let* ((dir (expand-file-name "~/Library/Spelling/"))
+           (aff (expand-file-name "en_US.aff" dir))
+           (dic (expand-file-name "en_US.dic" dir))
+           (base-url "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/"))
+
+      ;; Ensure directory exists
+      (unless (file-directory-p dir)
+        (make-directory dir t))
+
+      ;; Helper to download file if missing
+      (cl-labels ((download-if-missing (file url)
+                    (unless (file-exists-p file)
+                      (message "Downloading %s..." (file-name-nondirectory file))
+                      (url-copy-file url file t)
+                      (message "Saved %s" file))))
+
+        (download-if-missing aff (concat base-url "en_US.aff"))
+        (download-if-missing dic (concat base-url "en_US.dic"))))))
 
 (use-package markdown-mode
   :hook (markdown-mode . visual-line-mode))

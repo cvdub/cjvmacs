@@ -49,7 +49,8 @@
                                     "OBJC_DISABLE_INITIALIZE_FORK_SAFETY"
                                     "PATH"
                                     "PYTHONPATH"
-                                    "PYTHONSTARTUP"))
+                                    "PYTHONSTARTUP"
+                                    "XDG_CONFIG_HOME"))
   (exec-path-from-shell-arguments '("-l"))
   :config
   (exec-path-from-shell-initialize))

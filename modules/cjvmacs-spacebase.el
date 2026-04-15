@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(defvar spacebase/directory "/Users/cjv/code/projects/spacebase/")
+(defvar spacebase/directory "/Users/cjv/code/spacebase/")
 
 (defvar spacebase/servers '(("production" . "ubuntu@spacebaseapp.com")
                             ("staging" . "ubuntu@test.spacebaseapp.com")
@@ -102,7 +102,7 @@
      (start-process-shell-command
       "Update Spacebase DB"
       "*spacebase-db-update*"
-      "time /Users/cjv/code/projects/spacebase/provisioning/create-local-db.sh \
+      "time /Users/cjv/code/spacebase/provisioning/create-local-db.sh \
       $(pass spacebase/production/database-password)"))))
 
 (defun spacebase/open-logs ()
@@ -123,7 +123,7 @@
   "Set `default-directory' to Spacebase project root, then run BODY."
   `(let ((default-directory spacebase/directory))
      (hack-local-variables)
-     (pyvenv-activate "/Users/cjv/code/projects/spacebase/.venv")
+     (pyvenv-activate "/Users/cjv/code/spacebase/.venv")
      ,@body
      (pyvenv-deactivate)))
 

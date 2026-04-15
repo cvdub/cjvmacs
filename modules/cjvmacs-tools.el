@@ -81,7 +81,11 @@
 (use-package tramp
   :defer t)
 
+(use-package transient
+  :ensure t)
+
 (use-package magit
+  :after (transient)
   :defer t
   :bind (:map magit-section-mode-map
               ("C-<tab>" . nil))

@@ -309,6 +309,7 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   :config
   (setq dired-omit-files (concat dired-omit-files
                                  "\\|^\\.DS_Store\\'"
+                                 "\\|^\\.localized\\'"
                                  "\\|^\\.project\\(?:ile\\)?\\'"
                                  "\\|^\\.\\(?:svn\\|git\\)\\'"
                                  "\\|^\\.ccls-cache\\'"

@@ -156,7 +156,9 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
   (defun cjv/project-open-todo ()
     "Open TODO.org in the project-root."
     (interactive)
-    (project-root-find-file "TODO.org")))
+    (let* ((root (project-root (project-current)))
+           (todo-file (expand-file-name "TODO.org" root)))
+      (find-file todo-file))))
 
 (use-package transient
   :defer t)

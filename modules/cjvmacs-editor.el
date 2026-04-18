@@ -175,7 +175,9 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
 
 (use-package autorevert
   :custom
-  (global-auto-revert-mode t))
+  (global-auto-revert-mode t)
+  (auto-revert-avoid-polling t)
+  (auto-revert-interval 1))
 
 (use-package ffap
   :defer t

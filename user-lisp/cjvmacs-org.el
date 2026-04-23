@@ -309,7 +309,7 @@
       "* TODO %i%?\n- %a")))
 
   ;; Agenda
-  (org-agenda-tags-column 90)
+  (org-agenda-tags-column 'auto)
   (org-agenda-window-setup 'current-window)
   (org-agenda-sorting-strategy '((agenda habit-down time-up scheduled-up priority-down)
                                  (todo priority-down category-keep)
@@ -440,6 +440,10 @@
   :after org
   :config
   '(require 'ox-gfm nil t))
+
+(use-package org-appear
+  :vc (:url "https://github.com/awth13/org-appear" :rev :newest)
+  :hook (org-mode . org-appear-mode))
 
 (provide 'cjvmacs-org)
 

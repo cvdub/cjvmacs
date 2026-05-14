@@ -140,9 +140,16 @@
   :hook ((prog-mode . hl-line-mode)
          (org-agenda-mode . hl-line-mode)))
 
+(use-package visual-wrap
+  :ensure nil
+  :init (global-visual-wrap-prefix-mode))
+
 (use-package visual-fill-column
   :defer t
-  :hook (visual-line-mode-hook . visual-fill-column-for-vline))
+  :hook (visual-line-mode-hook . visual-fill-column-for-vline)
+  :bind (:map cjv/toggle-map
+              ("c" . #'visual-fill-column-toggle-center-text))
+  :custom (visual-fill-column-adjust-for-text-scale nil))
 
 (use-package diminish)
 
@@ -169,19 +176,19 @@
 
 (use-package writeroom-mode
   :defer t
-  ;; :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
+  :hook (writeroom-mode . cjv/writeroom-increase-text-scaling)
   :bind (:map cjv/toggle-map
               ("w" . #'writeroom-mode))
   :config
   (defun cjv/writeroom-increase-text-scaling ()
     (if writeroom-mode
-        (text-scale-adjust 1)
+        (text-scale-adjust 2)
       (text-scale-adjust 0))
     (visual-fill-column-adjust))
 
   :custom
   (writeroom-mode-line t)
-  (writeroom-maximize-window nil)
+  (writeroom-maximize-window t)
   (writeroom-fullscreen-effect 'maximized)
   (writeroom-width 100))
 

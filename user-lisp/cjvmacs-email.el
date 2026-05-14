@@ -78,7 +78,7 @@
         (message "Message cite style switched to: Gmail")
         (setq message-cite-style 'cjv/message-cite-style-gmail))))
 
-  :hook ((notmuch-message-mode . visual-line-fill-column-mode)
+  :hook ((notmuch-message-mode . turn-on-visual-line-mode)
          (notmuch-message-mode . turn-off-auto-fill))
   :bind (:map cjv/open-map
               ("m" . #'cjv/notmuch-inbox)

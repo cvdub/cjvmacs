@@ -138,7 +138,7 @@
 
 (use-package csv-mode
   :defer t
-  :hook (csv-mode . (lambda () (visual-line-fill-column-mode -1))))
+  :hook (csv-mode . (lambda () (visual-line-mode -1))))
 
 (use-package htmlize)
 

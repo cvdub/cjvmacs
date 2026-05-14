@@ -31,6 +31,9 @@
 ;; Disable suspend-frame binding
 (global-unset-key (kbd "C-z"))
 
+;; Disable mouse-wheel-text-scale and mouse-wheel-global-text-scale
+(setopt mouse-wheel-scroll-amount '(1 ((shift) . hscroll) ((meta))))
+
 ;;;; Keymaps
 (defvar cjv/global-keymap (make-keymap)
   "Keymap for cjv/keybindings-mode.")

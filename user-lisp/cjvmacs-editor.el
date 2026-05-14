@@ -112,6 +112,8 @@
         (hack-local-variables))
       (pop-to-buffer-same-window scratch)))
 
+  (add-to-list 'project-switch-commands '(cjv/project-scratch-buffer "Scratch buffer"))
+
   (defun cjv/project-compilation-buffer-name (mode-name)
     "Name compilation buffer after project if project is active."
     (format "*%s compilation*" (project-name (project-current))))
@@ -158,7 +160,9 @@ Each element is a list: (BUFFER-NAME COMMAND ARGS)")
     (interactive)
     (let* ((root (project-root (project-current)))
            (todo-file (expand-file-name "TODO.org" root)))
-      (find-file todo-file))))
+      (find-file todo-file)))
+
+  (add-to-list 'project-switch-commands '(cjv/project-open-todo "Todo")))
 
 (use-package transient
   :defer t)

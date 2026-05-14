@@ -261,9 +261,11 @@
   :custom
   (corfu-auto t)
   :config
-  (add-hook 'eshell-mode-hook (lambda ()
-                                (setq-local corfu-auto nil)
-                                (corfu-mode)))
+  (dolist (hook '(eshell-mode-hook text-mode-hook))
+    (add-hook hook (lambda ()
+                     (setq-local corfu-auto nil)
+                     (corfu-mode))))
+
   (keymap-set corfu-map "RET" #'corfu-send))
 
 (use-package cape

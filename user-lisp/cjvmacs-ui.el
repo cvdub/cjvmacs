@@ -182,7 +182,7 @@
   :config
   (defun cjv/writeroom-increase-text-scaling ()
     (if writeroom-mode
-        (text-scale-adjust 2)
+        (text-scale-adjust 1)
       (text-scale-adjust 0))
     (visual-fill-column-adjust))
 

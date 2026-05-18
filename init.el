@@ -58,6 +58,7 @@
 (server-start)
 
 ;; Load modules
+(add-to-list 'load-path (expand-file-name "user-lisp" user-emacs-directory))
 (require 'cjvmacs-utils)
 (require 'cjvmacs-keybindings)
 (require 'cjvmacs-ui)

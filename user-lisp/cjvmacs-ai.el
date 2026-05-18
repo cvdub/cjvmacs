@@ -167,7 +167,27 @@
               ("C-c C-k" . agent-shell-interrupt))
   :custom
   (agent-shell-show-welcome-message nil)
-  (agent-shell-show-usage-at-turn-end t))
+  (agent-shell-show-usage-at-turn-end t)
+  :config
+  (defvar cjv/consult-source-agent-shell-buffer
+    `(:name "Agent Shell"
+            :narrow ?a
+            :category buffer
+            :face consult-buffer
+            :history buffer-name-history
+            :state ,#'consult--buffer-state
+            :default t
+            :items
+            ,(lambda ()
+               (consult--buffer-query
+                :sort 'visibility
+                :as #'buffer-name
+                :predicate (lambda (buf)
+                             (with-current-buffer buf
+                               (derived-mode-p 'agent-shell-mode))))))
+    "Consult source for agent-shell buffers.")
+
+  (add-to-list 'consult-buffer-sources 'cjv/consult-source-agent-shell-buffer 'append))
 
 (use-package agent-shell-knockknock
   :vc (:url "https://github.com/xenodium/agent-shell-knockknock" :rev :newest)
